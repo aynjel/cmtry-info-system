@@ -107,87 +107,43 @@ if (isset($_SESSION['gcCart'])){
 
 <body style="background-color:#e0e4e5" onload="totalprice()" >
 
-<div class="navbar-fixed-top navbar-inverse  "    role="navigation">
+<div class="navbar navbar-default navbar-fixed-top" style="background-color:#000;color:white" >
+  <?php require_once 'banner.php'; ?>
   <div class="container">
-    <div class="navbar-header">
-          <h5 class="navbar-menu p" >Cemetery Mapping and Information System</h5>
-         <button type="button" class="navbar-toggle btn-xs p" data-toggle="collapse" data-target=".smMenu">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button> 
+    <div class="navbar-header"> 
+      <div class="navbar-menu p" >Menu</div>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bigMenu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button> 
     </div>
-      <div  class="collapse navbar-collapse  smMenu "> 
-
-        <ul class="navbar-nav p navbar-left tooltip-demo" style="margin-left:-8%;"> 
-            <li class="dropdown dropdown-toggle ">
-              <a  data-toggle="tooltip" data-placement="bottom" title="Cemetery Mapping and Information System"   href="#"> 
-               <i class="fa fa-info fa-fw"> </i>   
-              </a>
-            </li> 
-          </ul>
-         
-      </div>
-
+    <div class="collapse navbar-collapse bigMenu" style="float:right" > 
+      <ul class="nav navbar-nav" > 
+        <li class="dropdown dropdown-toggle <?php echo ($q=='home') ? "active" : false;?> ">
+          <a href="<?php echo web_root.'index.php?q=home'; ?>"> Home</a>
+        </li>
+        <li class="dropdown dropdown-toggle <?php echo ($q=='person') ? "active" : false;?>">
+          <a href="<?php echo web_root.'index.php?q=person'; ?>"> Deceased Person</a>
+        </li>
+        <li class="dropdown-toggle <?php echo ($q=='contact') ? "active" : false;?>">
+          <a href="<?php echo web_root.'index.php?q=contact';  ?>"> Contact Us</a>
+        </li>
+          <li class="dropdown-toggle <?php echo ($q=='about') ? "active" : false;?>">
+          <a href="<?php echo web_root.'index.php?q=about';  ?>"> About Us</a>
+        </li>
+        <li class="dropdown dropdown-toggle <?php echo ($q=='login') ? "active" : false;?> ">
+          <a href="<?php echo web_root.'index.php?q=login'; ?>"> Login</a>
+        </li>
+        <li class="dropdown dropdown-toggle <?php echo ($q=='register') ? "active" : false;?>">
+          <a href="<?php echo web_root.'index.php?q=register'; ?>"> Register</a>
+        </li>
+      </ul>           
+    </div> 
   </div>
 </div>
-
-
- <div class=" " style=" margin-top:-2%"> 
-  <!-- <div class="col-md-10 col-md-offset-1 " >  -->
  
-   
-    <div class="col-md-12" style="margin-bottom: 9px; ">
-     <div class="row ">
-        <?php require_once 'banner.php'; ?>
-     </div>  
-    </div>
-
-   </div>
-
- <div class="navbar navbar-static-top navbar-inverse  "    role="navigation">
-    
-      <div class="container ">
-        <div class="navbar-header"> 
-            <div class="navbar-menu p" >Menu</div>
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bigMenu">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button> 
-
-       <!--  <a class="navbar-brand"  href="<?php echo web_root; ?>index.php" title="View Sites">GC Appliance Centrum Corp</a> -->
-        </div>
-<?php
-  
-  ?>
-        <div class="collapse navbar-collapse bigMenu" style="float:left" > 
-          <!-- <ul class="nav navbar-nav" style="margin-left:-4%;"    >  -->
-
-          <ul class="nav navbar-nav" > 
-            <li class="dropdown dropdown-toggle <?php echo ($q=='home') ? "active" : false;?> ">
-              <a href="<?php echo web_root.'index.php?q=home'; ?>"> Home</a>
-            </li>
-            <li class="dropdown dropdown-toggle <?php echo ($q=='person') ? "active" : false;?>">
-              <a href="<?php echo web_root.'index.php?q=person'; ?>"> Deceased Person</a>
-            </li>
-            <li class="dropdown-toggle <?php echo ($q=='contact') ? "active" : false;?>">
-              <a href="<?php echo web_root.'index.php?q=contact';  ?>"> Contact Us</a>
-            </li>
-             <li class="dropdown-toggle <?php echo ($q=='about') ? "active" : false;?>">
-              <a href="<?php echo web_root.'index.php?q=about';  ?>"> About Us</a>
-            </li>
-           
-          </ul>           
-        </div> 
-        <!--/.navbar-collapse --> 
-    </div> 
-   <!-- /.nav-collapse --> 
-  </div> 
- <!-- /.container -->
- 
-  
-<div class="container"> 
+<div class="container" style="margin-top:180px;"> 
    <!-- start content --> 
         <div class="row"> 
           <div id="page-wrapper">
