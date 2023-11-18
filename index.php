@@ -26,6 +26,16 @@ switch ($view) {
         $title="Deceased Person";	
 		$content='person.php';		
 		break;
+
+	case 'login' :
+		$title="Login";	
+		$content ='login.php';		
+		break;	
+
+	case 'register' :
+		$title="Register";	
+		$content ='register.php';		
+		break;
   
 	default :
 	    $title="Home";	

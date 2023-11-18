@@ -176,60 +176,72 @@ if (isset($_GET['category'])) {
                     require_once "leftbar.php"; 
                   ?>
               </div> -->
+              <?php if ($_GET['q']=='login' or $_GET['q']=='register'): ?>
+                <div class="col-lg-12">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                    <b><?php   
+                        echo  $title . (isset($cur->TYPES) ?  '  |  ' .$cur->TYPES : '' )?></b> 
+                    </div>
+                    <div class="panel-body"> 
+                      <?php require_once $content; ?> 
+                    </div>
+                  <!--   <div class="panel-footer">
+                        Panel Footer
+                    </div> --> 
+                </div>
+              </div> 
+            <?php else: ?>
               <div class="col-lg-9">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                  <b><?php   
-                       echo  $title . (isset($cur->TYPES) ?  '  |  ' .$cur->TYPES : '' )?></b> 
-                  </div>
-                  <div class="panel-body"> 
-                    <?php require_once $content; ?> 
-                  </div>
-                <!--   <div class="panel-footer">
-                      Panel Footer
-                  </div> --> 
-              </div>
-            </div> 
-           <div class="col-lg-3"> 
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                    <b><?php   
+                        echo  $title . (isset($cur->TYPES) ?  '  |  ' .$cur->TYPES : '' )?></b> 
+                    </div>
+                    <div class="panel-body"> 
+                      <?php require_once $content; ?> 
+                    </div>
+                  <!--   <div class="panel-footer">
+                        Panel Footer
+                    </div> --> 
+                </div>
+              </div> 
+              <div class="col-lg-3"> 
                   <?php 
                     require_once "sidebar.php"; 
                   ?>
              </div>
+            <?php endif ?>
 
         </div>
-         <?php endif ?>
+        <?php endif ?>
+
         <?php if (isset($_GET['graveno'])): ?>
-          
-      
         <div class="row">
-           <div class="col-lg-12">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                      <div class="panel-heading">
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-heading">
                   <b>Map Section | <a  href="#" class="findgrave" style="color: red"><?php   
-                       echo   (isset($_GET['name']) ?  $_GET['name'] : '' )?></a></b> 
-                  </div>
-                </div>
-                    <div class="panel-body"> 
-                 <?php 
-                    require_once "map.php"; 
-                  ?>
+                        echo   (isset($_GET['name']) ?  $_GET['name'] : '' )?></a></b> 
                 </div>
               </div>
-             </div>
+              <div class="panel-body"> 
+                <?php require_once "map.php"; ?>
+              </div>
+            </div>
+          </div>
         </div>
           <?php endif ?>
-        <?php }
-
-?>
+        <?php } ?>
        </div>
             
       </div>
 
   </div> 
- <footer class="panel-footer" style="background-color:#000;color:white" >
-            <p align="left" >&copy; Cemetery Mapping and Information System</p>
-         </footer>
+  <footer class="panel-footer" style="background-color:#000;color:white" >
+    <p align="left" >&copy; Cemetery Mapping and Information System</p>
+  </footer>
 <!-- end of page  -->
 
 

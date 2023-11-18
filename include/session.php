@@ -48,8 +48,8 @@ function admin_confirm_logged_in() {
 	    $_SESSION['message'] = $msg;
 	    $_SESSION['msgtype'] = $msgtype;
 	  } else {
-	    // then this is "get message"
-			return $message;
+      // then this is "get message"
+      return $message;
 	  }
 	}
 		function check_message(){

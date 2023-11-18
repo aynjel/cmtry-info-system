@@ -1,16 +1,17 @@
-                      <?php 
-                       if (!isset($_SESSION['USERID'])){
-                          redirect(web_root."admin/index.php");
-                         }
-
-                      // $autonum = New Autonumber();
-                      // $res = $autonum->single_autonumber(2);
-
-                       ?> 
- <form class="form-horizontal span6" action="controller.php?action=add" method="POST">
+<form class="form-horizontal span6" action="controller.php?action=register" method="POST">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Add New User</h1>
+      <h1 class="page-header">
+        Registration Form
+      </h1>
+    </div>
+    <div class="col-lg-12">
+      <p>
+        <?php
+        check_message();
+        
+        ?>
+      </p>
     </div>
   </div>          
   <div class="form-group">
@@ -57,11 +58,12 @@
       "U_ROLE">Role:</label>
 
       <div class="col-md-8">
-        <select class="form-control input-sm" name="U_ROLE" id="U_ROLE">
+        <input class="form-control input-sm" id="U_ROLE" name="U_ROLE" type="text" value="User" readonly>
+        <!-- <select class="form-control input-sm" name="U_ROLE" id="U_ROLE">
           <option value="Administrator"  >Administrator</option>
           <option value="Staff"  >Staff</option> 
           <option value="User">User</option>
-        </select> 
+        </select>  -->
       </div>
     </div>
   </div>

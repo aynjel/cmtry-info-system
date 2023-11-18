@@ -1,76 +1,73 @@
- <?php
- require_once ("include/initialize.php"); 
- if (@$_GET['page'] <= 2 or @$_GET['page'] > 5) {
-  # code...
-    // unset($_SESSION['PRODUCTID']);
-    // // unset($_SESSION['QTY']);
-    // // unset($_SESSION['TOTAL']);
-} 
+<form class="form-horizontal span6" action="controller.php?action=register" method="POST">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        Login Form
+      </h1>
+    </div>
+    <div class="col-lg-12">
+      <p>
+        <?php
+        check_message();
+        
+        ?>
+      </p>
+    </div>
+  </div>          
+
+  <div class="form-group">
+    <div class="col-md-8">
+      <label class="col-md-4 control-label" for=
+      "U_USERNAME">Username:</label>
+
+      <div class="col-md-8">
+        <input name="deptid" type="hidden" value="">
+          <input class="form-control input-sm" id="U_USERNAME" name="U_USERNAME" placeholder=
+            "Email Address" type="text" value="">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-8">
+      <label class="col-md-4 control-label" for=
+      "U_PASS">Password:</label>
+
+      <div class="col-md-8">
+        <input name="deptid" type="hidden" value="">
+          <input class="form-control input-sm" id="U_PASS" name="U_PASS" placeholder=
+            "Account Password" type="Password" value="" required>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-8">
+      <label class="col-md-4 control-label" for=
+      "U_ROLE">Role:</label>
+
+      <div class="col-md-8">
+        <!-- <input class="form-control input-sm" id="U_ROLE" name="U_ROLE" type="text" value="User" readonly> -->
+        <select class="form-control input-sm" name="U_ROLE" id="U_ROLE">
+          <!-- <option value="Administrator"  >Administrator</option> -->
+          <option value="User">User</option>
+          <option value="Staff">Staff</option> 
+        </select> 
+      </div>
+    </div>
+  </div>
 
 
- 
-if(isset($_POST['sidebarLogin'])){
-  $email = trim($_POST['U_USERNAME']);
-  $upass  = trim($_POST['U_PASS']);
-  $h_upass = sha1($upass);
-  
-   if ($email == '' OR $upass == '') {
+        
+  <div class="form-group">
+    <div class="col-md-8">
+      <label class="col-md-4 control-label" for=
+      "idno"></label>
 
-      message("Invalid Username and Password!", "error");
-      redirect(web_root."index.php");
-         
-    } else {   
-        $cus = new Customer();
-        $cusres = $cus::cusAuthentication($email,$h_upass);
-
-        if ($cusres==true){
-
-
-           redirect(web_root."index.php?q=profile");
-        }else{
-             message("Invalid Username and Password! Please contact administrator", "error");
-             redirect(web_root."index.php");
-        }
- 
- }
-}
-
-
-
- if(isset($_POST['modalLogin'])){
-  $email = trim($_POST['U_USERNAME']);
-  $upass  = trim($_POST['U_PASS']);
-  $h_upass = sha1($upass);
-  
-   if ($email == '' OR $upass == '') { 
-      message("Invalid Username and Password!", "error");
-       redirect(web_root."index.php?page=6");
-         
-    } else {   
-        $cus = new Customer();
-        $cusres = $cus::cusAuthentication($email,$h_upass);
-
-        if ($cusres==true){
-
-           if($_POST['proid']==''){
-            redirect(web_root."index.php?q=orderdetails");
-           }else{
-              $proid = $_POST['proid'];
-              $id = mysql_insert_id(); 
-              $query ="INSERT INTO `tblwishlist` (`PROID`, `CUSID`, `WISHDATE`, `WISHSTATS`)  VALUES ('". $proid."','".$_SESSION['CUSID']."','".DATE('Y-m-d')."',0)";
-              mysql_query($query) or die(mysql_error());
-              redirect(web_root."index.php?q=profile");
-             }
-
-         
-        }else{
-             message("Invalid Username and Password! Please contact administrator", "error");
-             redirect(web_root."index.php");
-        }
- 
- }
- }
- ?> 
- 
-
- 
+      <div class="col-md-8">
+        <button class="btn btn-primary btn-sm" name="save" type="submit" ><span class="fa fa-save fw-fa"></span>  Save</button> 
+          <!-- <a href="index.php" class="btn btn-info"><span class="fa fa-arrow-circle-left fw-fa"></span></span>&nbsp;<strong>List of Users</strong></a> -->
+        </div>
+    </div>
+  </div>
+</form>
+       
