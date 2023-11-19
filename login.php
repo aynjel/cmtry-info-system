@@ -1,17 +1,10 @@
-<form class="form-horizontal span6" action="controller.php?action=register" method="POST">
+<form class="form-horizontal span6" method="POST">
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">
         Login Form
       </h1>
-    </div>
-    <div class="col-lg-12">
-      <p>
-        <?php
-        check_message();
-        
-        ?>
-      </p>
+      <p> <?php check_message(); ?> </p>
     </div>
   </div>          
 
@@ -64,10 +57,40 @@
       "idno"></label>
 
       <div class="col-md-8">
-        <button class="btn btn-primary btn-sm" name="save" type="submit" ><span class="fa fa-save fw-fa"></span>  Save</button> 
-          <!-- <a href="index.php" class="btn btn-info"><span class="fa fa-arrow-circle-left fw-fa"></span></span>&nbsp;<strong>List of Users</strong></a> -->
+        <button class="btn btn-primary btn-sm" name="btnLogin" type="submit" ><span class="fa fa-sign-in"></span> Login</button>
         </div>
     </div>
   </div>
 </form>
        
+<?php 
+
+if(isset($_POST['btnLogin'])){
+  $email = trim($_POST['U_USERNAME']);
+  $upass  = trim($_POST['U_PASS']);
+  $urole = trim($_POST['U_ROLE']);
+  $h_upass = sha1($upass);
+  
+  if ($email == '' OR $upass == '' OR $urole == '') {
+    message("Invalid Username and Password!", "error");
+
+        
+  } else {  
+  //it creates a new objects of member
+    $user = new User();
+    //make use of the static function, and we passed to parameters
+    $res = $user::userAuthenticationWithRole($email, $h_upass,$urole);
+    // var_dump($res);
+    if ($res==true) { 
+      message("You logon as ".$_SESSION['U_ROLE'].".","success");
+      if ($_SESSION['U_ROLE']=='Staff'){
+        redirect(web_root.'staff/');
+      }else{
+        redirect(web_root."user/");
+      }
+    }else{
+      message("Account does not exist! Please contact Administrator.", "error");
+      redirect(web_root."index.php?q=login");
+    }
+  }
+ } 

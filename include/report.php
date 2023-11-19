@@ -1,70 +1,43 @@
 <?php
 require_once(LIB_PATH.DS.'database.php');
-class User {
-	protected static  $tblname = "tbluseraccount";
+class Report {
+	protected static  $tblname = "tblreports";
 
 	function dbfields () {
 		global $mydb;
 		return $mydb->getfieldsononetable(self::$tblname);
+
 	}
-	function listofuser(){
+	function listofreports(){
 		global $mydb;
 		$mydb->setQuery("SELECT * FROM ".self::$tblname);
 		return $cur;
 	}
- 
-	function find_user($id="",$user_name=""){
+	function find_report($id="",$name=""){
 		global $mydb;
 		$mydb->setQuery("SELECT * FROM ".self::$tblname." 
-			WHERE USERID = {$id} OR U_USERNAME = '{$user_name}'");
+			WHERE id = {$id}");
 		$cur = $mydb->executeQuery();
 		$row_count = $mydb->num_rows($cur);
 		return $row_count;
 	}
-	static function userAuthentication($U_USERNAME,$h_pass){
+
+ 
+	function find_all_report($type=""){
 		global $mydb;
-		$mydb->setQuery("SELECT * FROM `tbluseraccount` WHERE `U_USERNAME` = '". $U_USERNAME ."' and `U_PASS` = '". $h_pass ."'");
+		$mydb->setQuery("SELECT * FROM ".self::$tblname." 
+			WHERE report_type = '{$type}'");
 		$cur = $mydb->executeQuery();
-		if($cur==false){
-			die(mysql_error());
-		}
-		$row_count = $mydb->num_rows($cur);//get the number of count
-		if ($row_count == 1){
-			$user_found = $mydb->loadSingleResult();
-			$_SESSION['USERID']   		= $user_found->USERID;
-			$_SESSION['U_NAME']      	= $user_found->U_NAME;
-			$_SESSION['U_USERNAME'] 	= $user_found->U_USERNAME;
-			$_SESSION['U_PASS'] 		= $user_found->U_PASS;
-			$_SESSION['U_ROLE'] 		= $user_found->U_ROLE;
-			return true;
-		}else{
-			return false;
-		}
-	}
-	static function userAuthenticationWithRole($U_USERNAME,$h_pass,$U_ROLE){
-		global $mydb;
-		$mydb->setQuery("SELECT * FROM `tbluseraccount` WHERE `U_USERNAME` = '". $U_USERNAME ."' and `U_PASS` = '". $h_pass ."' and `U_ROLE` = '". $U_ROLE ."'");
-		$cur = $mydb->executeQuery();
-		if($cur==false){
-			die(mysql_error());
-		}
 		$row_count = $mydb->num_rows($cur);
-		if ($row_count == 1){
-			$user_found = $mydb->loadSingleResult();
-			$_SESSION['USERID']   		= $user_found->USERID;
-			$_SESSION['U_NAME']      	= $user_found->U_NAME;
-			$_SESSION['U_USERNAME'] 	= $user_found->U_USERNAME;
-			$_SESSION['U_PASS'] 		= $user_found->U_PASS;
-			$_SESSION['U_ROLE'] 		= $user_found->U_ROLE;
-			return true;
-		}else{
-			return false;
-		}
+		return $row_count;
 	}
-	function single_user($id=""){
+	 
+	
+	 
+	function single_report($id=""){
 			global $mydb;
 			$mydb->setQuery("SELECT * FROM ".self::$tblname." 
-				Where USERID= '{$id}' LIMIT 1");
+				Where id= {$id} LIMIT 1");
 			$cur = $mydb->loadSingleResult();
 			return $cur;
 	}
@@ -140,25 +113,10 @@ class User {
 	  }
 	}
 
-	public function update($id=0) {
-	  global $mydb;
-		$attributes = $this->sanitized_attributes();
-		$attribute_pairs = array();
-		foreach($attributes as $key => $value) {
-		  $attribute_pairs[] = "{$key}='{$value}'";
-		}
-		$sql = "UPDATE ".self::$tblname." SET ";
-		$sql .= join(", ", $attribute_pairs);
-		$sql .= " WHERE USERID=". $id;
-	  $mydb->setQuery($sql);
-	 	if(!$mydb->executeQuery()) return false; 	
-		
-	}
-
 	public function delete($id=0) {
 		global $mydb;
 		  $sql = "DELETE FROM ".self::$tblname;
-		  $sql .= " WHERE USERID=". $id;
+		  $sql .= " WHERE id=". $id;
 		  $sql .= " LIMIT 1 ";
 		  $mydb->setQuery($sql);
 		  

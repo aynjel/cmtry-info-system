@@ -7,12 +7,17 @@ require_once ("include/initialize.php");
 
 $content='home.php';
 // q=home by default
-$view = (isset($_GET['q']) && $_GET['q'] != '') ? $_GET['q'] : 'home';
+if (isset($_GET['q'])){
+	$view = $_GET['q'];
+}else{
+	$view = 'home';
+	echo "<script> window.location.href = 'index.php?q=".$view."';</script>";
+}
  
 
 switch ($view) {
  
- case 'contact' :
+ 	case 'contact' :
         $title="Contact Us";	
 		$content='contact.php';		
 		break;
@@ -40,7 +45,6 @@ switch ($view) {
 	default :
 	    $title="Home";	
 		$content ='home.php';		
-
 }
 
        

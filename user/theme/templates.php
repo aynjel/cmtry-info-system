@@ -35,58 +35,58 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
  
  <style type="text/css">
 
-.p {
+  .p {
 
-  color: white;
-   margin-bottom: 0;
-  margin-top: 0;
-  /*padding: 0;*/
-  /*float: right;*/
-  list-style: none;
-}
-
-.p > a { 
-  color: white;
-  /*text-align: center;*/
-  margin-bottom: 0;
-  margin: 0;
-  padding: 0;
-  text-decoration:none;
-  background-color:  #0000FF;
-}
-.p > a:hover ,
-.p > a:focus {
-   color: black; 
-   text-decoration:none;
-   background-color: #2d52f2;
-}
-
-
- 
-.title-logo  {
-    color:black;
-    text-decoration:none;
-    font-size: 50px;
-    font-family: "broadway";
-    /*font-style: bold;*/
-    padding: 0;
-    margin: 0;
-    top: 0;
-  
+    color: white;
+    margin-bottom: 0;
+    margin-top: 0;
+    /*padding: 0;*/
+    /*float: right;*/
+    list-style: none;
   }
-.title-logo:hover {
-  color: blue; 
-  text-decoration:none; 
-}
-.carttxtactive {
-  color: red;
-  font-style: bold;
-  box-shadow: red;
 
-}
-.carttxtactive:hover {
-   color: white;
-}
+  .p > a { 
+    color: white;
+    /*text-align: center;*/
+    margin-bottom: 0;
+    margin: 0;
+    padding: 0;
+    text-decoration:none;
+    background-color:  #0000FF;
+  }
+  .p > a:hover ,
+  .p > a:focus {
+    color: black; 
+    text-decoration:none;
+    background-color: #2d52f2;
+  }
+
+
+  
+  .title-logo  {
+      color:black;
+      text-decoration:none;
+      font-size: 50px;
+      font-family: "broadway";
+      /*font-style: bold;*/
+      padding: 0;
+      margin: 0;
+      top: 0;
+    
+    }
+  .title-logo:hover {
+    color: blue; 
+    text-decoration:none; 
+  }
+  .carttxtactive {
+    color: red;
+    font-style: bold;
+    box-shadow: red;
+
+  }
+  .carttxtactive:hover {
+    color: white;
+  }
 
 </style>
 
@@ -95,20 +95,13 @@ if (isset($_SESSION['gcCart'])){
   if (count($_SESSION['gcCart'])>0) {
     $cart = '<label class="label label-danger">'.count($_SESSION['gcCart']) .'</label>';
   } 
- 
 } 
  ?>
- 
-<script type="text/javascript">
-   
-
-</script>
 </head>
 
 <body style="background-color:#e0e4e5" onload="totalprice()" >
 
 <div class="navbar navbar-default navbar-fixed-top" style="background-color:#000;color:white" >
-  <?php require_once 'banner.php'; ?>
   <div class="container">
     <div class="navbar-header"> 
       <div class="navbar-menu p" >Menu</div>
@@ -120,30 +113,20 @@ if (isset($_SESSION['gcCart'])){
     </div>
     <div class="collapse navbar-collapse bigMenu" style="float:right" > 
       <ul class="nav navbar-nav" > 
-        <li class="dropdown dropdown-toggle <?php echo ($q=='home') ? "active" : false;?> ">
-          <a href="<?php echo web_root.'index.php?q=home'; ?>"> Home</a>
+        <li class="dropdown dropdown-toggle active">
+          <a href="index.php?q=home">
+            Home
+          </a>
         </li>
-        <li class="dropdown dropdown-toggle <?php echo ($q=='person') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=person'; ?>"> Deceased Person</a>
-        </li>
-        <li class="dropdown-toggle <?php echo ($q=='contact') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=contact';  ?>"> Contact Us</a>
-        </li>
-          <li class="dropdown-toggle <?php echo ($q=='about') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=about';  ?>"> About Us</a>
-        </li>
-        <li class="dropdown dropdown-toggle <?php echo ($q=='login') ? "active" : false;?> ">
-          <a href="<?php echo web_root.'index.php?q=login'; ?>"> Login</a>
-        </li>
-        <li class="dropdown dropdown-toggle <?php echo ($q=='register') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=register'; ?>"> Register</a>
+        <li class="dropdown dropdown-toggle" style="background-color: red">
+          <a href="<?php echo 'logout.php'; ?>"> Logout</a>
         </li>
       </ul>           
     </div> 
   </div>
 </div>
  
-<div class="container" style="margin-top:180px;"> 
+<div class="container"> 
    <!-- start content --> 
         <div class="row"> 
           <div id="page-wrapper">
@@ -171,28 +154,12 @@ if (isset($_GET['category'])) {
 ?>
    <?php if (!isset($_GET['graveno'])): ?>
             <div class="row">
-              <!-- <div class="col-lg-3"> 
+              <div class="col-lg-3"> 
                   <?php 
                     require_once "leftbar.php"; 
                   ?>
-              </div> -->
-              <?php if ($_GET['q']=='login' or $_GET['q']=='register' or $_GET['q']=='about' or $_GET['q']=='contact'): ?>
-                <div class="col-lg-12">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                    <b><?php   
-                        echo  $title . (isset($cur->TYPES) ?  '  |  ' .$cur->TYPES : '' )?></b> 
-                    </div>
-                    <div class="panel-body"> 
-                      <?php require_once $content; ?> 
-                    </div>
-                  <!--   <div class="panel-footer">
-                        Panel Footer
-                    </div> --> 
-                </div>
-              </div> 
-            <?php else: ?>
-              <div class="col-lg-9">
+              </div>
+              <div class="col-lg-6">
                   <div class="panel panel-default">
                     <div class="panel-heading">
                     <b><?php   
@@ -211,7 +178,6 @@ if (isset($_GET['category'])) {
                     require_once "sidebar.php"; 
                   ?>
              </div>
-            <?php endif ?>
 
         </div>
         <?php endif ?>
