@@ -1,13 +1,14 @@
 
+
+<h4>
+    <b>
+    Cemetery Mapping and Information System
+    </b>
+</h4>
+<hr>
 <div class="row"> 
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div>
-            <img src="img/capstone-p.jpg" title="Capstone Project" style="width: 100%;height: 200px" /> 
-            <h4>
-                <b>
-                Cemetery Mapping and Information System
-                </b>
-            </h4>
             <ul>
                 <li>
                     Team Members:
@@ -61,7 +62,43 @@
                 </li>
             </ul>
         </div>
-   
     </div>
-        
+    <div class="col-lg-6">
+        <div>
+            <ul>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        Documentation
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        Source Code
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        Video Presentation
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        User Manual
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        Presentation Slides
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        Project Proposal
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
+<br>
+<br>

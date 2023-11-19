@@ -144,9 +144,12 @@
                       <div class="col-md-8">
                              
                       <select class="form-control input-sm" name="LOCATION" id="LOCATION">
-                          <option value="None">Select Location</option>
-                          <option value="BUENAVISTA LOOC CEMETERY" <?php echo ($p->LOCATION=='BUENAVISTA LOOC CEMETERY') ? 'SELECTED' : '';?>>BUENAVISTA LOOC CEMETERY</option>
-                          <option value="PUNTA LOOC CEMETERY" <?php echo ($p->LOCATION=='PUNTA LOOC CEMETERY') ? 'SELECTED' : '';?>>PUNTA LOOC CEMETERY</option>
+                          <option value="None" hidden>Select Location</option>
+                          <option value="SANGI TOLEDO CITY" <?php echo ($p->LOCATION=='SANGI TOLEDO CITY') ? 'SELECTED' : '';?>>SANGI TOLEDO CITY</option>
+                          <option value="LURAY TOLEDO CITY" <?php echo ($p->LOCATION=='LURAY TOLEDO CITY') ? 'SELECTED' : '';?>>LURAY TOLEDO CITY</option>
+                          <option value="DUMLOG TOLEDO CITY" <?php echo ($p->LOCATION=='DUMLOG TOLEDO CITY') ? 'SELECTED' : '';?>>DUMLOG TOLEDO CITY</option>
+                          <!-- <option value="BUENAVISTA LOOC CEMETERY" <?php echo ($p->LOCATION=='BUENAVISTA LOOC CEMETERY') ? 'SELECTED' : '';?>>BUENAVISTA LOOC CEMETERY</option>
+                          <option value="PUNTA LOOC CEMETERY" <?php echo ($p->LOCATION=='PUNTA LOOC CEMETERY') ? 'SELECTED' : '';?>>PUNTA LOOC CEMETERY</option> -->
           
                         </select> 
                       </div>

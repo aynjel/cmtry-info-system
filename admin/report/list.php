@@ -12,6 +12,9 @@
 			<div class="col-sm-6">
 				 <label>Location::</label> 
 		              <select class="form-control " name="LOCATION" id="LOCATION" style="width: 100%;"> 
+			            <option  >SANGI</option>
+						<option >LURAY</option>
+						<option >DUMLOG</option>
 			            <option  >BUENAVISTA LOOC CEMETERY</option> 
 			            <option >PUNTA LOOC CEMETERY</option>
 			          </select>  

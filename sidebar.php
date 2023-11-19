@@ -31,10 +31,13 @@
         <div class="panel-body">
         <div class="list-group">
          <div class="well well-sm "><b> Location </b> </div>
-            <ul >
-                <li><a href="index.php?q=person&location=BUENAVISTA LOOC CEMETERY">BUENAVISTA LOOC CEMETERY</a></li>
-                <li><a href="index.php?q=person&location=PUNTA LOOC CEMETERY">PUNTA LOOC CEMETERY</a></li> 
-             </ul>
+            <ul>
+              <li><a href="index.php?q=person&location=SANGI">SANGI TOLEDO CITY</a></li>
+              <li><a href="index.php?q=person&location=LURAY">LURAY TOLEDO CITY</a></li>
+              <li><a href="index.php?q=person&location=DUMLOG">DUMLOG TOLEDO CITY</a></li>
+              <!-- <li><a href="index.php?q=person&location=BUENAVISTA LOOC CEMETERY">BUENAVISTA LOOC CEMETERY</a></li>
+              <li><a href="index.php?q=person&location=PUNTA LOOC CEMETERY">PUNTA LOOC CEMETERY</a></li>  -->
+            </ul>
           </div> 
        </div> 
     </div> 
