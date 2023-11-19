@@ -217,25 +217,27 @@ if (isset($_GET['category'])) {
 <!-- end -->
  
     <!-- jQuery -->
-    <script src="<?php echo web_root; ?>jquery/jquery.min.js"></script>
+    <script src="<?php echo web_root; ?>user/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo web_root; ?>js/bootstrap.min.js"></script>
+    <script src="<?php echo web_root; ?>user/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript --> 
     <!-- DataTables JavaScript -->
-    <script src="<?php echo web_root; ?>js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo web_root; ?>js/dataTables.bootstrap.min.js"></script>
+    <script src="<?php echo web_root; ?>user/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo web_root; ?>user/js/dataTables.bootstrap.min.js"></script>
 
 
-<script type="text/javascript" language="javascript" src="<?php echo web_root; ?>js/ekko-lightbox.js"></script> 
-<script type="text/javascript" src="<?php echo web_root; ?>js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo web_root; ?>js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<script type="text/javascript" language="javascript" src="<?php echo web_root; ?>user/js/ekko-lightbox.js"></script> 
+<script type="text/javascript" src="<?php echo web_root; ?>user/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<?php echo web_root; ?>user/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
 
-  <script src="<?php echo web_root; ?>angularjs/angular.min.js"></script>
-  <script src="<?php echo web_root; ?>angularjs/angular-animate.min.js"></script>
-    <script src="<?php echo web_root; ?>angularjs/angular-aria.min.js"></script>
-      <script src="<?php echo web_root; ?>angularjs/angular-messages.min.js"></script>
+  <script src="<?php echo web_root; ?>user/angularjs/angular.min.js"></script>
+  <script src="<?php echo web_root; ?>user/angularjs/angular-animate.min.js"></script>
+    <script src="<?php echo web_root; ?>user/angularjs/angular-aria.min.js"></script>
+      <script src="<?php echo web_root; ?>user/angularjs/angular-messages.min.js"></script>
+      <link href="<?php echo web_root; ?>user/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+ <link href="<?php echo web_root; ?>user/css/datepicker.css" rel="stylesheet" media="screen">
 
     <!-- Custom Theme JavaScript --> 
 <script type="text/javascript" language="javascript" src="<?php echo web_root; ?>js/janobe.js"></script>  

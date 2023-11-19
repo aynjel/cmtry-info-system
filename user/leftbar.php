@@ -87,7 +87,7 @@
                            <div class="input-group-addon"> 
                               <i class="fa fa-calendar"></i>
                            </div>
-                           <input id="datemask2" name="BORNDATE"  value="" type="text" class="form-control input-sm datemask2"   data-inputmask="'alias': 'mm/dd/yyyy'" data-mask >
+                           <input id="datemask2" name="BORNDATE"  value="" type="text" class="form-control input-sm datemask2" placeholder="MM/DD/YYY">
                         </div>
                         </div>
                      </div>
@@ -103,7 +103,7 @@
                            <div class="input-group-addon"> 
                               <i class="fa fa-calendar"></i>
                            </div>
-                           <input id="datemask2" name="DIEDDATE"  value="" type="text" class="form-control input-sm datemask2"   data-inputmask="'alias': 'mm/dd/yyyy'" data-mask >
+                           <input id="datemask2" name="DIEDDATE"  value="" type="text" class="form-control input-sm datemask2" placeholder="MM/DD/YYY">
                         </div>
                         </div>
                      </div>
