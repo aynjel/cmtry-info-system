@@ -14,6 +14,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="<?= web_root; ?>/css/landing-page.css">
+    <link rel="stylesheet" href="<?= web_root; ?>/css/form.css">
 </head>
 
 <body>
@@ -34,6 +35,13 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
       </div>
       
       <main>
+        <?php
+        if ($q == 'login') {
+            include('../' . web_root . 'login.php');
+        } elseif ($q == 'register') {
+            include('../' . web_root . 'register.php');
+        } else {
+        ?>
         <!--HERO SECTION-->
         <section class="hero" id="hero">
           <h1>
@@ -499,9 +507,15 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             </form>
           </div>
         </section>
+        <?php
+        }
+        ?>
 
         <!--FOOTER SECTION-->
         <footer class="footer">
+          <?php
+          if ($q == 'home') {
+          ?>
           <ul class="footer-nav">
             <li class="footer-nav-item">
               <a href="#hero">Home</a>
@@ -517,8 +531,17 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             </li>
           </ul>
           <p>
+            &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Cemetery Mapping and Information System.
+          </p>
+          <?php
+          }else{
+          ?>
+          <p>
             &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Cemetery Mapping and Information System
           </p>
+          <?php
+          }
+          ?>
         </footer>
       </main>
   </div>

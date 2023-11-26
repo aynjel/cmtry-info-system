@@ -52,7 +52,7 @@ function admin_confirm_logged_in() {
       return $message;
 	  }
 	}
-		function check_message(){
+  function check_message(){
   
     if(isset($_SESSION['message'])){
       if(isset($_SESSION['msgtype'])){

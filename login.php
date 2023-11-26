@@ -1,67 +1,38 @@
-<form class="form-horizontal span6" method="POST">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">
-        Login Form
-      </h1>
-      <p> <?php check_message(); ?> </p>
-    </div>
-  </div>          
-
-  <div class="form-group">
-    <div class="col-md-8">
-      <label class="col-md-4 control-label" for=
-      "U_USERNAME">Username:</label>
-
-      <div class="col-md-8">
-        <input name="deptid" type="hidden" value="">
-          <input class="form-control input-sm" id="U_USERNAME" name="U_USERNAME" placeholder=
-            "Email Address" type="text" value="">
-      </div>
-    </div>
+<div class="auth-form-wrapper">
+  <div class="auth-form-header">
+    <h1>
+      Login
+    </h1>
+    <p>
+      Please enter your username and password to login.
+    </p>
   </div>
-
-  <div class="form-group">
-    <div class="col-md-8">
-      <label class="col-md-4 control-label" for=
-      "U_PASS">Password:</label>
-
-      <div class="col-md-8">
-        <input name="deptid" type="hidden" value="">
-          <input class="form-control input-sm" id="U_PASS" name="U_PASS" placeholder=
-            "Account Password" type="Password" value="" required>
+  <div class="auth-form-body">
+    <form class="auth-form" method="POST">
+      <?php check_message(); ?>
+      <div class="auth-form-group">
+        <label class="control-label" for="U_USERNAME">Username</label>
+        <input class="form-control" id="U_USERNAME" name="U_USERNAME" type="text" required />
       </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-md-8">
-      <label class="col-md-4 control-label" for=
-      "U_ROLE">Role:</label>
-
-      <div class="col-md-8">
-        <!-- <input class="form-control input-sm" id="U_ROLE" name="U_ROLE" type="text" value="User" readonly> -->
-        <select class="form-control input-sm" name="U_ROLE" id="U_ROLE">
-          <!-- <option value="Administrator"  >Administrator</option> -->
+      <div class="auth-form-group">
+        <label class="control-label" for="U_PASS">Password</label>
+        <input class="form-control" id="U_PASS" name="U_PASS" type="password" required />
+      </div>
+      <div class="auth-form-group">
+        <label class="control-label" for="U_ROLE">Role</label>
+        <select class="form-control" id="U_ROLE" name="U_ROLE" required>
+          <option hidden>Select Role</option>
           <option value="User">User</option>
-          <option value="Staff">Staff</option> 
-        </select> 
+          <option value="Staff">Staff</option>
+          <option value="Administrator">Administrator</option>
+        </select>
       </div>
-    </div>
+      <div class="auth-form-group">
+        <button class="btn-submit" name="btnLogin" type="submit">Login</button>
+      </div>
+    </form>
   </div>
-
-
-        
-  <div class="form-group">
-    <div class="col-md-8">
-      <label class="col-md-4 control-label" for=
-      "idno"></label>
-
-      <div class="col-md-8">
-        <button class="btn btn-primary btn-sm" name="btnLogin" type="submit" ><span class="fa fa-sign-in"></span> Login</button>
-        </div>
-    </div>
-  </div>
-</form>
+</div>
        
 <?php 
 
