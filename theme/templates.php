@@ -1,590 +1,535 @@
 <?php
-
-// set query parameter by default to home
 $q = isset($_GET['q']) ? $_GET['q'] : 'home';
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
-<title><?php echo $title; ?> | Cemetery Mapping and Information System</title>
-
-     <!-- Bootstrap Core CSS -->
- <link href="<?php echo web_root; ?>css/bootstrap.min.css" rel="stylesheet">
- 
-    <!-- Custom Fonts -->
-    <link href="<?php echo web_root; ?>font/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-  <link href="<?php echo web_root; ?>font/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables CSS -->
-    <link href="<?php echo web_root; ?>css/dataTables.bootstrap.css" rel="stylesheet">
- 
-     <!-- datetime picker CSS -->
-<link href="<?php echo web_root; ?>css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
- 
-<link href="<?php echo web_root; ?>css/ekko-lightbox.css" rel="stylesheet">
- <link href="<?php echo web_root; ?>css/modern.css" rel="stylesheet">
- <link href="<?php echo web_root; ?>css/costum.css" rel="stylesheet">
- <link rel="icon" href="<?php echo web_root; ?>img/favicon.ico" type="image/x-icon">  
- 
- <style type="text/css">
-
-.p {
-
-  color: white;
-   margin-bottom: 0;
-  margin-top: 0;
-  /*padding: 0;*/
-  /*float: right;*/
-  list-style: none;
-}
-
-.p > a { 
-  color: white;
-  /*text-align: center;*/
-  margin-bottom: 0;
-  margin: 0;
-  padding: 0;
-  text-decoration:none;
-  background-color:  #0000FF;
-}
-.p > a:hover ,
-.p > a:focus {
-   color: black; 
-   text-decoration:none;
-   background-color: #2d52f2;
-}
-
-
- 
-.title-logo  {
-    color:black;
-    text-decoration:none;
-    font-size: 50px;
-    font-family: "broadway";
-    /*font-style: bold;*/
-    padding: 0;
-    margin: 0;
-    top: 0;
-  
-  }
-.title-logo:hover {
-  color: blue; 
-  text-decoration:none; 
-}
-.carttxtactive {
-  color: red;
-  font-style: bold;
-  box-shadow: red;
-
-}
-.carttxtactive:hover {
-   color: white;
-}
-
-</style>
-
-<?php
-if (isset($_SESSION['gcCart'])){
-  if (count($_SESSION['gcCart'])>0) {
-    $cart = '<label class="label label-danger">'.count($_SESSION['gcCart']) .'</label>';
-  } 
- 
-} 
- ?>
- 
-<script type="text/javascript">
-   
-
-</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title><?= $title; ?> | Cemetery Mapping and Information System</title>
+    <link rel="shortcut icon" href="<?= web_root; ?>template/assets/img/favicon.png">
+    <!-- <link rel="stylesheet" href="<?= web_root; ?>template/assets/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="<?= web_root; ?>/css/landing-page.css">
 </head>
 
-<body style="background-color:#e0e4e5" onload="totalprice()" >
+<body>
 
-<div class="navbar navbar-default navbar-fixed-top" style="background-color:#000;color:white" >
-  <?php require_once 'banner.php'; ?>
-  <div class="container">
-    <div class="navbar-header"> 
-      <div class="navbar-menu p" >Menu</div>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bigMenu">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button> 
-    </div>
-    <div class="collapse navbar-collapse bigMenu" style="float:right" > 
-      <ul class="nav navbar-nav" > 
-        <li class="dropdown dropdown-toggle <?php echo ($q=='home') ? "active" : false;?> ">
-          <a href="<?php echo web_root.'index.php?q=home'; ?>"> Home</a>
-        </li>
-        <li class="dropdown dropdown-toggle <?php echo ($q=='person') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=person'; ?>"> Deceased Person</a>
-        </li>
-        <li class="dropdown-toggle <?php echo ($q=='contact') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=contact';  ?>"> Contact Us</a>
-        </li>
-          <li class="dropdown-toggle <?php echo ($q=='about') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=about';  ?>"> About Us</a>
-        </li>
-        <li class="dropdown dropdown-toggle <?php echo ($q=='login') ? "active" : false;?> ">
-          <a href="<?php echo web_root.'index.php?q=login'; ?>"> Login</a>
-        </li>
-        <li class="dropdown dropdown-toggle <?php echo ($q=='register') ? "active" : false;?>">
-          <a href="<?php echo web_root.'index.php?q=register'; ?>"> Register</a>
-        </li>
-      </ul>           
-    </div> 
-  </div>
-</div>
- 
-<div class="container" style="margin-top:180px;"> 
-   <!-- start content --> 
-        <div class="row"> 
-          <div id="page-wrapper">
-               <?php
+  <div class="main-wrapper">
+      <div class="header">
+          <a class="logo">
+            CMTRY
+          </a>
+          <ul class="nav-menu">
+              <li class="nav-item">
+                  <a class="nav-link <?php echo ($q == 'login') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=login">Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link <?php echo ($q == 'register') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=register">Register</a>
+              </li>
+          </ul>
+      </div>
+      
+      <main>
+        <!--HERO SECTION-->
+        <section class="hero" id="hero">
+          <h1>
+            Cemetery Mapping and Information System
+          </h1>
+          <p>
+            A web-based cemetery mapping and information system for the City of San Fernando, La Union
+          </p>
+          <form>
+            <input type="text" placeholder="Search">
+            <button type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </section>
 
-          if($title=='Profile' or $title=='Track Order' ){
-                echo ' <div class="row">';
-
-                require_once $content;
-                echo ' </div><br/>';
-     
-              }else{
-  // check_message(); ?>
-
-<?php
-if (isset($_GET['category'])) {
-  # code...
-   $categid = isset($_GET['category']) ? $_GET['category'] : ''; 
-  $sql="SELECT * FROM `tbltype` WHERE `TYPEID`=".$categid;
-  $mydb->setQuery($sql);
-  $cur = $mydb->loadSingleResult();
-}
- 
-
-?>
-   <?php if (!isset($_GET['graveno'])): ?>
-            <div class="row">
-              <!-- <div class="col-lg-3"> 
-                  <?php 
-                    require_once "leftbar.php"; 
-                  ?>
-              </div> -->
-              <?php if ($_GET['q']=='login' or $_GET['q']=='register' or $_GET['q']=='about' or $_GET['q']=='contact'): ?>
-                <div class="col-lg-12">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                    <b><?php   
-                        echo  $title . (isset($cur->TYPES) ?  '  |  ' .$cur->TYPES : '' )?></b> 
-                    </div>
-                    <div class="panel-body"> 
-                      <?php require_once $content; ?> 
-                    </div>
-                  <!--   <div class="panel-footer">
-                        Panel Footer
-                    </div> --> 
-                </div>
-              </div> 
-            <?php else: ?>
-              <div class="col-lg-9">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                    <b><?php   
-                        echo  $title . (isset($cur->TYPES) ?  '  |  ' .$cur->TYPES : '' )?></b> 
-                    </div>
-                    <div class="panel-body"> 
-                      <?php require_once $content; ?> 
-                    </div>
-                  <!--   <div class="panel-footer">
-                        Panel Footer
-                    </div> --> 
-                </div>
-              </div> 
-              <div class="col-lg-3"> 
-                  <?php 
-                    require_once "sidebar.php"; 
-                  ?>
-             </div>
-            <?php endif ?>
-
-        </div>
-        <?php endif ?>
-
-        <?php if (isset($_GET['graveno'])): ?>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <div class="panel-heading">
-                  <b>Map Section | <a  href="#" class="findgrave" style="color: red"><?php   
-                        echo   (isset($_GET['name']) ?  $_GET['name'] : '' )?></a></b> 
-                </div>
+        <!--SEARCH RESULT SECTION-->
+        <section class="search-result" id="search-result">
+          <h2>
+            Search Result
+          </h2>
+          <div class="search-result-content">
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
               </div>
-              <div class="panel-body"> 
-                <?php require_once "map.php"; ?>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div class="search-result-item-info">
+                <h3>
+                  San Fernando Memorial Park
+                </h3>
+                <p>
+                  San Fernando City, La Union
+                </p>
+                <p>
+                  09123456789
+                </p>
+                <p>
+                  Active
+                </p>
               </div>
             </div>
           </div>
-        </div>
-          <?php endif ?>
-        <?php } ?>
-       </div>
-            
-      </div>
+        </section>
 
-  </div> 
-  <footer class="panel-footer" style="background-color:#000;color:white" >
-    <p align="left" >&copy; Cemetery Mapping and Information System</p>
-  </footer>
-<!-- end of page  -->
+        <!--TABLE SECTION-->
+        <!-- <section class="table" id="table">
+          <h2>
+            Cemetery List
+          </h2>
+          <div class="table-content">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Cemetery Name
+                  </th>
+                  <th>
+                    Address
+                  </th>
+                  <th>
+                    Contact Number
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    San Fernando Memorial Park
+                  </td>
+                  <td>
+                    San Fernando City, La Union
+                  </td>
+                  <td>
+                    09123456789
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    San Fernando Memorial Park
+                  </td>
+                  <td>
+                    San Fernando City, La Union
+                  </td>
+                  <td>
+                    09123456789
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    San Fernando Memorial Park
+                  </td>
+                  <td>
+                    San Fernando City, La Union
+                  </td>
+                  <td>
+                    09123456789
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    San Fernando Memorial Park
+                  </td>
+                  <td>
+                    San Fernando City, La Union
+                  </td>
+                  <td>
+                    09123456789
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    San Fernando Memorial Park
+                  </td>
+                  <td>
+                    San Fernando City, La Union
+                  </td>
+                  <td>
+                    09123456789
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    San Fernando Memorial Park
+                  </td>
+                  <td>
+                    San Fernando City, La Union
+                  </td>
+                  <td>
+                    09123456789
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    San Fernando Memorial
+                  </td>
+                  <td>
+                    San Fernando City, La Union
+                  </td>
+                  <td>
+                    09123456789
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section> -->
 
+        <!--ABOUT SECTION-->
+        <section class="about" id="about">
+          <div class="about-content">
+            <h2>
+              About
+            </h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus dolorum veniam temporibus cum blanditiis illum ipsum laboriosam delectus perferendis quas? Adipisci, sint. Architecto officiis dicta doloremque voluptatibus vitae facilis magni! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus dolorum veniam temporibus cum blanditiis illum ipsum laboriosam delectus perferendis quas? Adipisci, sint. Architecto officiis dicta doloremque voluptatibus vitae facilis magni!
+            </p>
+          </div>
+          <div class="carousel">
+            <div class="carousel-item">
+              <img src="<?= web_root; ?>/img/hero-bg.jpeg" alt="">
+            </div>
+            <div class="carousel-item">
+              <img src="<?= web_root; ?>/img/hero-bg-1.jpeg" alt="">
+            </div>
+            <div class="carousel-item">
+              <img src="<?= web_root; ?>/img/hero-bg.jpeg" alt="">
+            </div>
+          </div>
+        </section>
 
- <!-- modalorder -->
- <div class="modal fade" id="myOrdered">
- </div>
-<!-- end -->
- 
-    <!-- jQuery -->
-    <script src="<?php echo web_root; ?>jquery/jquery.min.js"></script>
+        <!--FEATURES SECTION-->
+        <section class="features" id="features">
+          <h2>
+            Features
+          </h2>
+          <div class="features-content">
+            <div class="feature">
+              <i class="fas fa-map-marked-alt"></i>
+              <h3>
+                Cemetery Mapping
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+              </p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-search"></i>
+              <h3>
+                Search
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+              </p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-user"></i>
+              <h3>
+                User Management
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+              </p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-file-alt"></i>
+              <h3>
+                Reports
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+              </p>
+            </div>
+          </div>
+        </section>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo web_root; ?>js/bootstrap.min.js"></script>
+        <!--CONTACT SECTION-->
+        <section class="contact" id="contact">
+          <h2>
+            Contact
+          </h2>
+          <div class="contact-info">
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>
+                San Fernando City, La Union
+              </p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <p>
+                09123456789
+              </p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <p>
+                cmtry@gmail.com
+              </p>
+            </div>
+          </div>
+          <div class="contact-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125594.37589709257!2d123.60185079131196!3d10.355933947696727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a972ea07076fd7%3A0x110ff6cf2b076330!2sToledo%20City%2C%20Cebu!5e0!3m2!1sen!2sph!4v1701003479390!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="contact-social">
+            <a href="#">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+          <div class="contact-form">
+            <h3>
+              Send us a message
+            </h3>
+            <form>
+              <input type="text" placeholder="Name">
+              <input type="email" placeholder="Email">
+              <textarea placeholder="Message"></textarea>
+              <button type="submit">
+                Send
+              </button>
+            </form>
+          </div>
+        </section>
 
-    <!-- Metis Menu Plugin JavaScript --> 
-    <!-- DataTables JavaScript -->
-    <script src="<?php echo web_root; ?>js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo web_root; ?>js/dataTables.bootstrap.min.js"></script>
-
-
-<script type="text/javascript" language="javascript" src="<?php echo web_root; ?>js/ekko-lightbox.js"></script> 
-<script type="text/javascript" src="<?php echo web_root; ?>js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo web_root; ?>js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
-
-  <script src="<?php echo web_root; ?>angularjs/angular.min.js"></script>
-  <script src="<?php echo web_root; ?>angularjs/angular-animate.min.js"></script>
-    <script src="<?php echo web_root; ?>angularjs/angular-aria.min.js"></script>
-      <script src="<?php echo web_root; ?>angularjs/angular-messages.min.js"></script>
-
-    <!-- Custom Theme JavaScript --> 
-<script type="text/javascript" language="javascript" src="<?php echo web_root; ?>js/janobe.js"></script>  
-<script>
-$(function() {
-  $("[autofocus]").on("focus", function() {
-    if (this.setSelectionRange) {
-      var len = this.value.length * 2;
-      this.setSelectionRange(len, len);
-    } else {
-      this.value = this.value;
-    }
-    this.scrollTop = 999999;
-  }).focus();
-});
-
- 
-
- var currentZoom = 1.0;
-
-    $(document).ready(function () {
-      $('#zoom').animate({ 'zoom': currentZoom}, 'slow');
-
-        $('#btn_ZoomIn').click(
-            function () {
-                $('#zoom').animate({ 'zoom': currentZoom += .1 }, 'slow');
-            })
-        $('#btn_ZoomOut').click(
-            function () {
-                $('#zoom').animate({ 'zoom': currentZoom -= .1 }, 'slow');
-            })
-        $('#btn_ZoomReset').click(
-            function () {
-                currentZoom = 1.0
-                $('#zoom').animate({ 'zoom': 1 }, 'slow');
-            })
-    });
-</script>
- <script type="text/javascript">
-
-  angular.module('gridListDemo1', ['ngMaterial'])
-.controller('AppCtrl', function($scope) {});
-
-  $(document).on("click", ".proid", function () {
-    // var id = $(this).attr('id');
-      var proid = $(this).data('id')
-    // alert(proid)
-       $(".modal-body #proid").val( proid )
-
-      });
-
-</script>
- <script>
-    // tooltip demo
-    $('.tooltip-demo').tooltip({
-        selector: "[data-toggle=tooltip]",
-        container: "body"
-    })
-
-    // popover demo
-    $("[data-toggle=popover]")
-        .popover()
-    </script>
-
-
-      <script>
-        $('.carousel').carousel({
-            interval: 5000 //changes the speed
-        })
-    </script>
-
-
-
-<script type="text/javascript">
-setInterval(function(){autoloadpage()},3000); 
-function autoloadpage() {
-    $.ajax({
-        type: "POST",
-        url : "addtocart.php?action=validatecartbutton",
-        data :{validate:"yes"},
-        success : function(data){
-            $("#reloadform").html(data);
-        }
-    }); 
-
+        <!--FOOTER SECTION-->
+        <footer class="footer">
+          <ul class="footer-nav">
+            <li class="footer-nav-item">
+              <a href="#hero">Home</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="#about">About</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="#features">Features</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="#contact">Contact</a>
+            </li>
+          </ul>
+          <p>
+            &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Cemetery Mapping and Information System
+          </p>
+        </footer>
+      </main>
+  </div>
   
-} 
-
-setInterval(function(){autoloadcartno()},3000); 
-function autoloadcartno() { 
-     $.ajax({
-        type: "POST",
-        url : "addtocart.php?action=validatenoitemsincart",
-        data :{validate:"yes"},
-        success : function(data){
-            $("#noitemincart").html(data);
-        }
-    }); 
-}
-setInterval(function(){autoloadcartno2()},3000); 
-function autoloadcartno2() { 
-     $.ajax({
-        type: "POST",
-        url : "addtocart.php?action=validatenoitemsincart",
-        data :{validate:"yes"},
-        success : function(data){
-            $("#noitemincart2").html(data);
-        }
-    }); 
-}
-  $(document).on("change",".POSDESIGNID", function(){
-       var pid = document.getElementById("DESIGNID").value;
-       // alert(pid)
-       $.ajax({    //create an ajax request to load_page.php
-        type:"POST",
-        url: "addtocart.php?action=addtocart",             
-        dataType: "text",   //expect html to be returned  
-        data:{PID:pid},               
-        success: function(data){         
-          // alert(data);
-          $("#publicshowcart").html(data);
-        }
-
-    });
-
-  });
-
-// $(document).on("focusout",".cartqty", function(){
-//        var pid = $(this).data('id');
-//        var qty = document.getElementById(pid+'qty').value;
-//        // alert(pid);
-//        // alert(qty);
-//        $.ajax({    //create an ajax request to load_page.php
-//         type:"POST",
-//         url: "addtocart.php?action=editcart",             
-//         dataType: "text",   //expect html to be returned  
-//         data:{PID:pid,QTY:qty},               
-//         success: function(data){         
-//           // alert(data);
-//           $("#publicshowcart").html(data);
-//         }
-//     });
-
-//   });
-$(document).on("keyup",".cartqty", function(event){
-  event.preventDefault();
-// ON ENTER EVENT
-  if (event.keyCode === 13) {
-         var pid = $(this).data('id');
-       var qty = document.getElementById(pid+'qty').value;
-       // alert(pid);
-       // alert(qty);
-       $.ajax({    //create an ajax request to load_page.php
-        type:"POST",
-        url: "addtocart.php?action=editcart",             
-        dataType: "text",   //expect html to be returned  
-        data:{PID:pid,QTY:qty},               
-        success: function(data){         
-          // alert(data);
-          $("#publicshowcart").html(data);
-        }
-      });
-    }
-
-      
-
-  });
-
-$(document).on("click",".delcart", function(){
-       var pid = $(this).data('id');
-       // alert(pid)
-       $.ajax({    //create an ajax request to load_page.php
-        type:"POST",
-        url: "addtocart.php?action=deletecart",             
-        dataType: "text",   //expect html to be returned  
-        data:{PID:pid},               
-        success: function(data){         
-          // alert(data);
-          $("#publicshowcart").html(data);
-        }
-
-    });
-
-  });
-
-$(document).on("click",".cartqty", function(){
-  $(this).select();
-});
-
-
-$('#date_picker').datetimepicker({
-  format: 'mm/dd/yyyy',
-    language:  'en',
-    weekStart: 1,
-    todayBtn:  1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 2,
-    minView: 2,
-    forceParse: 0
-    });
-
- 
- 
- 
-function validatedate(){ 
- 
- 
-
-    var todaysDate = new Date() ;
-
-    var txtime =  document.getElementById('ftime').value
-    // var myDate = new Date(dateme); 
-
-    var tprice = document.getElementById('alltot').value 
-    var BRGY = document.getElementById('BRGY').value
-    var onum = document.getElementById('ORDERNUMBER').value
-
-     
-     var mytime = parseInt(txtime)  ;
-     var todaytime =  todaysDate.getHours()  ;
-       if (txtime==""){
-     alert("You must set the time enable to submit the order.")
-     }else 
-     if (mytime<todaytime){ 
-        alert("Selected time is invalid. Set another time.")
-      }else{
-        window.location = "index.php?page=7&price="+tprice+"&time="+txtime+"&BRGY="+BRGY+"&ordernumber="+onum; 
-      }
-  }
-</script>  
-
-
-    <script type="text/javascript">
-  $('.form_curdate').datetimepicker({
-        language:  'en',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-  $('.form_bdatess').datetimepicker({
-        language:  'en',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-</script>
-<script>
- 
-
-
-  function checkall(selector)
-  {
-    if(document.getElementById('chkall').checked==true)
-    {
-      var chkelement=document.getElementsByName(selector);
-      for(var i=0;i<chkelement.length;i++)
-      {
-        chkelement.item(i).checked=true;
-      }
-    }
-    else
-    {
-      var chkelement=document.getElementsByName(selector);
-      for(var i=0;i<chkelement.length;i++)
-      {
-        chkelement.item(i).checked=false;
-      }
-    }
-  }
-   function checkNumber(textBox){
-        while (textBox.value.length > 0 && isNaN(textBox.value)) {
-          textBox.value = textBox.value.substring(0, textBox.value.length - 1)
-        }
-        textBox.value = trim(textBox.value);
-      }
-      //
-      function checkText(textBox)
-      {
-        var alphaExp = /^[a-zA-Z]+$/;
-        while (textBox.value.length > 0 && !textBox.value.match(alphaExp)) {
-          textBox.value = textBox.value.substring(0, textBox.value.length - 1)
-        }
-        textBox.value = trim(textBox.value);
-      }
-  
-
-       
-
-//        In jQuery, the following would work:
-
-// $("#id_of_textbox").keyup(function(event) {
-//     if (event.keyCode === 13) {
-//         $("#id_of_button").click();
-//     }
-// });
-// Or in plain JavaScript, the following would work:
-
-// document.getElementById("id_of_textbox")
-//     .addEventListener("keyup", function(event) {
-//     event.preventDefault();
-//     if (event.keyCode === 13) {
-//         document.getElementById("id_of_button").click();
-//     }
-// });
-
-  </script>     
-
+  <script src="<?= web_root; ?>template/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?= web_root; ?>template/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="<?= web_root; ?>template/assets/js/feather.min.js"></script>
+  <script src="<?= web_root; ?>template/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="<?= web_root; ?>template/assets/plugins/apexchart/apexcharts.min.js"></script>
+  <script src="<?= web_root; ?>template/assets/plugins/apexchart/chart-data.js"></script>
+  <script src="<?= web_root; ?>template/assets/js/script.js"></script>
 </body>
+
 </html>
