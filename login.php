@@ -8,8 +8,8 @@
     </p>
   </div>
   <div class="auth-form-body">
+    <?php check_message(); ?>
     <form class="auth-form" method="POST">
-      <?php check_message(); ?>
       <div class="auth-form-group">
         <label class="control-label" for="U_USERNAME">Username</label>
         <input class="form-control" id="U_USERNAME" name="U_USERNAME" type="text" required />
@@ -21,14 +21,16 @@
       <div class="auth-form-group">
         <label class="control-label" for="U_ROLE">Role</label>
         <select class="form-control" id="U_ROLE" name="U_ROLE" required>
-          <option hidden>Select Role</option>
-          <option value="User">User</option>
+          <option selected value="User">User</option>
           <option value="Staff">Staff</option>
-          <option value="Administrator">Administrator</option>
+          <!-- <option value="Administrator">Administrator</option> -->
         </select>
       </div>
       <div class="auth-form-group">
         <button class="btn-submit" name="btnLogin" type="submit">Login</button>
+        <a class="btn-admin" href="<?php echo web_root; ?>admin/">
+          Login as Administrator
+        </a>
       </div>
     </form>
   </div>
@@ -44,23 +46,18 @@ if(isset($_POST['btnLogin'])){
   
   if ($email == '' OR $upass == '' OR $urole == '') {
     message("Invalid Username and Password!", "error");
-
-        
   } else {  
-  //it creates a new objects of member
     $user = new User();
-    //make use of the static function, and we passed to parameters
-    $res = $user::userAuthenticationWithRole($email, $h_upass,$urole);
-    // var_dump($res);
-    if ($res==true) { 
-      message("You logon as ".$_SESSION['U_ROLE'].".","success");
+    $res = $user::userAuthenticationWithRole($email, $h_upass, $urole);
+    if ($res == true) {
+      message("You logged in as ".$_SESSION['U_ROLE'].".","success");
       if ($_SESSION['U_ROLE']=='Staff'){
         redirect(web_root.'staff/');
       }else{
         redirect(web_root."user/");
       }
     }else{
-      message("Account does not exist! Please contact Administrator.", "error");
+      message("Account does not exist!", "error");
       redirect(web_root."index.php?q=login");
     }
   }

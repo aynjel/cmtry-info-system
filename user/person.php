@@ -1,32 +1,71 @@
 <?php 
+// error_reporting(0);
 $search = isset( $_POST['search']) ? $_POST['search'] : "";
-// $search = isset( $_GET['name']) ? $_GET['name'] : "";
 $location = isset($_GET['location']) ? $_GET['location'] : '';
 ?> 
-<table id="" class="table">
-	<thead>
-		<tr>
-			<th>Grave No</th>
-			<th>Name of the Deceased</th>
-			<th>Born</th>
-			<th>Died</th>
-			<th>Location</th>
-			<th>Years Buried</th>
-		</tr>
-	</thead>
-	<tbody>
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col">
+				<h5 class="card-title">
+					Deceased Person
+				</h5>
+			</div>
+			<div class="col">
+				<form method="POST" action="index.php?q=person">
+					<select class="form-select" name="location" onchange="this.form.submit()">
+						<option hidden selected>Select Location</option>
+						<option value="Sangi" <?= $location=='Sangi' ? 'selected' : ''; ?>>Sangi</option>
+						<option value="Luray" <?= $location=='Luray' ? 'selected' : ''; ?>>Luray</option>
+						<option value="Dumlog" <?= $location=='Dumlog' ? 'selected' : ''; ?>>Dumlog</option>
+						<option value="Carmen" <?= $location=='Carmen' ? 'selected' : ''; ?>>Carmen</option>
+						<option value="Canlumampao" <?= $location=='Canlumampao' ? 'selected' : ''; ?>>Dumlog</option>
+						<option value="Poog" <?= $location=='Poog' ? 'selected' : ''; ?>>Poog</option>
+						<option value="Ibo" <?= $location=='Ibo' ? 'selected' : ''; ?>>Ibo</option>
+					</select>
+				</form>
+
+				<form method="POST" action="index.php?q=person">
+					<div class="input-group">
+						<input type="text" class="form-control" name="search" placeholder="Search for..." value="<?= $search; ?>">
+						<span class="input-group-btn">
+							<button class="btn btn-secondary" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+					<p class="text-danger"><?= isset($_POST['search']) ? 'Search result for: '.$search : ''; ?></p>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead class="thead-light">
+					<tr>
+						<th>Name of the Deceased</th>
+						<th>Plot Number</th>
+						<th>Born</th>
+						<th>Died</th>
+						<th>Location</th>
+						<!-- <th>Years Buried</th> -->
+						<th class="text-right">Action</th>
+					</tr>
+				</thead>
+				<tbody>
 		<?php
 
-		if (isset($_GET['location'])) {
+		if (isset($_POST['location'])) {
 			# code...
 			if (isset($_GET['name'])) {
 				# code...
-				$sql = "SELECT * FROM tblpeople WHERE LOCATION='".$location."' AND GRAVENO = '".$_GET['graveno']."' AND FNAME ='".$_GET['name']."'";
+				$sql = "SELECT * FROM tblpeople WHERE LOCATION='".$_POST['location']."' AND GRAVENO = '".$_GET['graveno']."' AND FNAME ='".$_GET['name']."'";
 				$mydb->setQuery($sql);
 				$cur = $mydb->executeQuery();
 				$numrows = $mydb->num_rows($cur);//get the number of count
 			}else{
-				$sql = "SELECT * FROM tblpeople WHERE LOCATION='".$location."'";
+				$sql = "SELECT * FROM tblpeople WHERE LOCATION='".$_POST['location']."'";
 				$mydb->setQuery($sql);
 				$cur = $mydb->executeQuery();
 				$numrows = $mydb->num_rows($cur);//get the number of count
@@ -51,37 +90,21 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
 
 			foreach ($cur as $res) {
 
-				//date in mm/dd/yyyy format; or it can be in other formats as well
-  // $birthDate = "12/17/1983";
-
-//   var_dump($res->DIEDDATE);
-
-  @$formatdate = date_format(date_create($res->DIEDDATE),'m/d/Y');
-  $birthDate = $formatdate;
-  //explode the date to get month, day and year
-  $birthDate = explode("/", $birthDate);
-  //get age from date or birthdate
-  @$age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-    ? ((date("Y") - $birthDate[2]) - 1)
-    : (date("Y") - $birthDate[2]));
-  // echo "Age is:" . $age;
-
-
 				echo '<tr>';
+				echo '<td><a href="index.php?q=person&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&section='.$res->CATEGORIES.'"><img class="avatar avatar-sm me-2 avatar-img rounded-circle" src="https://ui-avatars.com/api/?name='.$res->FNAME.'&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="Person Image"> '.$res->FNAME.'</a></td>';
 				echo '<td>'.$res->GRAVENO.'</td>';
-				// echo '<td>'.$res->LNAME.','.$res->FNAME.' '.$res->MNAME.'</td>';
-				echo '<td><a href="index.php?q=person&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&section='.$res->CATEGORIES.'">'. $res->FNAME.'</a></td>';
 				echo '<td>'.$res->BORNDATE.'</td>';
 				echo '<td>'.$res->DIEDDATE.'</td>';
 				echo '<td>'.$res->LOCATION.'</td>';
-				echo '<td>'.$age.'</td>';
+				// echo '<td>'.$res->STATUS.'</td>';
+				echo '<td class="text-right"><a href="index.php?q=person&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&section='.$res->CATEGORIES.'" class="btn btn-primary btn-sm">View</a></td>';
 				echo '</tr>';
 
 			}
 
 		}else{
 				echo '<tr>'; 
-				echo '<td colspan="5" style="text-align:center">No Record Found!</td>'; 
+				echo '<td colspan="7" style="text-align:center">No Record Found!</td>'; 
 				echo '</tr>'; 
 		}
 			  
@@ -90,6 +113,8 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
 
 		?>
 		  
-	</tbody>
-</table>
-
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

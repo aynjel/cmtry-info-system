@@ -66,160 +66,195 @@
 <?php 
 
 function retrieveData_ASC_Horizontal_A_odd_bgcolor($gravenofrom=0,$gravenoto=0,$bgcolor){
+	$location = $_GET['location'];
 	$height = 30;
 	$width =15;
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' AND GRAVENO % 2 <> 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' AND GRAVENO % 2 <> 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal_bgcolor($sql,$height,$width,$bgcolor);
 }
 function retrieveData_ASC_Horizontal_A_even_bgcolor($gravenofrom=0,$gravenoto=0,$bgcolor){
+	$location = $_GET['location'];
 	$height = 30;
 	$width =15;
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' AND GRAVENO % 2 = 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' AND GRAVENO % 2 = 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal_bgcolor($sql,$height,$width,$bgcolor);
 }
  
 function retrieveData_ASC_Vertical_B_bgcolor($gravenofrom=0,$gravenoto=0,$bgcolor){
+	$location = $_GET['location'];
+
 	$height = 30;
 	$width =15;
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='B' AND LOCATION='PUNTA LOOC CEMETERY' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='B' AND LOCATION='$location' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Vertical_bgcolor($sql,$height,$width,$bgcolor);
 }
 
 
 
 function retrieveData_ASC_Vertical_C_bgcolor($gravenofrom=0,$gravenoto=0,$height=0,$width=0,$bgcolor){
+	$location = $_GET['location'];
+
  
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Vertical_bgcolor($sql,$height,$width,$bgcolor);
 }
 
 function retrieveData_ASC_Vertical_D_bgcolor($gravenofrom=0,$gravenoto=0,$height=0,$width=0,$bgcolor){
+	$location = $_GET['location'];
  
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='PUNTA LOOC CEMETERY' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='$location' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Vertical_bgcolor($sql,$height,$width,$bgcolor);
 }
 
 
 
 function retrieveData_ASC_Horizontal_A_odd($gravenofrom=0,$gravenoto=0){
+	$location = $_GET['location'];
+
 	$height = 30;
 	$width =15;
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' AND GRAVENO % 2 <> 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' AND GRAVENO % 2 <> 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal($sql,$height,$width);
 }
 function retrieveData_ASC_Horizontal_A_even($gravenofrom=0,$gravenoto=0){
+	$location = $_GET['location'];
+
 	$height = 30;
 	$width =15;
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' AND GRAVENO % 2 = 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' AND GRAVENO % 2 = 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal($sql,$height,$width);
 }
  
 function retrieveData_ASC_Vertical_B($gravenofrom=0,$gravenoto=0){
+	$location = $_GET['location'];
+
 	$height = 30;
 	$width =15;
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='B' AND LOCATION='PUNTA LOOC CEMETERY' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='B' AND LOCATION='$location' AND  GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Vertical($sql,$height,$width);
 }
 
 
 function retrieveData_ASC_Vertical_C($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Vertical($sql,$height,$width);
 }
 function retrieveData_ASC_Horizontal_C($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal($sql,$height,$width);
 }
 
 function retrieveData_DESC_Vertical_C($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
 	loadData_Vertical($sql,$height,$width);
 }
 function retrieveData_DESC_Horizontal_C($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
 	loadData_Horizontal($sql,$height,$width);
 }
 
 
 function retrieveData_ASC_Horizontal_C_odd($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY' AND GRAVENO % 2 <> 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location' AND GRAVENO % 2 <> 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal($sql,$height,$width);
 }
 function retrieveData_ASC_Horizontal_C_even($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY' AND GRAVENO % 2 = 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location' AND GRAVENO % 2 = 0 AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal($sql,$height,$width);
 }
 
 function retrieveData_ASC_slant_C($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal_slant($sql,$height,$width);
 }
  
  
 function retrieveData_ASC_Vertical_D($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Vertical($sql,$height,$width);
 }
 function retrieveData_ASC_Horizontal_D($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO";
 	loadData_Horizontal($sql,$height,$width);
 }
 
 function retrieveData_DESC_Vertical_D($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
 	loadData_Vertical($sql,$height,$width);
 }
 function retrieveData_DESC_Horizontal_D($gravenofrom=0,$gravenoto=0,$height=0,$width=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='PUNTA LOOC CEMETERY'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
+	$location = $_GET['location'];
+
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='$location'  AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
 	loadData_Horizontal($sql,$height,$width);
 }
 
 // function retrieveData_ASC_Horizontal_D($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='$location' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Horizontal($sql);
 // }
 
 // function retrieveData_ASC_Vertical_D($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='D' AND LOCATION='$location' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Vertical($sql);
 // }
 
 // function retrieveData_ASC_Horizontal_A($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Horizontal($sql);
 // }
 
 // function retrieveData_ASC_Horizontal_B($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='B' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO  LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='B' AND LOCATION='$location' GROUP BY GRAVENO  LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Horizontal($sql);
 // }
 
  
 
 // function retrieveData_ASC_Vertical($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Vertical($sql);
 // }
 
 // function retrieveData_DESC_Vertical($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO ORDER BY PEOPLEID DESC LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location' GROUP BY GRAVENO ORDER BY PEOPLEID DESC LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Vertical($sql);
 // }
 
 // function retrieveData_ASC_Horizontal($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location' GROUP BY GRAVENO LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Horizontal($sql);
 // }
 
 // function retrieveData_DESC_Horizontal($gravenofrom=0,$gravenoto=0){
-// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO ORDER BY PEOPLEID DESC LIMIT {$gravenofrom}, {$gravenoto}";
+// 	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='C' AND LOCATION='$location' GROUP BY GRAVENO ORDER BY PEOPLEID DESC LIMIT {$gravenofrom}, {$gravenoto}";
 // 	loadData_Horizontal($sql);
 // }
 function loadData_Vertical_bgcolor($sql="",$height=0,$width=0,$bgcolor=""){
    global $mydb;
    echo '<div class="rotate">';
 	echo '<table class="grave tooltip-demo">';
-		// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO  LIMIT 17,17";
+		// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' GROUP BY GRAVENO  LIMIT 17,17";
 		$mydb->setQuery($sql);
 		$cur = $mydb->executeQuery();
 		$numrows = $mydb->num_rows($cur);//get the number of count
@@ -266,7 +301,7 @@ function loadData_Horizontal_bgcolor($sql="",$height=0,$width=0,$bgcolor=""){
 		   global $mydb;
 		   echo '<div class="rotate">';
 			echo '<table class="grave tooltip-demo">';
-				// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO  LIMIT 17,17";
+				// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' GROUP BY GRAVENO  LIMIT 17,17";
 				$mydb->setQuery($sql);
 				$cur = $mydb->executeQuery();
 				$numrows = $mydb->num_rows($cur);//get the number of count
@@ -315,7 +350,7 @@ function loadData_Horizontal_bgcolor($sql="",$height=0,$width=0,$bgcolor=""){
 function loadData_Horizontal($sql="",$height=0,$width=0){
 		   global $mydb;
 			echo '<table class="grave tooltip-demo">';
-				// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO  LIMIT 17,17";
+				// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' GROUP BY GRAVENO  LIMIT 17,17";
 				$mydb->setQuery($sql);
 				$cur = $mydb->executeQuery();
 				$numrows = $mydb->num_rows($cur);//get the number of count
@@ -361,7 +396,7 @@ function loadData_Horizontal($sql="",$height=0,$width=0){
 		function loadData_Vertical($sql="",$height=0,$width=0){
 		   global $mydb;
 			echo '<table class="grave tooltip-demo">';
-				// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='PUNTA LOOC CEMETERY' GROUP BY GRAVENO  LIMIT 17,17";
+				// $sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location' GROUP BY GRAVENO  LIMIT 17,17";
 				$mydb->setQuery($sql);
 				$cur = $mydb->executeQuery();
 				$numrows = $mydb->num_rows($cur);//get the number of count

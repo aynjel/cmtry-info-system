@@ -8,7 +8,7 @@ $content='home.php';
 if (isset($_GET['q'])){
 	$view = $_GET['q'];
 }else{
-	$view = 'home';
+	$view = 'person';
 	echo "<script> window.location.href = 'index.php?q=".$view."';</script>";
 }
 switch ($view) {
@@ -32,4 +32,5 @@ switch ($view) {
        $title="Home";	
        $content ='home.php';		
 }
+
 require_once("theme/templates.php");

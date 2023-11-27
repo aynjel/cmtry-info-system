@@ -8,8 +8,9 @@
     overflow: auto;
 }  
 .scroll {
-	   /*width: 600px;*/
-    height:500px;
+	width:960px;
+	height: 540px;
+    /* height:560px; */
     /*border: thin solid black;*/
     /*overflow-: hidden; */
     overflow-y: auto;
@@ -23,14 +24,14 @@
 <?php 
  if (isset($_GET['location'])) {
  	# code...
- 	if ($_GET['location']=='BUENAVISTA LOOC CEMETERY') {
+ 	if ($_GET['location']=='Sangi') {
  		# code...
  		include 'mapBuenavista.php';
  	}else{ 
  		include 'puntaMap.php';
  	}
  }else{
- 	if ($res->LOCATION=='BUENAVISTA LOOC CEMETERY') {
+ 	if ($res->LOCATION=='Sangi') {
  		# code...
  		include 'mapBuenavista.php';
  	}else{

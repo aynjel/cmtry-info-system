@@ -21,7 +21,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
 
   <div class="main-wrapper">
       <div class="header">
-          <a class="logo">
+          <a class="logo" href="<?= web_root; ?>index.php">
             CMTRY
           </a>
           <ul class="nav-menu">
@@ -35,7 +35,47 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
       </div>
       
       <main>
-        <?php
+        <?php if ($q == 'details' && isset($_GET['id']) && isset($_GET['graveno'])) { ?>
+        <!--DETAILS SECTION-->
+        <section class="details" id="details">
+          <div class="details-content">
+            <img src="https://ui-avatars.com/api/?name=<?php echo $_GET['name']; ?>&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="<?php echo $_GET['name']; ?>">
+            <h2>
+              <?php echo $_GET['name']; ?>
+            </h2>
+            <ul class="details-list">
+              <li class="details-item">
+                <p>
+                  Location: <?php echo $_GET['location']; ?>
+                </p>
+              </li>
+              <li class="details-item">
+                <p>
+                  Grave No.: <?php echo $_GET['graveno']; ?>
+                </p>
+              </li>
+              <li class="details-item">
+                <p>
+                  Section: <?php echo $_GET['section']; ?>
+                </p>
+              </li>
+              <li class="details-item">
+                <p>
+                  Birth: <?php echo $_GET['born']; ?>
+                </p>
+              </li>
+              <li class="details-item">
+                <p>
+                  Died: <?php echo $_GET['died']; ?>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="map-details-content">
+            <?php include('../' . web_root . 'map.php'); ?>
+          </div>
+        </section>
+        <?php } else{        
         if ($q == 'login') {
             include('../' . web_root . 'login.php');
         } elseif ($q == 'register') {
@@ -48,216 +88,155 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             Cemetery Mapping and Information System
           </h1>
           <p>
-            A web-based cemetery mapping and information system for the City of San Fernando, La Union
+            A cemetery mapping and information system for the people to easily locate the grave of their loved ones.
           </p>
-          <form>
-            <input type="text" placeholder="Search">
-            <button type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </form>
+          <?php
+          if (isset($_GET['location'])) {
+            echo '<a href="index.php?q=home#search" class="clear-location">';
+            echo $_GET['location'];
+            echo '<i class="fas fa-times"></i>';
+            echo '</a>';
+          }else{
+            ?>
+            <form method="POST">
+              <input type="text" placeholder="Search" name="search" required>
+              <button type="submit" name="submit-search" value="submit-search">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+            <?php
+          }
+          ?>
+          
+          <ul class="locations">
+            <li class="location-item">
+              <a href="index.php?q=search&location=Sangi#search" class="location-item-link">
+                <p>
+                Sangi
+                </p>
+              </a>
+            </li>
+            <li class="location-item">
+              <a href="index.php?q=search&location=Ibo#search" class="location-item-link">
+                <p>
+                Ibo
+                </p>
+              </a>
+            </li>
+            <li class="location-item">
+              <a href="index.php?q=search&location=Dumlog#search" class="location-item-link">
+                <p>
+                Dumlog
+                </p>
+              </a>
+            </li>
+            <li class="location-item">
+              <a href="index.php?q=search&location=Luray#search" class="location-item-link">
+                <p>
+                Luray
+                </p>
+              </a>
+            </li>
+            <li class="location-item">
+              <a href="index.php?q=search&location=Canlumampao#search" class="location-item-link">
+                <p>
+                Canlumampao
+                </p>
+              </a>
+            </li>
+            <li class="location-item">
+              <a href="index.php?q=search&location=Poog#search" class="location-item-link">
+                <p>
+                Poog
+                </p>
+              </a>
+            </li>
+            <li class="location-item">
+              <a href="index.php?q=search&location=Bunga#search" class="location-item-link">
+                <p>
+                Bunga
+                </p>
+              </a>
+            </li>
+            <li class="location-item">
+              <a href="index.php?q=search&location=Carmen#search" class="location-item-link">
+                <p>
+                Carmen
+                </p>
+              </a>
+            </li>
+          </ul>
+          
         </section>
 
+        <?php if ($q == 'search' || isset($_POST['submit-search'])) {
+          ?>
         <!--SEARCH RESULT SECTION-->
-        <section class="search-result" id="search-result">
+        <section class="search-result" id="search">
           <h2>
             Search Result
           </h2>
+          <p>
+            Search result for "<?= (isset($_GET['location'])) ? $_GET['location'] : (isset($_POST['search']) ? $_POST['search'] : ''); ?>"
+          </p>
           <div class="search-result-content">
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
-            <div class="search-result-item">
-              <div class="search-result-item-info">
-                <h3>
-                  San Fernando Memorial Park
-                </h3>
-                <p>
-                  San Fernando City, La Union
-                </p>
-                <p>
-                  09123456789
-                </p>
-                <p>
-                  Active
-                </p>
-              </div>
-            </div>
+            
+            <?php
+              if (isset($_GET['location'])) {
+              # code...
+              if (isset($_GET['search'])) {
+                # code...
+                $sql = "SELECT * FROM tblpeople WHERE LOCATION='".$_GET['location']."' AND GRAVENO = '".$_GET['graveno']."' AND FNAME ='".$_GET['search']."'";
+                $mydb->setQuery($sql);
+                $cur = $mydb->executeQuery();
+                $numrows = $mydb->num_rows($cur);//get the number of count
+              }else{
+                $sql = "SELECT * FROM tblpeople WHERE LOCATION='".$_GET['location']."'";
+                $mydb->setQuery($sql);
+                $cur = $mydb->executeQuery();
+                $numrows = $mydb->num_rows($cur);//get the number of count
+              }
+            
+            }elseif (isset($_POST['search'])){
+              $sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%".$_POST['search']."%'";
+              $mydb->setQuery($sql);
+              $cur = $mydb->executeQuery();
+              $numrows = $mydb->num_rows($cur);//get the number of count
+            }else{
+              $sql = "SELECT * FROM tblpeople";
+              $mydb->setQuery($sql);
+              $cur = $mydb->executeQuery();
+              $numrows = $mydb->num_rows($cur);//get the number of count
+            }
+          
+          # code...
+          if ($numrows > 0) {
+            # code... 
+            $cur = $mydb->loadResultList();
+
+            foreach ($cur as $res) {
+              echo '<a href="index.php?q=details&id='.$res->PEOPLEID.'&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&born='.$res->BORNDATE.'&died='.$res->DIEDDATE.'&section='.$res->CATEGORIES.'" class="search-result-item">';
+              echo '<div class="search-result-item-info">';
+              echo '<h4>'.$res->FNAME.'</h4>';
+              echo '<h5>'.$res->LOCATION.'</h5>';
+              echo '<p>Birth: '.$res->BORNDATE.'</p>';
+              echo '<p>Died: '.$res->DIEDDATE.'</p>';
+              echo '<p>Plot No: '.$res->GRAVENO.'</p>';
+              echo '<p>Section: '.$res->CATEGORIES.'</p>';
+              echo '</div>';
+              echo '</a>';
+
+            }
+
+          }else{
+              echo '<tr>'; 
+              echo '<td colspan="5" style="text-align:center">No Record Found!</td>'; 
+              echo '</tr>'; 
+          }
+          ?>
           </div>
         </section>
+        <?php } ?>
 
         <!--TABLE SECTION-->
         <!-- <section class="table" id="table">
@@ -393,8 +372,12 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
               About
             </h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus dolorum veniam temporibus cum blanditiis illum ipsum laboriosam delectus perferendis quas? Adipisci, sint. Architecto officiis dicta doloremque voluptatibus vitae facilis magni! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus dolorum veniam temporibus cum blanditiis illum ipsum laboriosam delectus perferendis quas? Adipisci, sint. Architecto officiis dicta doloremque voluptatibus vitae facilis magni!
+              &emsp; &emsp; &emsp; &emsp; Truly a spectacular memorial garden at the sunset coast of Cebu Province - Toledo City. It reflects the traditional Filipino family setting inherent of our history and culture promotes the family centric tradition with its peaceful countryside environment complete with amenities for your convenience.
             </p>
+            <p>
+              &emsp; &emsp; &emsp; &emsp; Mission and Vision: Aims to be providers of preferred memorial gardens and integrated services, serving middle to high end market of every progressive town and city in Visayas and Mindanao Region.
+              We perpetuate investments and nurture good relationships because shareholders and stakeholders are our “Clients for Life”.
+              To do so, we strive to render top quality memorial developments and reliable services; and garner the best investment returns through: innovative corporate practices, professionalism, teamwork, and exemplary citizenship.
           </div>
           <div class="carousel">
             <div class="carousel-item">
@@ -404,7 +387,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
               <img src="<?= web_root; ?>/img/hero-bg-1.jpeg" alt="">
             </div>
             <div class="carousel-item">
-              <img src="<?= web_root; ?>/img/hero-bg.jpeg" alt="">
+              <img src="<?= web_root; ?>/img/hero-bg-2.jpg" alt="">
             </div>
           </div>
         </section>
@@ -421,7 +404,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
                 Cemetery Mapping
               </h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+                Cemetery map for the user to easily locate the grave of their loved ones.
               </p>
             </div>
             <div class="feature">
@@ -430,7 +413,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
                 Search
               </h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+                Search for the cemetery of your loved ones.
               </p>
             </div>
             <div class="feature">
@@ -439,7 +422,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
                 User Management
               </h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+                User management for the administrator to manage the users of the system.
               </p>
             </div>
             <div class="feature">
@@ -448,7 +431,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
                 Reports
               </h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+                Reports for the administrator to view the reports of the system.
               </p>
             </div>
           </div>
@@ -507,9 +490,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             </form>
           </div>
         </section>
-        <?php
-        }
-        ?>
+        <?php } ?>
 
         <!--FOOTER SECTION-->
         <footer class="footer">
@@ -543,6 +524,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
           }
           ?>
         </footer>
+        <?php } ?>
       </main>
   </div>
   

@@ -8,8 +8,8 @@
     </p>
   </div>
   <div class="auth-form-body">
+    <?php check_message(); ?>
     <form class="auth-form" method="POST">
-      <?php check_message(); ?>
       <div class="auth-form-group">
         <label class="control-label" for="U_NAME">Name</label>
         <input class="form-control" id="U_NAME" name="U_NAME" type="text" required />
@@ -36,3 +36,29 @@
     </form>
   </div>
 </div>
+
+   
+<?php 
+if(isset($_POST['btnRegister'])){
+  $name = trim($_POST['U_NAME']);
+  $email = trim($_POST['U_USERNAME']);
+  $upass  = trim($_POST['U_PASS']);
+  $cpass  = trim($_POST['U_CPASS']);
+  $urole = trim($_POST['U_ROLE']);
+  $h_upass = sha1($upass);
+  
+  if ($name == '' OR $email == '' OR $upass == '' OR $cpass == '' OR $urole == '') {
+    message("Invalid Username and Password!", "error");
+  } else {  
+    $user = New User();
+
+    $user->U_NAME 		= $_POST['U_NAME'];
+    $user->U_USERNAME		= $_POST['U_USERNAME'];
+    $user->U_PASS			=sha1($_POST['U_PASS']);
+    $user->U_ROLE			=  $_POST['U_ROLE'];
+    $user->create();
+
+    message("Registered successfully!", "success");
+    redirect("index.php?q=register");
+  }
+ } 

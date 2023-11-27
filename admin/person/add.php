@@ -126,9 +126,9 @@
                              
                       <select class="form-control input-sm" name="LOCATION" id="LOCATION">
                           <option value="None">Select Location</option>
-                          <option value="SANGI">SANGI TOLEDO CITY</option>
-                          <option value="LURAY">LURAY TOLEDO CITY</option>
-                          <option value="DUMLOG">DUMLOG TOLEDO CITY</option>
+                          <option value="Sangin">SANGI TOLEDO CITY</option>
+                          <option value="Luray">LURAY TOLEDO CITY</option>
+                          <option value="Dumlog">DUMLOG TOLEDO CITY</option>
                           <!-- <option value="BUENAVISTA LOOC CEMETERY">BUENAVISTA LOOC CEMETERY</option>
                           <option value="PUNTA LOOC CEMETERY">PUNTA LOOC CEMETERY</option> -->
           

@@ -57,18 +57,17 @@ function admin_confirm_logged_in() {
     if(isset($_SESSION['message'])){
       if(isset($_SESSION['msgtype'])){
         if ($_SESSION['msgtype']=="info"){
-          echo  '<label class="alert alert-info" style="width:100%;padding:5px">'. $_SESSION['message'] . '</label>';
+          echo  '<p style="width:100%;padding:5px 0; text-align: center; color: white; background-color: blue;">'. $_SESSION['message'] . '</p>';
            
         }elseif($_SESSION['msgtype']=="error"){
-          echo  '<label class="alert alert-danger" style="width:100%;padding:5px">' . $_SESSION['message'] . '</label>';
+          echo  '<p style="width:100%;padding:5px 0; text-align: center; color: white; background-color: red;">' . $_SESSION['message'] . '</p>';
                   
         }elseif($_SESSION['msgtype']=="success"){
-          echo  '<label class="alert alert-success" style="width:100%;padding:5px">' . $_SESSION['message'] . '</label>';
+          echo  '<p style="width:100%;padding:5px 0; text-align: center; color: white; background-color: green;">' . $_SESSION['message'] . '</p>';
         } 
         unset($_SESSION['message']);
         unset($_SESSION['msgtype']);
         }
-  
     }
 
  }

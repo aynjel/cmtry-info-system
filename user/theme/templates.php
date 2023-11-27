@@ -1,558 +1,220 @@
 <?php
-
-// set query parameter by default to home
-$q = isset($_GET['q']) ? $_GET['q'] : 'home';
-
-
+$q = isset($_GET['q']) ? $_GET['q'] : 'person';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
-<title><?php echo $title; ?> | Cemetery Mapping and Information System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title><?= $title; ?> | Cemetery Mapping and Information System</title>
+    <link rel="shortcut icon" href="<?= web_root; ?>template/assets/img/favicon.png">
+    <link rel="stylesheet" href="<?= web_root; ?>template/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="<?= web_root; ?>template/assets/css/style.css">
 
-     <!-- Bootstrap Core CSS -->
- <link href="<?php echo web_root; ?>css/bootstrap.min.css" rel="stylesheet">
- 
-    <!-- Custom Fonts -->
-    <link href="<?php echo web_root; ?>font/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-  <link href="<?php echo web_root; ?>font/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables CSS -->
-    <link href="<?php echo web_root; ?>css/dataTables.bootstrap.css" rel="stylesheet">
- 
-     <!-- datetime picker CSS -->
-<link href="<?php echo web_root; ?>css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
- 
-<link href="<?php echo web_root; ?>css/ekko-lightbox.css" rel="stylesheet">
- <link href="<?php echo web_root; ?>css/modern.css" rel="stylesheet">
- <link href="<?php echo web_root; ?>css/costum.css" rel="stylesheet">
- <link rel="icon" href="<?php echo web_root; ?>img/favicon.ico" type="image/x-icon">  
- 
- <style type="text/css">
-
-  .p {
-
-    color: white;
-    margin-bottom: 0;
-    margin-top: 0;
-    /*padding: 0;*/
-    /*float: right;*/
-    list-style: none;
-  }
-
-  .p > a { 
-    color: white;
-    /*text-align: center;*/
-    margin-bottom: 0;
-    margin: 0;
-    padding: 0;
-    text-decoration:none;
-    background-color:  #0000FF;
-  }
-  .p > a:hover ,
-  .p > a:focus {
-    color: black; 
-    text-decoration:none;
-    background-color: #2d52f2;
-  }
-
-
-  
-  .title-logo  {
-      color:black;
-      text-decoration:none;
-      font-size: 50px;
-      font-family: "broadway";
-      /*font-style: bold;*/
-      padding: 0;
-      margin: 0;
-      top: 0;
-    
-    }
-  .title-logo:hover {
-    color: blue; 
-    text-decoration:none; 
-  }
-  .carttxtactive {
-    color: red;
-    font-style: bold;
-    box-shadow: red;
-
-  }
-  .carttxtactive:hover {
-    color: white;
-  }
-
-</style>
-
-<?php
-if (isset($_SESSION['gcCart'])){
-  if (count($_SESSION['gcCart'])>0) {
-    $cart = '<label class="label label-danger">'.count($_SESSION['gcCart']) .'</label>';
-  } 
-} 
- ?>
+    <style>
+        .logo{
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 40px;
+            padding: 0 20px;
+            display: inline-block;
+            margin: 0;
+            color: #000;
+        }
+    </style>
 </head>
 
-<body style="background-color:#e0e4e5" onload="totalprice()" >
-
-<div class="navbar navbar-default navbar-fixed-top" style="background-color:#000;color:white" >
-  <div class="container">
-    <div class="navbar-header"> 
-      <div class="navbar-menu p" >Menu</div>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bigMenu">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button> 
-    </div>
-    <div class="collapse navbar-collapse bigMenu" style="float:right" > 
-      <ul class="nav navbar-nav" > 
-        <li class="dropdown dropdown-toggle active">
-          <a href="index.php?q=home">
-            Home
-          </a>
-        </li>
-        <li class="dropdown dropdown-toggle" style="background-color: red">
-          <a href="<?php echo 'logout.php'; ?>"> Logout</a>
-        </li>
-      </ul>           
-    </div> 
-  </div>
-</div>
- 
-<div class="container"> 
-   <!-- start content --> 
-        <div class="row"> 
-          <div id="page-wrapper">
-               <?php
-
-          if($title=='Profile' or $title=='Track Order' ){
-                echo ' <div class="row">';
-
-                require_once $content;
-                echo ' </div><br/>';
-     
-              }else{
-  // check_message(); ?>
-
-<?php
-if (isset($_GET['category'])) {
-  # code...
-   $categid = isset($_GET['category']) ? $_GET['category'] : ''; 
-  $sql="SELECT * FROM `tbltype` WHERE `TYPEID`=".$categid;
-  $mydb->setQuery($sql);
-  $cur = $mydb->loadSingleResult();
-}
- 
-
-?>
-   <?php if (!isset($_GET['graveno'])): ?>
-            <div class="row">
-              <div class="col-lg-3"> 
-                  <?php 
-                    require_once "leftbar.php"; 
-                  ?>
-              </div>
-              <div class="col-lg-6">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                    <b><?php   
-                        echo  $title . (isset($cur->TYPES) ?  '  |  ' .$cur->TYPES : '' )?></b> 
+<body>
+    <div class="main-wrapper">
+        <div class="header header-one">
+            <a href="index.php" class="logo">
+                User Panel
+            </a>
+            <ul class="nav nav-tabs user-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="?q=reserve"><i class="fas fa-user me-2"></i>
+                            Reserve Burial
+                        </a>
+                        <a class="dropdown-item" href="report.php"><i class="fas fa-user me-2"></i>
+                            Report Issues
+                        </a>
                     </div>
-                    <div class="panel-body"> 
-                      <?php require_once $content; ?> 
+                </li>
+                <li class="nav-item">
+                    <!-- profile picture end -->
+                    <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <div class="user-img">
+                            <img src="https://ui-avatars.com/api/?name=<?= $_SESSION['U_NAME']; ?>&background=random&color=000&rounded=true&size=32&bold=true&format=svg"
+                                alt="profile-img" width="36" class="img-circle">
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>
+                            <?= $_SESSION['U_NAME']; ?>
+                        </a>
+                        <a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
                     </div>
-                  <!--   <div class="panel-footer">
-                        Panel Footer
-                    </div> --> 
-                </div>
-              </div> 
-              <div class="col-lg-3"> 
-                  <?php 
-                    require_once "sidebar.php"; 
-                  ?>
-             </div>
-
+                </li>
+            </ul>
         </div>
-        <?php endif ?>
+        
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <?php check_message(); ?>
 
-        <?php if (isset($_GET['graveno'])): ?>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <div class="panel-heading">
-                  <b>Map Section | <a  href="#" class="findgrave" style="color: red"><?php   
-                        echo   (isset($_GET['name']) ?  $_GET['name'] : '' )?></a></b> 
+                <?php if ($_GET['q'] == 'reserve') { ?>
+                <div class="row">
+                    <div class="col-xl-12 d-flex">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Reservation Form</h5>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST">
+                                    <?php check_message(); ?>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2">Grave No.</label>
+                                        <div class="col-md-10">
+                                            <input required type="number" class="form-control" name="graveno" placeholder="Grave No.">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2">Name</label>
+                                        <div class="col-md-10">
+                                            <input required type="text" class="form-control" name="name" placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2">Born Date</label>
+                                        <div class="col-md-10">
+                                            <input required type="date" class="form-control" name="born" placeholder="Born Date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2">Died Date</label>
+                                        <div class="col-md-10">
+                                            <input required type="date" class="form-control" name="died" placeholder="Died Date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2">Section</label>
+                                        <div class="col-md-10">
+                                            <select class="form-select" name="section">
+                                                <?php 
+                                                    $sql = "SELECT * FROM tblcategory";
+                                                    $mydb->setQuery($sql);
+                                                    $cur = $mydb->executeQuery();
+                                                    $numrows = $mydb->num_rows($cur);//get the number of count
+                                                    if ($numrows > 0) {
+                                                        # code... 
+                                                        $cur = $mydb->loadResultList();
+
+                                                        foreach ($cur as $res) {
+                                                            echo '<option value="'.$res->CATEGORIES.'">'.$res->CATEGORIES.'</option>';
+                                                        }
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2">Location</label>
+                                        <div class="col-md-10">
+                                            <select class="form-select" name="location">
+                                                <option value="Sangi">Sangi</option>
+                                                <option value="Luray">Luray</option>
+                                                <option value="Dumlog">Dumlog</option>
+                                                <option value="Carmen">Carmen</option>
+                                                <option value="Canlumampao">Canlumampao</option>
+                                                <option value="Poog">Poog</option>
+                                                <option value="Ibo">Ibo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0 row">
+                                        <button type="submit" class="btn btn-primary btn-block" name="reserve">Reserve</button>
+                                    </div>
+                                </form>
+
+                                <?php 
+                                    if (isset($_POST['reserve'])) {
+                                        # code...
+                                        $sql = "INSERT INTO tblpeople (FNAME, BORNDATE, DIEDDATE, LOCATION, CATEGORIES, GRAVENO) VALUES ('".$_POST['name']."', '".$_POST['born']."', '".$_POST['died']."', '".$_POST['location']."', '".$_POST['section']."', '".$_POST['graveno']."')";
+                                        $mydb->setQuery($sql);
+                                        $cur = $mydb->executeQuery();
+                                        if ($cur) {
+                                            # code...
+                                            message('Reservation Success!', 'success');
+                                            redirect('index.php?q=person');
+                                        }else{
+                                            message('Something went wrong!', 'error');
+                                            redirect('index.php?q=person');
+                                        }
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="panel-body"> 
-                <?php require_once "map.php"; ?>
-              </div>
+                <?php } ?>
+                <div class="row">
+                    <?php if (!isset($_GET['graveno'])) { ?>
+                    <div class="col-xl-12 d-flex">
+                        <?php if ($q == 'person') {
+                            include $content;
+                        } ?>
+                    </div>
+                    <?php } ?>
+                    <?php if(isset($_GET['graveno'])){ ?>
+                    <div class="col-xl-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title">Map</h5>
+                                    <div class="details">
+                                        <h6>
+                                            Name: <?= $_GET['name']; ?>
+                                        </h6>
+                                        <p>
+                                            Plot no. <?= $_GET['graveno']; ?>
+                                        </p>
+                                        <a href="index.php?q=person&location=<?= $_GET['location']; ?>&section=<?= $_GET['section']; ?>" class="btn btn-primary btn-sm">Back</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <?php
+                                include '../map.php';
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
             </div>
-          </div>
         </div>
-          <?php endif ?>
-        <?php } ?>
-       </div>
-            
-      </div>
+    </div>
 
-  </div> 
-  <footer class="panel-footer" style="background-color:#000;color:white" >
-    <p align="left" >&copy; Cemetery Mapping and Information System</p>
-  </footer>
-<!-- end of page  -->
-
-
- <!-- modalorder -->
- <div class="modal fade" id="myOrdered">
- </div>
-<!-- end -->
- 
-    <!-- jQuery -->
-    <script src="<?php echo web_root; ?>user/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo web_root; ?>user/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript --> 
-    <!-- DataTables JavaScript -->
-    <script src="<?php echo web_root; ?>user/js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo web_root; ?>user/js/dataTables.bootstrap.min.js"></script>
-
-
-<script type="text/javascript" language="javascript" src="<?php echo web_root; ?>user/js/ekko-lightbox.js"></script> 
-<script type="text/javascript" src="<?php echo web_root; ?>user/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo web_root; ?>user/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
-
-  <script src="<?php echo web_root; ?>user/angularjs/angular.min.js"></script>
-  <script src="<?php echo web_root; ?>user/angularjs/angular-animate.min.js"></script>
-    <script src="<?php echo web_root; ?>user/angularjs/angular-aria.min.js"></script>
-      <script src="<?php echo web_root; ?>user/angularjs/angular-messages.min.js"></script>
-      <link href="<?php echo web_root; ?>user/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
- <link href="<?php echo web_root; ?>user/css/datepicker.css" rel="stylesheet" media="screen">
-
-    <!-- Custom Theme JavaScript --> 
-<script type="text/javascript" language="javascript" src="<?php echo web_root; ?>js/janobe.js"></script>  
-<script>
-$(function() {
-  $("[autofocus]").on("focus", function() {
-    if (this.setSelectionRange) {
-      var len = this.value.length * 2;
-      this.setSelectionRange(len, len);
-    } else {
-      this.value = this.value;
-    }
-    this.scrollTop = 999999;
-  }).focus();
-});
-
- 
-
- var currentZoom = 1.0;
-
-    $(document).ready(function () {
-      $('#zoom').animate({ 'zoom': currentZoom}, 'slow');
-
-        $('#btn_ZoomIn').click(
-            function () {
-                $('#zoom').animate({ 'zoom': currentZoom += .1 }, 'slow');
-            })
-        $('#btn_ZoomOut').click(
-            function () {
-                $('#zoom').animate({ 'zoom': currentZoom -= .1 }, 'slow');
-            })
-        $('#btn_ZoomReset').click(
-            function () {
-                currentZoom = 1.0
-                $('#zoom').animate({ 'zoom': 1 }, 'slow');
-            })
-    });
-</script>
- <script type="text/javascript">
-
-  angular.module('gridListDemo1', ['ngMaterial'])
-.controller('AppCtrl', function($scope) {});
-
-  $(document).on("click", ".proid", function () {
-    // var id = $(this).attr('id');
-      var proid = $(this).data('id')
-    // alert(proid)
-       $(".modal-body #proid").val( proid )
-
-      });
-
-</script>
- <script>
-    // tooltip demo
-    $('.tooltip-demo').tooltip({
-        selector: "[data-toggle=tooltip]",
-        container: "body"
-    })
-
-    // popover demo
-    $("[data-toggle=popover]")
-        .popover()
-    </script>
-
-
-      <script>
-        $('.carousel').carousel({
-            interval: 5000 //changes the speed
-        })
-    </script>
-
-
-
-<script type="text/javascript">
-setInterval(function(){autoloadpage()},3000); 
-function autoloadpage() {
-    $.ajax({
-        type: "POST",
-        url : "addtocart.php?action=validatecartbutton",
-        data :{validate:"yes"},
-        success : function(data){
-            $("#reloadform").html(data);
-        }
-    }); 
-
-  
-} 
-
-setInterval(function(){autoloadcartno()},3000); 
-function autoloadcartno() { 
-     $.ajax({
-        type: "POST",
-        url : "addtocart.php?action=validatenoitemsincart",
-        data :{validate:"yes"},
-        success : function(data){
-            $("#noitemincart").html(data);
-        }
-    }); 
-}
-setInterval(function(){autoloadcartno2()},3000); 
-function autoloadcartno2() { 
-     $.ajax({
-        type: "POST",
-        url : "addtocart.php?action=validatenoitemsincart",
-        data :{validate:"yes"},
-        success : function(data){
-            $("#noitemincart2").html(data);
-        }
-    }); 
-}
-  $(document).on("change",".POSDESIGNID", function(){
-       var pid = document.getElementById("DESIGNID").value;
-       // alert(pid)
-       $.ajax({    //create an ajax request to load_page.php
-        type:"POST",
-        url: "addtocart.php?action=addtocart",             
-        dataType: "text",   //expect html to be returned  
-        data:{PID:pid},               
-        success: function(data){         
-          // alert(data);
-          $("#publicshowcart").html(data);
-        }
-
-    });
-
-  });
-
-// $(document).on("focusout",".cartqty", function(){
-//        var pid = $(this).data('id');
-//        var qty = document.getElementById(pid+'qty').value;
-//        // alert(pid);
-//        // alert(qty);
-//        $.ajax({    //create an ajax request to load_page.php
-//         type:"POST",
-//         url: "addtocart.php?action=editcart",             
-//         dataType: "text",   //expect html to be returned  
-//         data:{PID:pid,QTY:qty},               
-//         success: function(data){         
-//           // alert(data);
-//           $("#publicshowcart").html(data);
-//         }
-//     });
-
-//   });
-$(document).on("keyup",".cartqty", function(event){
-  event.preventDefault();
-// ON ENTER EVENT
-  if (event.keyCode === 13) {
-         var pid = $(this).data('id');
-       var qty = document.getElementById(pid+'qty').value;
-       // alert(pid);
-       // alert(qty);
-       $.ajax({    //create an ajax request to load_page.php
-        type:"POST",
-        url: "addtocart.php?action=editcart",             
-        dataType: "text",   //expect html to be returned  
-        data:{PID:pid,QTY:qty},               
-        success: function(data){         
-          // alert(data);
-          $("#publicshowcart").html(data);
-        }
-      });
-    }
-
-      
-
-  });
-
-$(document).on("click",".delcart", function(){
-       var pid = $(this).data('id');
-       // alert(pid)
-       $.ajax({    //create an ajax request to load_page.php
-        type:"POST",
-        url: "addtocart.php?action=deletecart",             
-        dataType: "text",   //expect html to be returned  
-        data:{PID:pid},               
-        success: function(data){         
-          // alert(data);
-          $("#publicshowcart").html(data);
-        }
-
-    });
-
-  });
-
-$(document).on("click",".cartqty", function(){
-  $(this).select();
-});
-
-
-$('#date_picker').datetimepicker({
-  format: 'mm/dd/yyyy',
-    language:  'en',
-    weekStart: 1,
-    todayBtn:  1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 2,
-    minView: 2,
-    forceParse: 0
-    });
-
- 
- 
- 
-function validatedate(){ 
- 
- 
-
-    var todaysDate = new Date() ;
-
-    var txtime =  document.getElementById('ftime').value
-    // var myDate = new Date(dateme); 
-
-    var tprice = document.getElementById('alltot').value 
-    var BRGY = document.getElementById('BRGY').value
-    var onum = document.getElementById('ORDERNUMBER').value
-
-     
-     var mytime = parseInt(txtime)  ;
-     var todaytime =  todaysDate.getHours()  ;
-       if (txtime==""){
-     alert("You must set the time enable to submit the order.")
-     }else 
-     if (mytime<todaytime){ 
-        alert("Selected time is invalid. Set another time.")
-      }else{
-        window.location = "index.php?page=7&price="+tprice+"&time="+txtime+"&BRGY="+BRGY+"&ordernumber="+onum; 
-      }
-  }
-</script>  
-
-
-    <script type="text/javascript">
-  $('.form_curdate').datetimepicker({
-        language:  'en',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-  $('.form_bdatess').datetimepicker({
-        language:  'en',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-</script>
-<script>
- 
-
-
-  function checkall(selector)
-  {
-    if(document.getElementById('chkall').checked==true)
-    {
-      var chkelement=document.getElementsByName(selector);
-      for(var i=0;i<chkelement.length;i++)
-      {
-        chkelement.item(i).checked=true;
-      }
-    }
-    else
-    {
-      var chkelement=document.getElementsByName(selector);
-      for(var i=0;i<chkelement.length;i++)
-      {
-        chkelement.item(i).checked=false;
-      }
-    }
-  }
-   function checkNumber(textBox){
-        while (textBox.value.length > 0 && isNaN(textBox.value)) {
-          textBox.value = textBox.value.substring(0, textBox.value.length - 1)
-        }
-        textBox.value = trim(textBox.value);
-      }
-      //
-      function checkText(textBox)
-      {
-        var alphaExp = /^[a-zA-Z]+$/;
-        while (textBox.value.length > 0 && !textBox.value.match(alphaExp)) {
-          textBox.value = textBox.value.substring(0, textBox.value.length - 1)
-        }
-        textBox.value = trim(textBox.value);
-      }
-  
-
-       
-
-//        In jQuery, the following would work:
-
-// $("#id_of_textbox").keyup(function(event) {
-//     if (event.keyCode === 13) {
-//         $("#id_of_button").click();
-//     }
-// });
-// Or in plain JavaScript, the following would work:
-
-// document.getElementById("id_of_textbox")
-//     .addEventListener("keyup", function(event) {
-//     event.preventDefault();
-//     if (event.keyCode === 13) {
-//         document.getElementById("id_of_button").click();
-//     }
-// });
-
-  </script>     
-
+    <script src="<?= web_root; ?>template/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/feather.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/apexchart/apexcharts.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/apexchart/chart-data.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/script.js"></script>
 </body>
+
 </html>

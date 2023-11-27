@@ -23,14 +23,14 @@
 <?php 
  if (isset($_GET['location'])) {
  	# code...
- 	if ($_GET['location']=='LURAY') {
+ 	if ($_GET['location']=='Sangi') {
  		# code...
  		include 'mapBuenavista.php';
  	}else{ 
  		include 'puntaMap.php';
  	}
  }else{
- 	if ($res->LOCATION=='SANGI') {
+ 	if ($res->LOCATION=='Sangi') {
  		# code...
  		include 'mapBuenavista.php';
  	}else{

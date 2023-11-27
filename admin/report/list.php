@@ -15,8 +15,8 @@
 			            <option  >SANGI</option>
 						<option >LURAY</option>
 						<option >DUMLOG</option>
-			            <option  >BUENAVISTA LOOC CEMETERY</option> 
-			            <option >PUNTA LOOC CEMETERY</option>
+			            <!-- <option  >BUENAVISTA LOOC CEMETERY</option> 
+			            <option >PUNTA LOOC CEMETERY</option> -->
 			          </select>  
 			</div>
 			<div class="col-sm-2">

@@ -33,12 +33,14 @@
 
 <?php 
 function retrieveData_ASC_Horizontal_A($gravenofrom=0,$gravenoto=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='BUENAVISTA LOOC CEMETERY'   AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO ASC";
+	$location = isset($_GET['location']) ? $_GET['location']  :"";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location'   AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO ASC";
 	loadDatas_A_Buenavista($sql);
 }
  
 function retrieveData_DESC_Horizontal_A($gravenofrom=0,$gravenoto=0){
-	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='BUENAVISTA LOOC CEMETERY'   AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
+	$location = isset($_GET['location']) ? $_GET['location']  :"";
+	$sql = "SELECT * FROM tblpeople WHERE CATEGORIES='A' AND LOCATION='$location'   AND GRAVENO >= {$gravenofrom} AND GRAVENO <= {$gravenoto} GROUP BY GRAVENO ORDER BY GRAVENO DESC";
 	loadDatas_A_Buenavista($sql);
 }
   

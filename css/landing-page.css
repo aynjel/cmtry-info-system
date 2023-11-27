@@ -120,6 +120,33 @@ body{
     background-color: #ff4780;
 }
 
+.locations{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 50px;
+    margin-top: 30px;
+}
+
+.locations .location-item{
+    height: 40px;
+    cursor: pointer;
+}
+
+.location-item a{
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.location-item a:hover{
+    text-decoration: underline;
+}
+
 .about{
     width: 100%;
     background-color: #ffeff4;
@@ -547,7 +574,8 @@ body{
 }
 
 .search-result-item{
-    width: 240px;
+    text-decoration: none;
+    width: 200px;
     height: 300px;
     background-color: #fff0f5;
     border: 1px solid #ff568c;
@@ -562,14 +590,13 @@ body{
 }
 
 .search-result-item:hover{
-    border: 2px solid #ff0051;
-    border-radius: 20px;
+    background-color: #ff8aaf;
 }
 
 .search-result-item-info{
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
     gap: 20px;
@@ -588,4 +615,85 @@ body{
     text-align: center;
     font-weight: 500;
     color: #555555;
+}
+
+.clear-location{
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #ff568c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.clear-location i{
+    font-size: 2em;
+    color: #ff568c;
+    margin-right: 10px;
+}
+
+.details{
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.details-content{
+    width: 100%;
+    background-color: #ff4780;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.details-content img{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+
+.details-content h2{
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.details-content .details-list{
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.details-list li{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.details-list li p{
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #ffeaea;
+}
+
+.map-details-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
