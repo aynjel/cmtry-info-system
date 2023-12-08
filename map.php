@@ -8,8 +8,8 @@
     overflow: auto;
 }  
 .scroll {
-	width:960px;
-	height: 540px;
+	width: 1100px;
+	height: 100vh;
     /* height:560px; */
     /*border: thin solid black;*/
     /*overflow-: hidden; */

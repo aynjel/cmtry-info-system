@@ -20,53 +20,77 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
 <body>
 
   <div class="main-wrapper">
+      <?php if ($q != 'details') { ?>
       <div class="header">
           <a class="logo" href="<?= web_root; ?>index.php">
-            CMTRY
+            <img src="<?= web_root; ?>img/logo.jpg" alt="Logo">
           </a>
           <ul class="nav-menu">
               <li class="nav-item">
-                  <a class="nav-link <?php echo ($q == 'login') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=login">Login</a>
+                <a class="nav-link <?= ($q == 'home') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php">Home</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link <?php echo ($q == 'register') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=register">Register</a>
+                <a class="nav-link <?= ($q == 'about') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?= ($q == 'features') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=features">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?= ($q == 'contact') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=contact">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?= ($q == 'login') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?= ($q == 'register') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=register">Register</a>
               </li>
           </ul>
       </div>
+      <?php }?>
       
       <main>
-        <?php if ($q == 'details' && isset($_GET['id']) && isset($_GET['graveno'])) { ?>
+
         <!--DETAILS SECTION-->
+        <?php if ($q == 'details' && isset($_GET['id']) && isset($_GET['graveno'])) { ?>
         <section class="details" id="details">
           <div class="details-content">
-            <img src="https://ui-avatars.com/api/?name=<?php echo $_GET['name']; ?>&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="<?php echo $_GET['name']; ?>">
+            <?php if (isset($_GET['location'])) { ?>
+            <a class="back" href="index.php?q=search&location=<?= $_GET['location']; ?>#search">
+              <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <?php }else{ ?>
+            <a class="back" href="index.php?q=search&search=<?= $_GET['name']; ?>#search">
+              <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <?php } ?>
+            <img src="https://ui-avatars.com/api/?name=<?= $_GET['name']; ?>&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="<?= $_GET['name']; ?>">
             <h2>
-              <?php echo $_GET['name']; ?>
+              <?= $_GET['name']; ?>
             </h2>
             <ul class="details-list">
               <li class="details-item">
                 <p>
-                  Location: <?php echo $_GET['location']; ?>
+                  Location: <?= $_GET['location']; ?>
                 </p>
               </li>
               <li class="details-item">
                 <p>
-                  Grave No.: <?php echo $_GET['graveno']; ?>
+                  Grave Number: <?= $_GET['graveno']; ?>
                 </p>
               </li>
               <li class="details-item">
                 <p>
-                  Section: <?php echo $_GET['section']; ?>
+                  Section: <?= $_GET['section']; ?>
                 </p>
               </li>
               <li class="details-item">
                 <p>
-                  Birth: <?php echo $_GET['born']; ?>
+                  Birth: <?= $_GET['born']; ?>
                 </p>
               </li>
               <li class="details-item">
                 <p>
-                  Died: <?php echo $_GET['died']; ?>
+                  Died: <?= $_GET['died']; ?>
                 </p>
               </li>
             </ul>
@@ -80,10 +104,14 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             include('../' . web_root . 'login.php');
         } elseif ($q == 'register') {
             include('../' . web_root . 'register.php');
-        } else {
-        ?>
+        } else { ?>
+
         <!--HERO SECTION-->
+        <?php if ($q == 'home' || $q == 'search') { ?>
         <section class="hero" id="hero">
+
+          <img src="<?= web_root; ?>img/logo.jpg" alt="Logo" class="hero-logo">
+
           <h1>
             Cemetery Mapping and Information System
           </h1>
@@ -168,74 +196,152 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
           </ul>
           
         </section>
-
-        <?php if ($q == 'search' || isset($_POST['submit-search'])) {
-          ?>
+        
         <!--SEARCH RESULT SECTION-->
+        <?php if (isset($_POST['submit-search']) || $q == 'search') {
+          if (isset($_POST['submit-search'])) {
+            $search = $_POST['search'];
+            echo '<script>window.location.href = "index.php?q=search&search='.$search.'#search";</script>';
+          }
+          ?>
         <section class="search-result" id="search">
           <h2>
             Search Result
           </h2>
-          <p>
-            Search result for "<?= (isset($_GET['location'])) ? $_GET['location'] : (isset($_POST['search']) ? $_POST['search'] : ''); ?>"
+          <p class="p">
+            Search result for "<?= (isset($_GET['location'])) ? $_GET['location'] : (isset($_GET['search']) ? $_GET['search'] : ''); ?>"
           </p>
           <div class="search-result-content">
             
             <?php
-              if (isset($_GET['location'])) {
-              # code...
-              if (isset($_GET['search'])) {
-                # code...
-                $sql = "SELECT * FROM tblpeople WHERE LOCATION='".$_GET['location']."' AND GRAVENO = '".$_GET['graveno']."' AND FNAME ='".$_GET['search']."'";
-                $mydb->setQuery($sql);
-                $cur = $mydb->executeQuery();
-                $numrows = $mydb->num_rows($cur);//get the number of count
+            // pagination
+            $mydb->setQuery("SELECT * FROM tblpeople");
+            $cur = $mydb->executeQuery();
+            $total_count = $mydb->num_rows($cur);
+            $per_page = 10;
+            $num_pages = ceil($total_count/$per_page);
+            $show_page = 1;
+            if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+              $show_page = $_GET['page'];
+              if ($show_page > 0 && $show_page <= $num_pages) {
+                $start = ($show_page - 1) * $per_page;
+                $end = $start + $per_page;
               }else{
-                $sql = "SELECT * FROM tblpeople WHERE LOCATION='".$_GET['location']."'";
-                $mydb->setQuery($sql);
-                $cur = $mydb->executeQuery();
-                $numrows = $mydb->num_rows($cur);//get the number of count
+                $start = 0;
+                $end = $per_page;
               }
+            }else{
+              $start = 0;
+              $end = $per_page;
+            }
             
-            }elseif (isset($_POST['search'])){
-              $sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%".$_POST['search']."%'";
+            if (isset($_GET['location'])) {
+              $sql = "SELECT * FROM tblpeople WHERE LOCATION = '".$_GET['location']."' LIMIT $start, $end";
+              $mydb->setQuery($sql);
+              $cur = $mydb->executeQuery();
+              $numrows = $mydb->num_rows($cur);//get the number of count
+            }elseif (isset($_GET['search'])){
+              $sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%".$_GET['search']."%' LIMIT $start, $end";
               $mydb->setQuery($sql);
               $cur = $mydb->executeQuery();
               $numrows = $mydb->num_rows($cur);//get the number of count
             }else{
-              $sql = "SELECT * FROM tblpeople";
+              $sql = "SELECT * FROM tblpeople LIMIT $start, $end";
               $mydb->setQuery($sql);
               $cur = $mydb->executeQuery();
               $numrows = $mydb->num_rows($cur);//get the number of count
             }
-          
-          # code...
-          if ($numrows > 0) {
-            # code... 
-            $cur = $mydb->loadResultList();
-
-            foreach ($cur as $res) {
-              echo '<a href="index.php?q=details&id='.$res->PEOPLEID.'&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&born='.$res->BORNDATE.'&died='.$res->DIEDDATE.'&section='.$res->CATEGORIES.'" class="search-result-item">';
-              echo '<div class="search-result-item-info">';
-              echo '<h4>'.$res->FNAME.'</h4>';
-              echo '<h5>'.$res->LOCATION.'</h5>';
-              echo '<p>Birth: '.$res->BORNDATE.'</p>';
-              echo '<p>Died: '.$res->DIEDDATE.'</p>';
-              echo '<p>Plot No: '.$res->GRAVENO.'</p>';
-              echo '<p>Section: '.$res->CATEGORIES.'</p>';
-              echo '</div>';
-              echo '</a>';
-
+            
+            if ($numrows > 0) {
+              while ($row = $mydb->fetch_array($cur)) {
+                ?>
+                <a class="search-result-item" href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
+                  <img src="https://ui-avatars.com/api/?name=<?= $row['FNAME']; ?>&background=random&color=000&rounded=true&bold=true&format=svg" alt="<?= $row['FNAME']; ?>">
+                  <div class="search-result-item-content">
+                    <h3>
+                      <?= $row['FNAME']; ?>
+                    </h3>
+                    <ul>
+                      <li>
+                        <!-- cross icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M176 0c-26.5 0-48 21.5-48 48v80H48c-26.5 0-48 21.5-48 48v32c0 26.5 21.5 48 48 48h80V464c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V256h80c26.5 0 48-21.5 48-48V176c0-26.5-21.5-48-48-48H256V48c0-26.5-21.5-48-48-48H176z"/></svg> <?= $row['DIEDDATE']; ?>
+                      </li>
+                      <li>
+                        <!-- star icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg> <?= $row['BORNDATE']; ?>
+                      </li>
+                      <li>
+                        <!-- hash icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M181.3 32.4c17.4 2.9 29.2 19.4 26.3 36.8L197.8 128h95.1l11.5-69.3c2.9-17.4 19.4-29.2 36.8-26.3s29.2 19.4 26.3 36.8L357.8 128H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H347.1L325.8 320H384c17.7 0 32 14.3 32 32s-14.3 32-32 32H315.1l-11.5 69.3c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8l9.8-58.7H155.1l-11.5 69.3c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8L90.2 384H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h68.9l21.3-128H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h68.9l11.5-69.3c2.9-17.4 19.4-29.2 36.8-26.3zM187.1 192L165.8 320h95.1l21.3-128H187.1z"/></svg> <?= $row['GRAVENO']; ?>
+                      </li>
+                      <li>
+                        <!-- location icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg> <?= $row['LOCATION']; ?>
+                      </li>
+                      <li>
+                        <!-- section icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg> <?= $row['CATEGORIES']; ?>
+                      </li>
+                    </ul>
+                  </div>
+                </a>
+                <?php
+              }
+            }else{
+              ?>
+              <div class="search-result-item">
+                <p class="no-result">
+                  No results found.
+                </p>
+              </div>
+              <?php
             }
-
-          }else{
-              echo '<tr>'; 
-              echo '<td colspan="5" style="text-align:center">No Record Found!</td>'; 
-              echo '</tr>'; 
-          }
           ?>
+          
+          </div>
+          <!--div for next and previous button-->
+          <div class="next-prev-btn">
+            <?php
+            if(isset($_GET['location'])){
+              $location = $_GET['location'];
+              if ($show_page > 1) {
+                $page = $show_page - 1;
+                $prev = "<a href='index.php?q=search&page=$page&location=".$location."#search'>Prev</a>";
+                echo $prev;
+              } 
+              if ($show_page < $num_pages) {
+                $page = $show_page + 1;
+                $next = "<a href='index.php?q=search&page=$page&location=".$location."#search'>Next</a>";
+                echo $next;
+              }
+            }elseif (isset($_GET['search'])) {
+              $search = $_GET['search'];
+              if ($show_page > 1) {
+                $page = $show_page - 1;
+                $prev = "<a href='index.php?q=search&page=$page&search=".$search."#search'>Prev</a>";
+                echo $prev;
+              } 
+              if ($show_page < $num_pages) {
+                $page = $show_page + 1;
+                $next = "<a href='index.php?q=search&page=$page&search=".$search."#search'>Next</a>";
+                echo $next;
+              }
+            }else{
+              if ($show_page > 1) {
+                $page = $show_page - 1;
+                $prev = "<a href='index.php?q=search&page=$page#search'>Prev</a>";
+                echo $prev;
+              } 
+              if ($show_page < $num_pages) {
+                $page = $show_page + 1;
+                $next = "<a href='index.php?q=search&page=$page#search'>Next</a>";
+                echo $next;
+              }
+            }
+            ?>
           </div>
         </section>
+        <?php } ?>
         <?php } ?>
 
         <!--TABLE SECTION-->
@@ -366,6 +472,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
         </section> -->
 
         <!--ABOUT SECTION-->
+        <?php if ($q == 'about') { ?>
         <section class="about" id="about">
           <div class="about-content">
             <h2>
@@ -391,7 +498,9 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             </div>
           </div>
         </section>
+        <?php } ?>
 
+        <?php if ($q == 'features') { ?>
         <!--FEATURES SECTION-->
         <section class="features" id="features">
           <h2>
@@ -436,7 +545,9 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             </div>
           </div>
         </section>
+        <?php } ?>
 
+        <?php if ($q == 'contact') { ?>
         <!--CONTACT SECTION-->
         <section class="contact" id="contact">
           <h2>
@@ -490,6 +601,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             </form>
           </div>
         </section>
+        <?php } ?>
         <?php } ?>
 
         <!--FOOTER SECTION-->

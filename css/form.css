@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: #232D3F;
 }
 
 .auth-form-header{
@@ -20,12 +21,13 @@
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 1rem;
+    color: #fff;
 }
 
 .auth-form-header p{
     font-size: 1rem;
     font-weight: 400;
-    color: #666;
+    color: #c7c3c3;
 }
 
 .auth-form-body{
@@ -35,7 +37,8 @@
 }
 
 .auth-form-body .auth-form{
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #0F0F0F;
+    box-shadow: 0 0 10px rgba(190, 190, 190, 0.1);
     border-radius: 6px;
     padding: 20px;
 }
@@ -53,6 +56,7 @@
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
+    color: #fff;
 }
 
 .auth-form-group .form-control{
@@ -91,7 +95,7 @@
     padding: 10px 0;
     border: none;
     border-radius: 4px;
-    background-color: #ff568c;
+    background-color: #005B41;
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
@@ -100,7 +104,7 @@
 }
 
 .btn-submit:hover{
-    background-color: #ffa1bf;
+    background-color: #008170;
 }
 
 .btn-submit:disabled{
@@ -113,7 +117,6 @@
     padding: 10px 0;
     border: none;
     border-radius: 4px;
-    background-color: #ffecf3;
     color: #616161;
     font-size: 1rem;
     font-weight: 500;
@@ -124,6 +127,5 @@
 }
 
 .btn-admin:hover{
-    background-color: #ffc1d5;
     color: #fff;
 }
