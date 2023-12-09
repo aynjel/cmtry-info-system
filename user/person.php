@@ -19,6 +19,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current pag
 								<ul>
 									<li><a href="?q=person" class="active">Deceased Person</a></li>
 									<li><a href="?q=view-reserve">Reserved Plot</a></li>
+									<li><a href="?q=report">Report Issues</a></li>
 								</ul>
 							</div>
 						</div>

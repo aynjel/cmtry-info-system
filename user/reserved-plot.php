@@ -18,6 +18,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
 								<ul>
 									<li><a href="?q=person">Deceased Person</a></li>
 									<li><a href="?q=view-reserve" class="active">Reserved Plot</a></li>
+									<li><a href="?q=report">Report Issues</a></li>
 								</ul>
 							</div>
 						</div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2023 at 03:04 PM
+-- Generation Time: Dec 09, 2023 at 04:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -94,6 +94,18 @@ INSERT INTO `tblpeople` (`PEOPLEID`, `FNAME`, `GRAVENO`, `BORNDATE`, `DIEDDATE`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tblreport`
+--
+
+CREATE TABLE `tblreport` (
+  `id` int(11) NOT NULL,
+  `issue` text NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tblreserve`
 --
 
@@ -177,6 +189,12 @@ ALTER TABLE `tblpeople`
   ADD PRIMARY KEY (`PEOPLEID`);
 
 --
+-- Indexes for table `tblreport`
+--
+ALTER TABLE `tblreport`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tblreserve`
 --
 ALTER TABLE `tblreserve`
@@ -209,6 +227,12 @@ ALTER TABLE `tblcategory`
 --
 ALTER TABLE `tblpeople`
   MODIFY `PEOPLEID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9898;
+
+--
+-- AUTO_INCREMENT for table `tblreport`
+--
+ALTER TABLE `tblreport`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tblreserve`

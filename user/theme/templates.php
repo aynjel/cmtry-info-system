@@ -235,7 +235,7 @@ if (isset($_GET['graveno'])) {
                     <?php } ?>
                 </div>
 
-                <?php if ($_GET['q'] == 'view-reserve') {
+                <?php if ($_GET['q'] == 'view-reserve' || $_GET['q'] == 'report') {
                     include $content;
                 } ?>
             </div>

@@ -12,11 +12,6 @@ if (isset($_GET['q'])){
 	echo "<script> window.location.href = 'index.php?q=".$view."';</script>";
 }
 switch ($view) {
- 
-    case 'home' :
-        $title="Home";	
-        $content='home.php';		
-        break;
 
     case 'person' :
        $title="Deceased Person";	
@@ -35,7 +30,7 @@ switch ($view) {
  
    default :
        $title="Home";	
-       $content ='home.php';		
+       $content ='person.php';		
 }
 
 require_once("theme/templates.php");
