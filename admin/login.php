@@ -128,7 +128,7 @@ form[role=login] {
       <section class="login-form"> <? echo check_message(); ?>;
         <form method="post" action="" role="login">
           <!-- <img src="http://i.imgur.com/RcmcLv4.png" class="img-responsive" alt="" /> -->
-           <img src="../img/adminloginlogo2.png" height="25px" class="img-responsive" alt="" />
+           <img src="../img/logo.jpg" height="25px" class="img-responsive" alt="" />
          
           <input type="input" name="user_email" placeholder="Username" required class="form-control input-lg" value="" />
           

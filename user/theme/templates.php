@@ -1,5 +1,28 @@
 <?php
 $q = isset($_GET['q']) ? $_GET['q'] : 'person';
+
+
+// get person details
+if (isset($_GET['graveno'])) {
+    $sql = "SELECT * FROM tblpeople WHERE GRAVENO = '" . $_GET['graveno'] . "'";
+    $mydb->setQuery($sql);
+    $cur = $mydb->executeQuery();
+    $numrows = $mydb->num_rows($cur);//get the number of count
+    if ($numrows > 0) {
+        # code... 
+        $cur = $mydb->loadResultList();
+
+        foreach ($cur as $res) {
+            $name = $res->FNAME;
+            $born = $res->BORNDATE;
+            $died = $res->DIEDDATE;
+            $location = $res->LOCATION;
+            $section = $res->CATEGORIES;
+            $graveno = $res->GRAVENO;
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +32,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'person';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title><?= $title; ?> | Cemetery Mapping and Information System</title>
-    <link rel="shortcut icon" href="<?= web_root; ?>template/assets/img/favicon.png">
+    <link rel="shortcut icon" href="<?= web_root; ?>template/assets/img/favicon.ico">
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/all.min.css">
@@ -34,11 +57,10 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'person';
 <body>
     <div class="main-wrapper">
         <div class="header header-one">
-            <a href="index.php" class="logo">
-                User Panel
-            </a>
+            <!-- text logo -->
+            <a href="index.php" class="navbar-brand"><img src="<?= web_root; ?>/img/logo.jpg" alt="logo" width="50" height="50"> User Panel</a>
             <ul class="nav nav-tabs user-menu">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="fas fa-plus-circle"></i>
@@ -51,7 +73,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'person';
                             Report Issues
                         </a>
                     </div>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <!-- profile picture end -->
                     <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
@@ -65,7 +87,8 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'person';
                         <a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>
                             <?= $_SESSION['U_NAME']; ?>
                         </a>
-                        <a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                        <a class="dropdown-item text-danger" href="javascript:void(0);" data-bs-toggle="modal"
+                            data-bs-target="#logout-modal"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
                     </div>
                 </li>
             </ul>
@@ -182,18 +205,25 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'person';
                     <div class="col-xl-12 d-flex">
                         <div class="card flex-fill">
                             <div class="card-header">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="card-title">Map</h5>
-                                    <div class="details">
-                                        <h6>
-                                            Name: <?= $_GET['name']; ?>
-                                        </h6>
-                                        <p>
-                                            Plot no. <?= $_GET['graveno']; ?>
-                                        </p>
-                                        <a href="index.php?q=person&location=<?= $_GET['location']; ?>&section=<?= $_GET['section']; ?>" class="btn btn-primary btn-sm">Back</a>
-                                    </div>
-                                </div>
+                                <a href="index.php?q=person" class="btn btn-primary btn-sm float-end">Back</a>
+                                <h6 class="card-title mb-0">
+                                    Person Details <small class="text-muted">
+                                </h6>
+                                <h5 class="card-title">
+                                    Name: <?= $name; ?>
+                                </h5>
+                                <h5 class="card-title">
+                                    Plot #: <?= $graveno ?>
+                                </h5>
+                                <h5 class="card-title">
+                                    Block #: <?= $section ?>
+                                </h5>
+                                <h5 class="card-title">
+                                    Date of Birth: <?= $born; ?>
+                                </h5>
+                                <h5 class="card-title">
+                                    Date of Death: <?= $died; ?>
+                                </h5>
                             </div>
                             <div class="card-body">
                                 <?php
@@ -203,6 +233,41 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'person';
                         </div>
                     </div>
                     <?php } ?>
+                </div>
+
+                <?php if ($_GET['q'] == 'view-reserve') {
+                    include $content;
+                } ?>
+            </div>
+        </div>
+
+        <!-- logout modal -->
+        <div class="modal custom-modal fade bank-details" id="logout-modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="form-header text-start mb-0">
+                            <h4 class="mb-0">Logout</h4>
+                        </div>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bank-inner-details">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <h5>Are you sure you want to logout?</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="bank-details-btn">
+                            <a href="logout.php" class="btn bank-save-btn">Logout</a>
+                            <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn bank-cancel-btn me-2">Cancel</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

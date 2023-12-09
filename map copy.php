@@ -4,7 +4,7 @@ $sql = "SELECT * FROM tblpeople";
 $mydb->setQuery($sql);
 $res = $mydb->loadResultList();
     
-$totalBlock = 3;
+// $totalBlock = 3;
 $totalGrave = 960;
 $totalRow = 23;
 $totalColumn = 14;
@@ -77,11 +77,11 @@ $totalColumn = 14;
 	<div class="legend">
 		<ul>
 			<?php
-			if (isset($_GET['name']) && isset($_GET['id'])) {
+			if (isset($_GET['name'])) {
 				$sql = "SELECT * FROM tblpeople WHERE PEOPLEID = '{$_GET['id']}'";
 				$mydb->setQuery($sql);
 				$selected = $mydb->loadSingleResult();
-				echo "<li><span style='background: blue;'></span> - Selected</li>";
+				echo "<li><span style='background: blue;'></span> - Selected Grave</li>";
 			}
 			?>
 			<li><span style="background: red;"></span> - Occupied</li>
@@ -103,44 +103,38 @@ $totalColumn = 14;
 				echo "</tr>";
 				echo "</thead>";
 				echo "<tbody>";
-				for ($j = 1; $j <= $totalRow; $j++) {
-					echo "<tr>";
-					for ($k = 1; $k <= $totalColumn; $k++) {
-						$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
-						$mydb->setQuery($sql);
-						$res = $mydb->loadSingleResult();
-						// get reserved grave
-						$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
-						$mydb->setQuery($sql1);
-						$reserved = $mydb->loadResultList();
-
-						$reservedGrave = array();
-						foreach ($reserved as $key => $value) {
-							array_push($reservedGrave, $value->graveno);
-						}
-						if (isset($res)) {
-							if ($res->GRAVENO == $count) {
-								if(isset($_GET['name'])){
-									if ($res->PEOPLEID == $_GET['id']) {
-										echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$res->FNAME'>$count</td>";
-									} else {
-										echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
-									}
-								}else{
-									echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
+				if($i == $_GET['section']) {
+					for ($j = 1; $j <= $totalRow; $j++) {
+						echo "<tr>";
+						for ($k = 1; $k <= $totalColumn; $k++) {
+							$selected = "";
+							if (isset($_GET['name'])) {
+								if ($count == $_GET['id']) {
+									$selected = "person";
 								}
 							}
-						} else {
-							if (in_array($count, $reservedGrave)) {
-								echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
-							} else {
-								echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
-							}
+							echo "<td class='$selected'><a href='index.php?q=person&id=$count&name=$selected'>$count</a></td>";
+							$count++;
 						}
-						$count++;
+						echo "</tr>";
 					}
-					echo "</tr>";
+				} else {
+					for ($j = 1; $j <= $totalRow; $j++) {
+						echo "<tr>";
+						for ($k = 1; $k <= $totalColumn; $k++) {
+							$selected = "";
+							if (isset($_GET['name'])) {
+								if ($count == $_GET['id']) {
+									$selected = "person";
+								}
+							}
+							echo "<td class='$selected'>$count</td>";
+							$count++;
+						}
+						echo "</tr>";
+					}
 				}
+
 				echo "</tbody>";
 				echo "</table>";
 			}

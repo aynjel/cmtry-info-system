@@ -3,7 +3,7 @@ $per_page = 10; // Number of records per page
 
 $search = isset($_POST['search']) ? $_POST['search'] : "";
 $location = isset($_GET['location']) ? $_GET['location'] : '';
-$current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current page number
 
 ?> 
 
@@ -17,8 +17,8 @@ $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 						<div class="col-lg-12 col-md-12">
 							<div class="invoices-items-tabs">
 								<ul>
-									<li><a href="#" class="active">Deceased Person</a></li>
-									<li><a href="#">Reserved Plot</a></li>
+									<li><a href="?q=person" class="active">Deceased Person</a></li>
+									<li><a href="?q=view-reserve">Reserved Plot</a></li>
 								</ul>
 							</div>
 						</div>
@@ -32,6 +32,7 @@ $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 					<div class="row align-items-center">
 						<div class="col-lg-12 col-md-12">
 							<div class="invoices-settings-btn invoices-settings-btn-one">
+								<!-- <a href="index.php?q=person" class="btn btn-sm"><i data-feather="refresh-cw"></i></a> -->
 								<form method="POST" action="index.php?q=person">
 									<select name="location" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()">
 										<option hidden selected>Select Location</option>
@@ -102,7 +103,7 @@ $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 											echo '<td>'.$res->BORNDATE.'</td>';
 											echo '<td>'.$res->DIEDDATE.'</td>';
 											echo '<td>'.$res->LOCATION.'</td>';
-											echo '<td class="text-right"><a href="index.php?q=person&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&section='.$res->CATEGORIES.'" class="btn btn-sm btn-white text-info me-2"><i class="far fa-eye me-1"></i> View</a></td>';
+											echo '<td class="text-right"><a href="index.php?q=details&id='.$res->PEOPLEID.'&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&section='.$res->CATEGORIES.'" class="btn btn-sm btn-white text-info me-2"><i class="far fa-eye me-1"></i> View</a></td>';
 											echo '</tr>';
 
 										}
@@ -233,65 +234,3 @@ $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 		</div>
 	</div>
 </div>
-
-<!-- <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col">
-				<h5 class="card-title">
-					Deceased Person
-				</h5>
-			</div>
-			<div class="col">
-				<form method="POST" action="index.php?q=person">
-					<select class="form-select" name="location" onchange="this.form.submit()">
-						<option hidden selected>Select Location</option>
-						<option value="Sangi" <?= $location=='Sangi' ? 'selected' : ''; ?>>Sangi</option>
-						<option value="Luray" <?= $location=='Luray' ? 'selected' : ''; ?>>Luray</option>
-						<option value="Dumlog" <?= $location=='Dumlog' ? 'selected' : ''; ?>>Dumlog</option>
-						<option value="Carmen" <?= $location=='Carmen' ? 'selected' : ''; ?>>Carmen</option>
-						<option value="Canlumampao" <?= $location=='Canlumampao' ? 'selected' : ''; ?>>Canlumampao</option>
-						<option value="Poog" <?= $location=='Poog' ? 'selected' : ''; ?>>Poog</option>
-						<option value="Ibo" <?= $location=='Ibo' ? 'selected' : ''; ?>>Ibo</option>
-					</select>
-				</form>
-
-				<form method="POST" action="index.php?q=person">
-					<div class="input-group">
-						<input type="text" class="form-control" name="search" placeholder="Search for..." value="<?= $search; ?>">
-						<span class="input-group-btn">
-							<button class="btn btn-secondary" type="submit">
-								<i class="fa fa-search"></i>
-							</button>
-						</span>
-					</div>
-					<p class="text-danger"><?= isset($_POST['search']) ? 'Search result for: '.$search : ''; ?></p>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="card-body">
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<thead class="thead-light">
-					<tr>
-						<th>Name of the Deceased</th>
-						<th>Plot Number</th>
-						<th>Born</th>
-						<th>Died</th>
-						<th>Location</th>
-						<th>Years Buried</th>
-						<th class="text-right">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-				
-		  
-				</tbody>
-			</table>
-
-			
-
-		</div>
-	</div>
-</div> -->

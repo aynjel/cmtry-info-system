@@ -88,7 +88,7 @@
                     <ul class="dropdown-menu dropdown-user"> 
                      <li><a href="<?php echo web_root; ?>admin/person/index.php?view=add"><i class="fa fa-users fa-fw"></i> Person</a>
                         </li>
-                        <li><a href="<?php echo web_root; ?>admin/category/index.php?view=add"><i class="fa fa-list fa-fw"></i> Section</a>
+                        <li><a href="<?php echo web_root; ?>admin/category/index.php?view=add"><i class="fa fa-list fa-fw"></i> Block</a>
                         </li>
                          </li>
                             <?php if ($_SESSION['U_ROLE']=='Administrator') {
@@ -148,17 +148,17 @@ $singleuser = $user->single_user($_SESSION['USERID']);
                         </li>
                       
                         <li>
-                             <a href="<?php echo web_root; ?>admin/category/index.php"><i class="fa fa-list fa-fw"></i>Section </a>
+                             <a href="<?php echo web_root; ?>admin/category/index.php"><i class="fa fa-list fa-fw"></i>Block </a>
            
                         </li>
                         
                         <?php if ($_SESSION['U_ROLE']=='Administrator') {
                             # code...
                         ?> 
-                         <li>
+                         <!-- <li>
                              <a href="<?php echo web_root; ?>admin/import/index.php" ><i class="fa fa-gear fa-fw"></i>Import Excel File</a>
             
-                        </li> 
+                        </li>  -->
                           <li>
                             <a href="<?php echo web_root; ?>admin/user/index.php" ><i class="fa fa-user fa-fw"></i> Manage Users </a>
                           

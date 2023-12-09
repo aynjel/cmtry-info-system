@@ -1,5 +1,45 @@
 <?php
 $q = isset($_GET['q']) ? $_GET['q'] : 'home';
+$location = isset($_GET['location']) ? $_GET['location'] : '';
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// pagination
+$mydb->setQuery("SELECT * FROM tblpeople");
+$cur = $mydb->executeQuery();
+$total_count = $mydb->num_rows($cur);
+$per_page = 10;
+$num_pages = ceil($total_count/$per_page);
+$show_page = 1;
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+  $show_page = $_GET['page'];
+  if ($show_page > 0 && $show_page <= $num_pages) {
+    $start = ($show_page - 1) * $per_page;
+    $end = $start + $per_page;
+  }else{
+    $start = 0;
+    $end = $per_page;
+  }
+}else{
+  $start = 0;
+  $end = $per_page;
+}
+
+if (isset($location)) {
+  $sql = "SELECT * FROM tblpeople WHERE LOCATION = '".$location."' LIMIT $start, $end";
+  $mydb->setQuery($sql);
+  $cur = $mydb->executeQuery();
+  $numrows = $mydb->num_rows($cur);//get the number of count
+}elseif (isset($search)){
+  $sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%".$search."%' LIMIT $start, $end";
+  $mydb->setQuery($sql);
+  $cur = $mydb->executeQuery();
+  $numrows = $mydb->num_rows($cur);//get the number of count
+}else{
+  $sql = "SELECT * FROM tblpeople LIMIT $start, $end";
+  $mydb->setQuery($sql);
+  $cur = $mydb->executeQuery();
+  $numrows = $mydb->num_rows($cur);//get the number of count
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +49,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title><?= $title; ?> | Cemetery Mapping and Information System</title>
-    <link rel="shortcut icon" href="<?= web_root; ?>template/assets/img/favicon.png">
+    <link rel="shortcut icon" href="<?= web_root; ?>template/assets/img/favicon.ico">
     <!-- <link rel="stylesheet" href="<?= web_root; ?>template/assets/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/plugins/fontawesome/css/all.min.css">
@@ -70,17 +110,12 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             <ul class="details-list">
               <li class="details-item">
                 <p>
-                  Location: <?= $_GET['location']; ?>
+                  Plot Number: <?= $_GET['graveno']; ?>
                 </p>
               </li>
               <li class="details-item">
                 <p>
-                  Grave Number: <?= $_GET['graveno']; ?>
-                </p>
-              </li>
-              <li class="details-item">
-                <p>
-                  Section: <?= $_GET['section']; ?>
+                  Block: <br><?= $_GET['section']; ?>
                 </p>
               </li>
               <li class="details-item">
@@ -91,6 +126,11 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
               <li class="details-item">
                 <p>
                   Died: <?= $_GET['died']; ?>
+                </p>
+              </li>
+              <li class="details-item">
+                <p>
+                  Location: <?= $_GET['location']; ?>
                 </p>
               </li>
             </ul>
@@ -209,48 +249,11 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             Search Result
           </h2>
           <p class="p">
-            Search result for "<?= (isset($_GET['location'])) ? $_GET['location'] : (isset($_GET['search']) ? $_GET['search'] : ''); ?>"
+            Search result for "<?= (isset($location)) ? $location : $search; ?>"
+            (<?= $numrows; ?> results)
           </p>
           <div class="search-result-content">
-            
             <?php
-            // pagination
-            $mydb->setQuery("SELECT * FROM tblpeople");
-            $cur = $mydb->executeQuery();
-            $total_count = $mydb->num_rows($cur);
-            $per_page = 10;
-            $num_pages = ceil($total_count/$per_page);
-            $show_page = 1;
-            if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-              $show_page = $_GET['page'];
-              if ($show_page > 0 && $show_page <= $num_pages) {
-                $start = ($show_page - 1) * $per_page;
-                $end = $start + $per_page;
-              }else{
-                $start = 0;
-                $end = $per_page;
-              }
-            }else{
-              $start = 0;
-              $end = $per_page;
-            }
-            
-            if (isset($_GET['location'])) {
-              $sql = "SELECT * FROM tblpeople WHERE LOCATION = '".$_GET['location']."' LIMIT $start, $end";
-              $mydb->setQuery($sql);
-              $cur = $mydb->executeQuery();
-              $numrows = $mydb->num_rows($cur);//get the number of count
-            }elseif (isset($_GET['search'])){
-              $sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%".$_GET['search']."%' LIMIT $start, $end";
-              $mydb->setQuery($sql);
-              $cur = $mydb->executeQuery();
-              $numrows = $mydb->num_rows($cur);//get the number of count
-            }else{
-              $sql = "SELECT * FROM tblpeople LIMIT $start, $end";
-              $mydb->setQuery($sql);
-              $cur = $mydb->executeQuery();
-              $numrows = $mydb->num_rows($cur);//get the number of count
-            }
             
             if ($numrows > 0) {
               while ($row = $mydb->fetch_array($cur)) {
@@ -302,8 +305,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
           <!--div for next and previous button-->
           <div class="next-prev-btn">
             <?php
-            if(isset($_GET['location'])){
-              $location = $_GET['location'];
+            if(isset($location)){
               if ($show_page > 1) {
                 $page = $show_page - 1;
                 $prev = "<a href='index.php?q=search&page=$page&location=".$location."#search'>Prev</a>";
@@ -314,8 +316,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
                 $next = "<a href='index.php?q=search&page=$page&location=".$location."#search'>Next</a>";
                 echo $next;
               }
-            }elseif (isset($_GET['search'])) {
-              $search = $_GET['search'];
+            }elseif (isset($search)) {
               if ($show_page > 1) {
                 $page = $show_page - 1;
                 $prev = "<a href='index.php?q=search&page=$page&search=".$search."#search'>Prev</a>";
@@ -478,11 +479,11 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             <h2>
               About
             </h2>
-            <p>
-              &emsp; &emsp; &emsp; &emsp; Truly a spectacular memorial garden at the sunset coast of Cebu Province - Toledo City. It reflects the traditional Filipino family setting inherent of our history and culture promotes the family centric tradition with its peaceful countryside environment complete with amenities for your convenience.
+            <p style="text-align: justify;">
+            Truly a spectacular memorial garden at the sunset coast of Cebu Province - Toledo City. It reflects the traditional Filipino family setting inherent of our history and culture promotes the family centric tradition with its peaceful countryside environment complete with amenities for your convenience.
             </p>
-            <p>
-              &emsp; &emsp; &emsp; &emsp; Mission and Vision: Aims to be providers of preferred memorial gardens and integrated services, serving middle to high end market of every progressive town and city in Visayas and Mindanao Region.
+            <p style="text-align: justify;">
+            Mission and Vision: Aims to be providers of preferred memorial gardens and integrated services, serving middle to high end market of every progressive town and city in Visayas and Mindanao Region.
               We perpetuate investments and nurture good relationships because shareholders and stakeholders are our “Clients for Life”.
               To do so, we strive to render top quality memorial developments and reliable services; and garner the best investment returns through: innovative corporate practices, professionalism, teamwork, and exemplary citizenship.
           </div>
@@ -557,7 +558,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : 'home';
             <div class="contact-item">
               <i class="fas fa-map-marker-alt"></i>
               <p>
-                San Fernando City, La Union
+              Legacy Plains Memorial Garden Ibo, Toledo City
               </p>
             </div>
             <div class="contact-item">

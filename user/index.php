@@ -27,6 +27,11 @@ switch ($view) {
         $title="Report Issues";	
         $content='report.php';		
         break;
+
+    case 'view-reserve' :
+        $title="Reserved Plot";	
+        $content='reserved-plot.php';		
+        break;
  
    default :
        $title="Home";	

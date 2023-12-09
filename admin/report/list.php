@@ -15,22 +15,19 @@
 			            <option  >SANGI</option>
 						<option >LURAY</option>
 						<option >DUMLOG</option>
+						<option >CARMEN</option>
+						<option >CANLUMAMPAO</option>
+						<option >IBO</option>
 			            <!-- <option  >BUENAVISTA LOOC CEMETERY</option> 
 			            <option >PUNTA LOOC CEMETERY</option> -->
 			          </select>  
 			</div>
 			<div class="col-sm-2">
-				<label>Section::</label> 
+				<label>Block::</label> 
 		              <select class="form-control " name="SECTION" id="SECTION" style="width: 100%;"> 
-			            <?php   
-			              $query = "SELECT * FROM   `tblcategory` ORDER BY CATEGORIES ASC";
-			              $mydb->setQuery($query);
-			              $cur = $mydb->loadResultList();
-
-				            foreach ($cur as $result) {
-				              echo '<option value="'.$result->CATEGORIES.'">'.$result->CATEGORIES.'</option>'; 
-				            }
-			            ?>
+						<option  >1</option>	
+						<option  >2</option>
+						<option  >3</option>
 			          </select>  
 			</div>
 			<div class="col-sm-2">
@@ -49,8 +46,8 @@
 <div class="row">
 <span id="printout">
 	<div class="col-md-12">
-	<div style="text-align: center;font-size: 16px;">Looc Cemetery</div>
-	<div style="text-align: center;font-size: 14px;">Looc Romblon Cemetery, Looc, Romblon</div>
+	<div style="text-align: center;font-size: 16px;">Legacy Plains Memorial Garden</div>
+	<div style="text-align: center;font-size: 14px;">Legacy Plains Memorial Garden Ibo, Toledo City</div>
 	<div style="text-align: center;font-size: 20px">List of Deceased Person</div>
 	<div style="text-align: center;font-size: 12px;"><?php echo isset($_POST['TYPES']) ? $_POST['TYPES']:"";  ?></div> 
 	<div style="text-align: center;font-size: 12px;"><?php echo isset($_POST['LOCATION']) ? "Cemtery of ".$_POST['LOCATION']  :"";  ?></div> 

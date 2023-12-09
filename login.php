@@ -50,7 +50,7 @@ if(isset($_POST['btnLogin'])){
     $user = new User();
     $res = $user::userAuthenticationWithRole($email, $h_upass, $urole);
     if ($res == true) {
-      message("You logged in as ".$_SESSION['U_ROLE'].".","success");
+      // message("You logged in as ".$_SESSION['U_ROLE'].".","success");
       if ($_SESSION['U_ROLE']=='Staff'){
         redirect(web_root.'staff/');
       }else{

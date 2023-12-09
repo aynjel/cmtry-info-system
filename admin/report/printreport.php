@@ -11,7 +11,7 @@ require_once("../../include/initialize.php");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Looc Cemetery</title>
+<title>Toledo Cemetery</title>
 
      <!-- Bootstrap Core CSS -->
  <link href="<?php echo web_root; ?>admin/css/bootstrap.min.css" rel="stylesheet">
@@ -32,8 +32,8 @@ require_once("../../include/initialize.php");
 
 <span id="printout">
   <div class="col-md-12">
-  <div style="text-align: center;font-size: 16px;">Looc Cemetery</div>
-  <div style="text-align: center;font-size: 14px;">Looc Romblon Cemetery, Looc, Romblon</div>
+  <div style="text-align: center;font-size: 16px;">Toledo Cemetery</div>
+  <div style="text-align: center;font-size: 14px;">Toledo City, Cebu</div>
   <div style="text-align: center;font-size: 20px">List of Deceased Person</div>
   <div style="text-align: center;font-size: 12px;"><?php echo isset($_POST['TYPES']) ? $_POST['TYPES']:"";  ?></div> 
   <div style="text-align: center;font-size: 12px;"><?php echo isset($_POST['LOCATION']) ? "Cemtery of ".$_POST['LOCATION']  :"";  ?>  </div> 
@@ -105,5 +105,5 @@ require_once("../../include/initialize.php");
     
  
 </body>
-<footer><div style="text-align: left;margin-left: 1%;">Copyrignt &copy; Looc Romblon Cemetery, Looc, Romblon</div></footer>
+<footer><div style="text-align: left;margin-left: 1%;">Copyrignt &copy; Toledo City Cemetery, Toledo, Cebu</div></footer>
 </html>
