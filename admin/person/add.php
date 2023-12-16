@@ -66,11 +66,11 @@
                   <div class="form-group">
                     <div class="col-md-8">
                       <label class="col-md-4 control-label" for=
-                      "CATEGORIES">Section:</label>
+                      "CATEGORIES">Block:</label>
 
                       <div class="col-md-8">
                        <select class="form-control input-sm" name="CATEGORIES" id="CATEGORIES">
-                          <option value="None">Select Section</option>
+                          <option selected hidden>Select Block</option>
                           <?php
                             //Statement
                           $mydb->setQuery("SELECT * FROM `tblcategory`");
@@ -96,7 +96,7 @@
                           <div class="input-group-addon"> 
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input id="datemask2" name="BORNDATE"  value="" type="text" class="form-control input-sm datemask2"   data-inputmask="'alias': 'mm/dd/yyyy'" data-mask >
+                          <input name="BORNDATE"  value="" type="date" class="form-control input-sm datemask2">
                         </div>
                       </div>
                     </div>
@@ -112,7 +112,7 @@
                           <div class="input-group-addon"> 
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input id="datemask2" name="DIEDDATE"  value="" type="text" class="form-control input-sm datemask2"   data-inputmask="'alias': 'mm/dd/yyyy'" data-mask >
+                          <input name="DIEDDATE"  value="" type="date" class="form-control input-sm datemask2">
                         </div>
                       </div>
                     </div>
@@ -125,10 +125,15 @@
                       <div class="col-md-8">
                              
                       <select class="form-control input-sm" name="LOCATION" id="LOCATION">
-                          <option value="None">Select Location</option>
-                          <option value="Sangin">SANGI TOLEDO CITY</option>
-                          <option value="Luray">LURAY TOLEDO CITY</option>
-                          <option value="Dumlog">DUMLOG TOLEDO CITY</option>
+                          <option selected hidden>Select Location</option>
+                          <option value="Sangi">SANGI</option>
+                          <option value="Luray">LURAY</option>
+                          <option value="Dumlog">DUMLOG</option>
+                          <option value="Carmen">CARMEN</option>
+                          <option value="Canlumampao">CANLUMAMPAO</option>
+                          <option value="Poog">POOG</option>
+                          <option value="Ibo">IBO</option>
+                          <option value="Bunga">BUNGA</option>
                           <!-- <option value="BUENAVISTA LOOC CEMETERY">BUENAVISTA LOOC CEMETERY</option>
                           <option value="PUNTA LOOC CEMETERY">PUNTA LOOC CEMETERY</option> -->
           

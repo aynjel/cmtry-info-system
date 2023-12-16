@@ -99,7 +99,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current pag
 										foreach ($cur as $res) {
 
 											echo '<tr>';
-											echo '<td><a href="index.php?q=person&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&section='.$res->CATEGORIES.'"><img class="avatar avatar-sm me-2 avatar-img rounded-circle" src="https://ui-avatars.com/api/?name='.$res->FNAME.'&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="Person Image"> '.$res->FNAME.'</a></td>';
+											echo '<td>'.$res->FNAME.'</td>';
 											echo '<td>'.$res->GRAVENO.'</td>';
 											echo '<td>'.$res->BORNDATE.'</td>';
 											echo '<td>'.$res->DIEDDATE.'</td>';

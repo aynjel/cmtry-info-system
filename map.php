@@ -5,16 +5,18 @@ $mydb->setQuery($sql);
 $res = $mydb->loadResultList();
     
 $totalBlock = 3;
-$totalGrave = 960;
-$totalRow = 23;
-$totalColumn = 14;
+$totalRow = 10;
+$totalColumn = 10;
 
 ?>
 <style>
 	.map-container {
 		position: relative;
-		width: 100%;
-		height: auto;
+		background-image: url(./img/map.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: 1100px;
+		height: 600px;
 	}
 	.legend {
 		width: 100%;
@@ -38,32 +40,27 @@ $totalColumn = 14;
 		margin-right: 5px;
 		vertical-align: middle;
 	}
-	.map {
-		width: 100%;
-		height: 130vh;
-	}
 	.heading-text{
 		font-size: 30px;
 		font-weight: bold;
 	}
 	.blocks{
 		position: absolute;
-		top: 0;
+		top: 10%;
 		left: 0;
 		width: 100%;
-		height: 100%;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 10px;
-		padding: 0 10px;
+		height: 200px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 10px;
+		padding: 10px;
 	}
 	.block-1 td,
 	.block-2 td,
 	.block-3 td {
 		background-color: #fff;
 		color: #000;
-		border: .5px solid #000;
+		border: 4px solid mediumseagreen;
 		text-align: center;
 		vertical-align: middle;
 	}
@@ -89,7 +86,7 @@ $totalColumn = 14;
 			<li><span style="background: white;"></span> - Available</li>
 		</ul>
 	</div>
-	<img src="./img/map.png" alt="map" class="map" />
+	<!-- <img src="./img/map.png" alt="map" class="map" /> -->
 
 	<div class="blocks">
 		<?php
@@ -110,7 +107,7 @@ $totalColumn = 14;
 						$mydb->setQuery($sql);
 						$res = $mydb->loadSingleResult();
 						// get reserved grave
-						$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+						$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted' OR status = 'Approved'";
 						$mydb->setQuery($sql1);
 						$reserved = $mydb->loadResultList();
 
