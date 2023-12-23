@@ -35,47 +35,47 @@ function doInsert(){
 
 		 
 		 	
-					if ($_POST['FNAME'] == ""  ) {
-					$messageStats = false;
-					message("All fields are required!","error");
-					redirect('index.php?view=add');
+					if ($_POST['FNAME'] == "" || $_POST['GRAVENO'] == "") {
+					echo "<script>alert('Please fill up all required fields!')</script>";
+					redirect('index.php');
 					}else{	
 
-						$sql = "SELECT * FROM `tblpeople` WHERE `GRAVENO`= '".$_POST['GRAVENO']."'  AND  `CATEGORIES`='".$_POST['CATEGORIES']."' AND `LOCATION`='".$_POST['LOCATION']."'";
+						$sql = "SELECT * FROM `tblpeople` WHERE `GRAVENO`= '".$_POST['GRAVENO']."'";
 					    $mydb->setQuery($sql);
 					    $cur = $mydb->loadSingleResult();
 
 					    if ($cur->GRAVENO== $_POST['GRAVENO']) {
 					    	# code...
-					    	message("Grave number is already exists!","error");
-							redirect('index.php?view=add');
+					    	// message("Grave number is already exists!","error");
+							echo "<script>alert('Grave number is already exists!')</script>";
+							redirect('index.php');
 					    }else{
 
-						$autonumber = New Autonumber();
-						$res = $autonumber->set_autonumber('PEOPLEID');
+							$autonumber = New Autonumber();
+							$res = $autonumber->set_autonumber('PEOPLEID');
 
-  				 	 	$p = New Person(); 
-  				 	 	$p->PEOPLEID 	= $res->AUTO; 
-						$p->FNAME 		= $_POST['FNAME'];
-						// $p->LNAME 		= $_POST['LNAME'];
-						// $p->MNAME 		= $_POST['MNAME'];
-						$p->CATEGORIES  = $_POST['CATEGORIES'];
-						$p->BORNDATE	= $borndate;
-						$p->DIEDDATE	= $dieddate; 
-						$p->LOCATION 	= $_POST['LOCATION'];
-						$p->GRAVENO		= $_POST['GRAVENO']; 
-						$p->create();
-						// }
+							$p = New Person(); 
+							$p->PEOPLEID 	= $res->AUTO; 
+							$p->FNAME 		= $_POST['FNAME'];
+							// $p->LNAME 		= $_POST['LNAME'];
+							// $p->MNAME 		= $_POST['MNAME'];
+							$p->CATEGORIES  = $_POST['CATEGORIES'];
+							$p->BORNDATE	= $borndate;
+							$p->DIEDDATE	= $dieddate; 
+							$p->LOCATION 	= $_POST['LOCATION'];
+							$p->GRAVENO		= $_POST['GRAVENO']; 
+							$p->create();
+							// }
 
-  
+	
 
-						$autonumber = New Autonumber();
-						$autonumber->auto_update('PEOPLEID');
+							$autonumber = New Autonumber();
+							$autonumber->auto_update('PEOPLEID');
 
 
 
-						message("New Record created successfully!", "success");
-						redirect("index.php");
+							message("New Record created successfully!", "success");
+							redirect("index.php");
 
 					    }
 

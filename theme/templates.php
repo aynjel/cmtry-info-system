@@ -1,7 +1,7 @@
 <?php
 $q = isset($_GET['q']) ? $_GET['q'] : 'home';
-$location = isset($_GET['location']) ? $_GET['location'] : '';
-$search = isset($_GET['search']) ? $_GET['search'] : '';
+$location = @$_GET['location'];
+$search = @$_GET['search'];
 
 // pagination
 $mydb->setQuery("SELECT * FROM tblpeople");
@@ -238,20 +238,29 @@ if (isset($location)) {
         </section>
         
         <!--SEARCH RESULT SECTION-->
-        <?php if (isset($_POST['submit-search']) || $q == 'search') {
+        <?php 
+        if (isset($_POST['submit-search']) || $q == 'search') {
           if (isset($_POST['submit-search'])) {
-            $search = $_POST['search'];
-            echo '<script>window.location.href = "index.php?q=search&search='.$search.'#search";</script>';
+            $post_search = $_POST['search'];
+            echo '<script>window.location.href = "index.php?q=search&search='.$post_search.'#search";</script>';
           }
           ?>
         <section class="search-result" id="search">
           <h2>
             Search Result
           </h2>
+          <?php if(isset($location)){ ?>
           <p class="p">
-            Search result for "<?= (isset($location)) ? $location : $search; ?>"
+            Search result for location "<?= $location ?>"
             (<?= $numrows; ?> results)
           </p>
+          <?php }
+          if (isset($search)) { ?>
+          <p class="p">
+            Search result for search "<?= $search ?>"
+            (<?= $numrows; ?> results)
+          </p>
+          <?php } ?>
           <div class="search-result-content">
             <?php
             
@@ -292,10 +301,16 @@ if (isset($location)) {
               }
             }else{
               ?>
-              <div class="search-result-item">
-                <p class="no-result">
-                  No results found.
-                </p>
+              <div class="no-result">
+                <div class="search-result-item">
+                  <p class="no-result">
+                    No results found.
+                  </p>
+                </div>
+
+                <a href="index.php?q=home#hero" class="back-to-home">
+                  <i class="fas fa-arrow-left"></i> Back to home
+                </a>
               </div>
               <?php
             }
@@ -479,10 +494,12 @@ if (isset($location)) {
             <h2>
               About
             </h2>
-            <p style="text-align: justify;">
+            <p style="text-align: justify; border: 3px solid #fff; padding: 30px; width: 1240px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Legacy Plains Memorial Garden is a 2.5 hectare memorial park located at Brgy. Ibo, Toledo City, Cebu.
             Truly a spectacular memorial garden at the sunset coast of Cebu Province - Toledo City. It reflects the traditional Filipino family setting inherent of our history and culture promotes the family centric tradition with its peaceful countryside environment complete with amenities for your convenience.
-            </p>
-            <p style="text-align: justify;">
+            <br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Mission and Vision: Aims to be providers of preferred memorial gardens and integrated services, serving middle to high end market of every progressive town and city in Visayas and Mindanao Region.
               We perpetuate investments and nurture good relationships because shareholders and stakeholders are our “Clients for Life”.
               To do so, we strive to render top quality memorial developments and reliable services; and garner the best investment returns through: innovative corporate practices, professionalism, teamwork, and exemplary citizenship.

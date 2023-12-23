@@ -59,7 +59,7 @@
 
 				<div class="btn-group">
 				  <!-- <a href="index.php?view=add" class="btn btn-default">New</a> -->
-				  <button type="submit" class="btn btn-default" name="delete"><i class="fa fa-trash fw-fa"></i> Delete Selected</button>
+				  <button type="submit" class="btn btn-default" name="delete" onclick="return confirm('Are you sure you want to delete this data?');"><i class="fa fa-trash fw-fa"></i> Delete Selected</button>
 				</div>
 				</div>
 				</form>

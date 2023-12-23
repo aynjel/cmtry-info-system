@@ -13,18 +13,18 @@
  
               <div class="row">
          <div class="col-lg-12">
-            <h1 class="page-header">Update Section</h1>
+            <h1 class="page-header">Update Block</h1>
           </div> 
        </div> 
 
                   <div class="form-group">
                     <div class="col-md-8">
-                      <label class="col-md-4 control-label" for="CATEGORY">Section:</label>
+                      <label class="col-md-4 control-label" for="CATEGORY">Block:</label>
 
                       <div class="col-md-8">
                        <input  id="CATEGID" name="CATEGID"   type="HIDDEN" value="<?php echo $singlecategory->CATEGID; ?>">
                          <input class="form-control input-sm" id="CATEGORY" name="CATEGORY" placeholder=
-                            "Section" type="text" value="<?php echo $singlecategory->CATEGORIES; ?>">
+                            "Block" type="text" value="<?php echo $singlecategory->CATEGORIES; ?>">
                       </div>
                     </div>
                   </div>

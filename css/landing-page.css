@@ -788,7 +788,21 @@ body{
     color: #fff;
 } */
 
-.map-details-content{
-    
+.no-result{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    gap: 20px;
 }
 
+.no-result .back-to-home{
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background-color: #008170;
+}
