@@ -26,7 +26,7 @@
         <label class="control-label" for="U_CPASS">Confirm Password</label>
         <input class="form-control" id="U_CPASS" name="U_CPASS" type="password" required />
       </div>
-      <div class="auth-form-group">
+      <div class="auth-form-group" style="display: none;">
         <label class="control-label" for="U_ROLE">Role</label>
         <input class="form-control" id="U_ROLE" name="U_ROLE" type="text" readonly value="User" />
       </div>

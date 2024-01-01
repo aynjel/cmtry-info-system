@@ -1,7 +1,7 @@
 <?php
 $q = isset($_GET['q']) ? $_GET['q'] : 'person';
 
-
+$user_id = $_SESSION['USERID'];
 // get person details
 if (isset($_GET['graveno'])) {
     $sql = "SELECT * FROM tblpeople WHERE GRAVENO = '" . $_GET['graveno'] . "'";

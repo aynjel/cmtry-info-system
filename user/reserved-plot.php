@@ -51,13 +51,15 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
 									<tr>
 										<th>ID</th>
 										<th>PLOT NUMBER</th>
+										<th>BLOCK</th>
+										<th>LOCATION</th>
 										<th>DATE RESERVED</th>
 										<th>STATUS</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-                                    $sql = "SELECT * FROM tblreserve";
+                                    $sql = "SELECT * FROM tblreserve WHERE user_id = ".$_SESSION['USERID']." ORDER BY id DESC";
                                     $mydb->setQuery($sql);
                                     $cur = $mydb->loadResultList();
 					
@@ -66,6 +68,8 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                                             echo '<tr>'; 
                                             echo '<td>' . $res->id . '</td>';
                                             echo '<td>' . $res->graveno . '</td>';
+                                            echo '<td>' . $res->block . '</td>';
+                                            echo '<td>' . $res->location . '</td>';
                                             echo '<td>' . date_format(date_create($res->created_at), 'l, F d, Y') . '</td>';
                                             if ($res->status == 'Pending') {
                                                 echo '<td><span class="badge bg-warning">' . $res->status . '</span></td>';
@@ -115,7 +119,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                 if ($cur) {
                     message("Plot number is already reserved!", "error");
                 } else {
-                    $sql = "INSERT INTO tblreserve (graveno, location, block, mobile_number, email) VALUES ('$plot_no', '$location', '$block', '$mobile_number', '$email')";
+                    $sql = "INSERT INTO tblreserve (graveno, location, block, mobile_number, email, user_id) VALUES ('$plot_no', '$location', '$block', '$mobile_number', '$email', ".$_SESSION['USERID'].")";
                     $mydb->setQuery($sql);
                     $res = $mydb->executeQuery();
                     if ($res) {
@@ -132,6 +136,12 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                 <div class="modal-header">
                     <div class="form-header text-start mb-0">
                         <h4 class="mb-0">Reserve Plot</h4>
+                        <button class="example-popover btn btn-primary" type="button" data-bs-trigger="hover" data-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="
+                        Plot Number - Plot number must be between 1 to 300. Block 1 - 1 to 100, Block 2 - 101 to 200, Block 3 - 201 to 300.
+                        Location - Sangi, Bunga, Luray, Dumlog, Carmen, Canlumampao, Poog, Ibo.
+                        Block - Block 1 - 1 to 100, Block 2 - 101 to 200, Block 3 - 201 to 300.
+                        " data-bs-content="And here's some amazing content. It's very engaging. Right?">?</button>
+
                     </div>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -143,28 +153,64 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
                                     <label>Plot Number</label>
-                                    <input type="number" class="form-control" name="plot_no" placeholder="Ex. 1">
+                                    <p class="text-muted">
+                                        <small>
+                                            <i>
+                                                <b>Note:</b> Plot number must be between 1 to 300. Block 1 - 1 to 100, Block 2 - 101 to 200, Block 3 - 201 to 300
+                                            </i>
+                                        </small>
+                                    </p>
+                                    <input 
+                                    type="number" 
+                                    class="form-control" 
+                                    name="plot_no" 
+                                    min="1"
+                                    max="300"
+                                    placeholder="Plot No. 1 to 100 - Block 1, Plot No. 101 to 200 - Block 2, Plot No. 201 to 300 - Block 3"
+                                    title="Plot number must be between 1 to 300"
+                                    required
+                                    >
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
-                                    <label>Location</label>
-                                    <select class="form-control" name="location">
-                                        <option selected hidden>Select Location</option>
+                                    <label>
+                                        Location
+                                    </label>
+                                    <p class="text-muted">
+                                        <small>
+                                            <i>
+                                                <b>Note:</b> Sangi, Bunga, Luray, Dumlog, Carmen, Canlumampao, Poog, Ibo
+                                            </i>
+                                        </small>
+                                    </p>
+                                    <select class="form-control" name="location" required>
+                                        <option selected hidden disabled>Select Location</option>
                                         <option value="Sangi">Sangi</option>
+                                        <option value="Bunga">Bunga</option>
                                         <option value="Luray">Luray</option>
                                         <option value="Dumlog">Dumlog</option>
                                         <option value="Carmen">Carmen</option>
                                         <option value="Canlumampao">Canlumampao</option>
+                                        <option value="Poog">Poog</option>
                                         <option value="Ibo">Ibo</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
-                                    <label>Block</label>
-                                    <select class="form-control" name="block">
-                                        <option selected hidden>Select Block</option>
+                                    <label>
+                                        Block
+                                    </label>
+                                    <p class="text-muted">
+                                        <small>
+                                            <i>
+                                                <b>Note:</b> Block 1 - 1 to 100, Block 2 - 101 to 200, Block 3 - 201 to 300
+                                            </i>
+                                        </small>
+                                    </p>
+                                    <select class="form-control" name="block" required>
+                                        <option selected hidden disabled>Select Block</option>
                                         <option value="1">Block 1</option>
                                         <option value="2">Block 2</option>
                                         <option value="3">Block 3</option>
@@ -175,16 +221,23 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                             <h5>
                                 Contact Details
                             </h5>
+                            <p class="text-muted">
+                                <small>
+                                    <i>
+                                        <b>Note:</b> Please provide your contact details so we can contact you for the reservation.
+                                    </i>
+                                </small>
+                            </p>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Number</label>
-                                    <input type="number" class="form-control" name="mobile_number" placeholder="Ex. 09123456789">
+                                    <input type="number" class="form-control" name="mobile_number" placeholder="Ex. 09123456789" required>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" name="email" placeholder="Ex. 09123456789">
+                                    <input type="email" class="form-control" name="email" placeholder="Ex. 09123456789" required>
                                 </div>
                             </div>
                         </div>

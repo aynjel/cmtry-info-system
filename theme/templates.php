@@ -72,9 +72,9 @@ if (isset($location)) {
               <li class="nav-item">
                 <a class="nav-link <?= ($q == 'about') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=about">About</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link <?= ($q == 'features') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=features">Features</a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a class="nav-link <?= ($q == 'contact') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=contact">Contact</a>
               </li>
@@ -147,7 +147,7 @@ if (isset($location)) {
         } else { ?>
 
         <!--HERO SECTION-->
-        <?php if ($q == 'home' || $q == 'search') { ?>
+        <?php if ($q == 'home') { ?>
         <section class="hero" id="hero">
 
           <img src="<?= web_root; ?>img/logo.jpg" alt="Logo" class="hero-logo">
@@ -236,6 +236,7 @@ if (isset($location)) {
           </ul>
           
         </section>
+        <?php } ?>
         
         <!--SEARCH RESULT SECTION-->
         <?php 
@@ -257,16 +258,13 @@ if (isset($location)) {
           <?php }
           if (isset($search)) { ?>
           <p class="p">
-            Search result for search "<?= $search ?>"
+            Search result for "<?= $search ?>"
             (<?= $numrows; ?> results)
           </p>
           <?php } ?>
           <div class="search-result-content">
-            <?php
-            
-            if ($numrows > 0) {
-              while ($row = $mydb->fetch_array($cur)) {
-                ?>
+            <?php if ($numrows > 0) {
+              while ($row = $mydb->fetch_array($cur)) { ?>
                 <a class="search-result-item" href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
                   <img src="https://ui-avatars.com/api/?name=<?= $row['FNAME']; ?>&background=random&color=000&rounded=true&bold=true&format=svg" alt="<?= $row['FNAME']; ?>">
                   <div class="search-result-item-content">
@@ -299,8 +297,7 @@ if (isset($location)) {
                 </a>
                 <?php
               }
-            }else{
-              ?>
+            }else{ ?>
               <div class="no-result">
                 <div class="search-result-item">
                   <p class="no-result">
@@ -308,15 +305,18 @@ if (isset($location)) {
                   </p>
                 </div>
 
-                <a href="index.php?q=home#hero" class="back-to-home">
+                <!-- <a href="index.php?q=home#hero" class="back-to-home">
                   <i class="fas fa-arrow-left"></i> Back to home
-                </a>
+                </a> -->
               </div>
-              <?php
-            }
-          ?>
-          
+              <?php 
+            } ?>
           </div>
+          
+          <a href="index.php?q=home#hero" class="back-to-home" style="margin-top: 30px;">
+            <i class="fas fa-arrow-left"></i> Back to home
+          </a>
+            
           <!--div for next and previous button-->
           <div class="next-prev-btn">
             <?php
@@ -357,7 +357,6 @@ if (isset($location)) {
             ?>
           </div>
         </section>
-        <?php } ?>
         <?php } ?>
 
         <!--TABLE SECTION-->

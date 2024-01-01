@@ -43,12 +43,14 @@
 									<tr>
 										<th>ID</th>
 										<th>Issue</th>
+										<th>Report Type</th>
 										<th>Date Created</th>
+										<th>Status</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-                                    $sql = "SELECT * FROM tblreport";
+                                    $sql = "SELECT * FROM tblreport WHERE user_id=".$_SESSION['USERID'];
                                     $mydb->setQuery($sql);
                                     $cur = $mydb->loadResultList();
 					
@@ -57,7 +59,14 @@
 											echo '<tr>'; 
 											echo '<td>'.$res->id.'</td>';
 											echo '<td>'.$res->issue.'</td>';
+											echo '<td>'.$res->report_type.'</td>';
 											echo '<td>'.date_format(date_create($res->created_at), 'M d, Y').'</td>';
+											echo '<td>';
+											if ($res->status == 'Pending') {
+												echo '<span class="badge bg-warning text-dark">'.$res->status.'</span>';
+											}else{
+												echo '<span class="badge bg-success text-dark">'.$res->status.'</span>';
+											}
 											echo '</tr>';
 										}
 									}else{
@@ -82,7 +91,8 @@
             <?php 
             if (isset($_POST['report'])) {
 				$issue = $_POST['issue'];
-				$sql = "INSERT INTO `tblreport` (`issue`) VALUES ('".$issue."')";
+				$type = $_POST['type'];
+				$sql = "INSERT INTO `tblreport` (`issue`, `report_type`, `user_id`) VALUES ('".$issue."', '".$type."', '".$_SESSION['USERID']."')";
 				$mydb->setQuery($sql);
 				if ($mydb->executeQuery()) {
 					# code...
@@ -108,8 +118,31 @@
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
                                     <label>Issue</label>
+									<p class="text-muted">Please provide a detailed description of the issue.</p>
                                     <textarea class="form-control" name="issue" required></textarea>
                                 </div>
+
+								<div class="form-group">
+                                    <label>Report Type</label>
+									<p class="text-muted">Please select the type of report.</p>
+									<select class="form-control" name="type" required>
+										<option value="Others">Others</option>
+										<option value="Deceased Person">Deceased Person</option>
+										<option value="Reserved Plot">Reserved Plot</option>
+										<option value="Wrong Information">Wrong Information</option>
+										<option value="Quality of Service">Quality of Service</option>
+										<option value="Location">Location</option>
+										<option value="Violation of Terms and Conditions">Violation of Terms and Conditions</option>
+										<option value="Website Error">Website Error</option>
+										<option value="Technical Issue">Technical Issue</option>
+										<option value="Management">Management</option>
+										<option value="Not Working Properly">Not Working Properly</option>
+										<option value="Security">Security</option>
+										<option value="Customer Service">Customer Service</option>
+										<option value="Harrassment">Harrassment</option>
+										<option value="Fraud">Fraud</option>
+									</select>
+								</div>
                             </div>
                         </div>
                     </div>
