@@ -274,13 +274,18 @@ $max = 300;
                                                             echo '<script>window.location.href = "index.php?q=reserved-plot&id=' . $id . '#sel";</script>';
                                                         }
                                                     }
-                                                    ?>
-                                                    <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()" id="sel">
-                                                        <option hidden selected>Select Status</option>
-                                                        <option value="Contacted" <?= $reserved->status == 'Contacted' ? 'selected' : ''; ?>>Contacted</option>
-                                                        <option value="Approved" <?= $reserved->status == 'Approved' ? 'selected' : ''; ?>>Approved</option>
-                                                        <option value="Declined" <?= $reserved->status == 'Declined' ? 'selected' : ''; ?>>Declined</option>
-                                                    </select>
+
+                                                    // disable is if status is approved
+                                                    if ($reserved->status == 'Approved') {
+                                                        echo '<input type="text" class="form-control" value="' . $reserved->status . '" disabled>';
+                                                    } else { ?>
+                                                        <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()" id="sel">
+                                                            <option hidden selected>Select Status</option>
+                                                            <option value="Contacted" <?= $reserved->status == 'Contacted' ? 'selected' : ''; ?>>Contacted</option>
+                                                            <option value="Approved" <?= $reserved->status == 'Approved' ? 'selected' : ''; ?>>Approved</option>
+                                                            <option value="Declined" <?= $reserved->status == 'Declined' ? 'selected' : ''; ?>>Declined</option>
+                                                        </select>
+                                                    <?php } ?>
                                                 </form>
                                             </div>
                                         </div>
@@ -289,6 +294,37 @@ $max = 300;
                             </div>
                         </div>
                     </div>
+
+                    <!-- deceased person from reserved plot -->
+                    <div class="row">
+                        <div class="col-12">
+                            <?php
+                            $sql = "SELECT * FROM tblpeople WHERE GRAVENO = '" . $reserved->graveno . "'";
+                            $mydb->setQuery($sql);
+                            $cur = $mydb->executeQuery();
+                            $numrows = $mydb->num_rows($cur); ?>
+                            <?php if ($numrows > 0) {
+                                $cur = $mydb->loadSingleResult(); ?>
+                                
+                                <div class="card flex-fill bg-white">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Deceased Person Information on this Plot</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Name: <?= $cur->FNAME; ?></li>
+                                            <li class="list-group-item">Born Date: <?= date_format(date_create($cur->BORNDATE), 'l, F d, Y'); ?></li>
+                                            <li class="list-group-item">Died Date: <?= date_format(date_create($cur->DIEDDATE), 'l, F d, Y'); ?></li>
+                                            <li class="list-group-item">Years Buried: <?= date_diff(date_create($cur->BORNDATE), date_create($cur->DIEDDATE))->y; ?> years</li>
+                                            <!-- <li class="list-group-item">Address: <?= $cur->LOCATION; ?></li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            <?php } ?>
+                        </div>
+                    </div>
+
                 <?php } elseif($q == 'plot-location'){?>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
@@ -310,7 +346,7 @@ $max = 300;
                                         <table class="table table-hover datatable">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th>Ref ID</th>
+                                                    <th>ID</th>
                                                     <th>Plot Number</th>
                                                     <th>Block</th>
                                                     <th>Location</th>
@@ -405,13 +441,7 @@ $max = 300;
 
                                     echo '<tr>';
                                     echo '<td><span class="text-primary"># ' . $res->GRAVENO . '</span></td>';
-                                    if ($res->CATEGORIES == '1') {
-                                        echo '<td><span class="badge bg-success-light">Block ' . $res->CATEGORIES . '</span></td>';
-                                    } else if ($res->CATEGORIES == '2') {
-                                        echo '<td><span class="badge bg-warning-light">Block ' . $res->CATEGORIES . '</span></td>';
-                                    } else {
-                                        echo '<td><span class="badge bg-danger-light">Block ' . $res->CATEGORIES . '</span></td>';
-                                    }
+                                    echo '<td><span class="text-primary"># ' . $res->CATEGORIES . '</span></td>';
                                     echo '<td><span class="badge bg-info-light">' . $res->LOCATION . '</span></td>';
                                     echo '<td><span class="text-primary text-uppercase">' . $res->FNAME . '</span></td>';
                                     if ($age == 0) {
