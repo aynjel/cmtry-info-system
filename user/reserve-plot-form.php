@@ -92,11 +92,12 @@
                             <p class="text-muted">
                                 <small>
                                     <i>
-                                        <b>Note:</b> Sangi, Bunga, Luray, Dumlog, Carmen, Canlumampao, Poog, Ibo
+                                        <b>Note:</b> Location is the location of the plot you want to reserve.
                                     </i>
                                 </small>
                             </p>
-                            <select class="form-control" name="location" required>
+                            <input type="text" class="form-control" name="location" placeholder="Ex. Sangi" required>
+                            <!-- <select class="form-control" name="location" required>
                                 <option selected hidden disabled>Select Location</option>
                                 <option value="Sangi">Sangi</option>
                                 <option value="Bunga">Bunga</option>
@@ -106,7 +107,7 @@
                                 <option value="Canlumampao">Canlumampao</option>
                                 <option value="Poog">Poog</option>
                                 <option value="Ibo">Ibo</option>
-                            </select>
+                            </select> -->
                         </div>
                     </div>
                     <hr>

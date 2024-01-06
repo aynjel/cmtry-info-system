@@ -13,6 +13,16 @@ if (isset($_GET['q'])) {
 }
 switch ($view) {
 
+    case 'person-info':
+        $title = "Burial";
+        $content = 'person-info.php';
+        break;
+
+    case 'map-info':
+        $title = "Map";
+        $content = 'map-info.php';
+        break;
+
     case 'report':
         $title = "Report Issues";
         $content = 'report.php';

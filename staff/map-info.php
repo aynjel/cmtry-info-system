@@ -375,6 +375,7 @@
 			<div class="card-body">
 				<div class="legend">
 					<ul>
+						<li><span style="background: blue;"></span> - Selected</li>
 						<li><span style="background: red;"></span> - Occupied</li>
 						<li><span style="background: yellow;"></span> - Reserved</li>
 						<li><span style="background: white;"></span> - Available</li>
@@ -436,7 +437,8 @@
 											}
 										} else {
 											if (in_array($count, $reservedGrave)) {
-												$sql2 = "SELECT * FROM tblreserve WHERE graveno = '$count'";
+                                                // get reserve id for reserved grave
+                                                $sql2 = "SELECT * FROM tblreserve WHERE graveno = '$count'";
                                                 $mydb->setQuery($sql2);
                                                 $reserve = $mydb->loadSingleResult();
                                                 $reserveId = $reserve->id;

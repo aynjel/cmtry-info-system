@@ -430,7 +430,8 @@ $max = 300;
                                 echo '<th>Years Buried</th>';
                                 echo '<th>Born</th>';
                                 echo '<th>Died</th>';
-                                // echo '<th></th>';
+                                echo '<th>Burial Date</th>';
+                                echo '<th>Action</th>';
                                 echo '</tr>';
                                 echo '</thead>';
                                 echo '<tbody>';
@@ -440,7 +441,9 @@ $max = 300;
                                     $age = date_diff(date_create($res->BORNDATE), date_create($res->DIEDDATE))->y;
 
                                     echo '<tr>';
-                                    echo '<td><span class="text-primary"># ' . $res->GRAVENO . '</span></td>';
+                                    echo '<td><span class="text-primary"># ';
+                                    echo '<a href="index.php?q=map-info&name=' . $res->FNAME . '&id=' . $res->PEOPLEID . '" class="text-primary">' . $res->GRAVENO . '</a>';
+                                    echo '</span></td>';
                                     echo '<td><span class="text-primary"># ' . $res->CATEGORIES . '</span></td>';
                                     echo '<td><span class="badge bg-info-light">' . $res->LOCATION . '</span></td>';
                                     echo '<td><span class="text-primary text-uppercase">' . $res->FNAME . '</span></td>';
@@ -451,19 +454,12 @@ $max = 300;
                                     }
                                     echo '<td>' . date_format(date_create($res->BORNDATE), 'F d, Y') . '</td>';
                                     echo '<td>' . date_format(date_create($res->DIEDDATE), 'F d, Y') . '</td>';
-                                    // echo '<td class="text-right">';
-                                    // echo '<div class="table-action">';
-                                    // echo '<a href="index.php?q=person-list&id=' . $res->ID . '" class="btn btn-sm bg-success-light">';
-                                    // echo '<i class="fas fa-eye"></i>';
-                                    // echo '</a>';
-                                    // echo '<a href="index.php?q=person-list&id=' . $res->ID . '" class="btn btn-sm bg-info-light">';
-                                    // echo '<i class="fas fa-edit"></i>';
-                                    // echo '</a>';
-                                    // echo '<a href="index.php?q=person-list&id=' . $res->ID . '" class="btn btn-sm bg-danger-light">';
-                                    // echo '<i class="fas fa-trash-alt"></i>';
-                                    // echo '</a>';
-                                    // echo '</div>';
-                                    // echo '</td>';
+                                    echo '<td>' . date_format(date_create($res->BURIALDATE), 'F d, Y') . '</td>';
+                                    echo '<td class="text-right">';
+                                    echo '<a href="index.php?q=map-info&name=' . $res->FNAME . '&id=' . $res->PEOPLEID . '" class="btn btn-sm btn-outline-primary">';
+                                    echo '<i class="far fa-eye me-1"></i> View';
+                                    echo '</a>';
+                                    echo '</td>';
                                     echo '</tr>';
                                 }
 
@@ -708,10 +704,11 @@ $max = 300;
                             $name = $_POST['name'];
                             $born_date = $_POST['born_date'];
                             $died_date = $_POST['died_date'];
+                            $burial_date = $_POST['burial_date'];
                             $categories = $reserved->block;
                             $location = $reserved->location;
 
-                            $sql = "INSERT INTO tblpeople (FNAME, GRAVENO, BORNDATE, DIEDDATE, CATEGORIES, LOCATION) VALUES ('$name', '$graveno', '$born_date', '$died_date', '$categories', '$location')";
+                            $sql = "INSERT INTO tblpeople (FNAME, GRAVENO, BORNDATE, DIEDDATE, CATEGORIES, LOCATION, BURIALDATE) VALUES ('$name', '$graveno', '$born_date', '$died_date', '$categories', '$location', '$burial_date')";
                             $mydb->setQuery($sql);
                             $cur = $mydb->executeQuery();
 
@@ -739,9 +736,9 @@ $max = 300;
                         <div class="modal-body">
                             <div class="bank-inner-details">
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-12">
+                                    <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
-                                            <label>Plot Number (Applicable only for approved reserved plot)</label>
+                                            <label>Plot Number (Approved reserved plot only)</label>
                                             <select class="form-control" name="graveno">
                                                 <option selected hidden>Select Plot Number</option>
                                                 <?php
@@ -755,6 +752,12 @@ $max = 300;
                                                 }
                                                 ?>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Burial Date</label>
+                                            <input type="date" class="form-control" name="burial_date">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12">

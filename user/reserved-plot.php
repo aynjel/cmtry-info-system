@@ -188,7 +188,8 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                                             </i>
                                         </small>
                                     </p>
-                                    <select class="form-control" name="location" required>
+                                    <input type="text" class="form-control" name="location" placeholder="Ex. Sangi" required>
+                                    <!-- <select class="form-control" name="location" required>
                                         <option selected hidden disabled>Select Location</option>
                                         <option value="Sangi">Sangi</option>
                                         <option value="Bunga">Bunga</option>
@@ -198,7 +199,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                                         <option value="Canlumampao">Canlumampao</option>
                                         <option value="Poog">Poog</option>
                                         <option value="Ibo">Ibo</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">

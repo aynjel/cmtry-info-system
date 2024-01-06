@@ -121,10 +121,29 @@
                   <div class="form-group">
                     <div class="col-md-8">
                       <label class="col-md-4 control-label" for=
+                      "BURIALDATE">Burial Date:</label>
+
+                      <div class="col-md-8">
+                       <div class="input-group" id=""> 
+                          <div class="input-group-addon"> 
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input name="BURIALDATE" value="" type="date" class="form-control input-sm datemask2">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-8">
+                      <label class="col-md-4 control-label" for=
                       "LOCATION">Location:</label> 
                       <div class="col-md-8">
+
+                      <input class="form-control input-sm" id="LOCATION" name="LOCATION" placeholder=
+                            "Location" type="text" value="">
                              
-                        <select class="form-control input-sm" name="LOCATION" id="LOCATION">
+                        <!-- <select class="form-control input-sm" name="LOCATION" id="LOCATION">
                           <option selected hidden disabled>Select Location</option>
                           <option value="Sangi">SANGI</option>
                           <option value="Luray">LURAY</option>
@@ -134,7 +153,7 @@
                           <option value="Poog">POOG</option>
                           <option value="Ibo">IBO</option>
                           <option value="Bunga">BUNGA</option>
-                        </select> 
+                        </select>  -->
                       </div>
                     </div>
                   </div>

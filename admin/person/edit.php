@@ -137,13 +137,32 @@
                     </div>
                   </div>
 
+                  <div class="form-group">
+                    <div class="col-md-8">
+                      <label class="col-md-4 control-label" for=
+                      "BURIALDATE">Burial Date:</label>
+
+                      <div class="col-md-8">
+                       <div class="input-group" id=""> 
+                          <div class="input-group-addon"> 
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input name="BURIALDATE"  value="<?php echo $p->BURIALDATE ?>" type="date" class="form-control input-sm datemask2">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                    <div class="form-group">
                     <div class="col-md-8">
                       <label class="col-md-4 control-label" for=
                       "LOCATION">Location:</label> 
                       <div class="col-md-8">
+
+                        <input class="form-control input-sm" id="LOCATION" name="LOCATION" placeholder=
+                            "Location" type="text" value="<?php echo $p->LOCATION ?>">
                              
-                      <select class="form-control input-sm" name="LOCATION" id="LOCATION">
+                      <!-- <select class="form-control input-sm" name="LOCATION" id="LOCATION">
                           <option value="None" hidden>Select Location</option>
                           <option value="Sangi" <?php echo ($p->LOCATION=='Sangi') ? 'selected="true"': '' ?>>SANGI</option>
                           <option value="Luray" <?php echo ($p->LOCATION=='Luray') ? 'selected="true"': '' ?>>LURAY</option>
@@ -153,7 +172,7 @@
                           <option value="Poog" <?php echo ($p->LOCATION=='Poog') ? 'selected="true"': '' ?>>POOG</option>
                           <option value="Ibo" <?php echo ($p->LOCATION=='Ibo') ? 'selected="true"': '' ?>>IBO</option>
                           <option value="Bunga" <?php echo ($p->LOCATION=='Bunga') ? 'selected="true"': '' ?>>BUNGA</option>
-                        </select> 
+                        </select>  -->
                       </div>
                     </div>
                   </div> 

@@ -191,7 +191,8 @@ if (isset($search)) {
               <div class="search-result-content">
                 <?php if ($numrows > 0) {
                   while ($row = $mydb->fetch_array($cur)) { ?>
-                    <a class="search-result-item" href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
+                  <!-- href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details" -->
+                    <a class="search-result-item" href="#">
                       <img src="https://ui-avatars.com/api/?name=<?= $row['FNAME']; ?>&background=random&color=000&rounded=true&bold=true&format=svg" alt="<?= $row['FNAME']; ?>">
                       <div class="search-result-item-content">
                         <h3>
@@ -547,6 +548,14 @@ if (isset($search)) {
             </section>
           <?php } ?>
         <?php } ?>
+
+        <section>
+          <div class="card">
+            <div class="card-body">
+              <?php include('../' . web_root . 'map.php'); ?>
+            </div>
+          </div>
+        </section>
 
         <!--FOOTER SECTION-->
         <footer class="footer">

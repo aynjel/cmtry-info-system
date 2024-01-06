@@ -14,12 +14,13 @@ check_message();
 
 			<thead>
 				<tr>
-					<th>#</th>
+					<th>Plot No.</th>
 					<th>Name of the Deceased</td>
 					<th>Born</th>
 					<th>Died</th>
 					<th>Block</th>
 					<th>Address</th>
+					<th>Burial Date</th>
 				</tr>
 			</thead>
 
@@ -49,6 +50,7 @@ check_message();
 					echo '<td>' . $dieddate . '</td>';
 					echo '<td>' . $result->CATEGORIES . '</td>';
 					echo '<td>' . $result->LOCATION . '</td>';
+					echo '<td>' . $result->BURIALDATE . '</td>';
 					echo '</tr>';
 				}
 				?>

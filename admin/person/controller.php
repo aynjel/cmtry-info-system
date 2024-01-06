@@ -105,6 +105,7 @@ function doInsert(){
 						$p->DIEDDATE	= $dieddate; 
 						$p->GRAVENO		= $_POST['GRAVENO']; 
 						$p->LOCATION 	= $_POST['LOCATION'];
+						$p->BURIALDATE 	= $_POST['BURIALDATE'];
 						$p->update($_POST['PEOPLEID']);
   
 
