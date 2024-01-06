@@ -124,8 +124,8 @@
                       "LOCATION">Location:</label> 
                       <div class="col-md-8">
                              
-                      <select class="form-control input-sm" name="LOCATION" id="LOCATION">
-                          <option selected hidden>Select Location</option>
+                        <select class="form-control input-sm" name="LOCATION" id="LOCATION">
+                          <option selected hidden disabled>Select Location</option>
                           <option value="Sangi">SANGI</option>
                           <option value="Luray">LURAY</option>
                           <option value="Dumlog">DUMLOG</option>
@@ -134,9 +134,6 @@
                           <option value="Poog">POOG</option>
                           <option value="Ibo">IBO</option>
                           <option value="Bunga">BUNGA</option>
-                          <!-- <option value="BUENAVISTA LOOC CEMETERY">BUENAVISTA LOOC CEMETERY</option>
-                          <option value="PUNTA LOOC CEMETERY">PUNTA LOOC CEMETERY</option> -->
-          
                         </select> 
                       </div>
                     </div>

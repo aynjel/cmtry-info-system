@@ -18,14 +18,13 @@
         <label class="control-label" for="U_PASS">Password</label>
         <input class="form-control" id="U_PASS" name="U_PASS" type="password" required />
       </div>
-      <div class="auth-form-group">
+      <!-- <div class="auth-form-group">
         <label class="control-label" for="U_ROLE">Role</label>
         <select class="form-control" id="U_ROLE" name="U_ROLE" required>
           <option selected value="User">User</option>
           <option value="Staff">Staff</option>
-          <!-- <option value="Administrator">Administrator</option> -->
         </select>
-      </div>
+      </div> -->
       <div class="auth-form-group">
         <button class="btn-submit" name="btnLogin" type="submit">Login</button>
         <a class="btn-admin" href="<?php echo web_root; ?>admin/">
@@ -35,30 +34,42 @@
     </form>
   </div>
 </div>
-       
-<?php 
 
-if(isset($_POST['btnLogin'])){
+<?php
+
+if (isset($_POST['btnLogin'])) {
   $email = trim($_POST['U_USERNAME']);
   $upass  = trim($_POST['U_PASS']);
-  $urole = trim($_POST['U_ROLE']);
   $h_upass = sha1($upass);
-  
-  if ($email == '' OR $upass == '' OR $urole == '') {
+
+  // find user in database and get user role
+  $sql = "SELECT * FROM `tbluseraccount` WHERE `U_USERNAME` = '" . $email . "'";
+  $mydb->setQuery($sql);
+  $cur = $mydb->executeQuery();
+
+  $row_count = $mydb->num_rows($cur);
+  if ($row_count == 1) {
+    $user_found = $mydb->loadSingleResult();
+    $urole = $user_found->U_ROLE;
+  } else {
+    $urole = '';
+  }
+
+  if ($email == '' or $upass == '' or $urole == '') {
     message("Invalid Username and Password!", "error");
-  } else {  
+  } else {
     $user = new User();
     $res = $user::userAuthenticationWithRole($email, $h_upass, $urole);
     if ($res == true) {
       // message("You logged in as ".$_SESSION['U_ROLE'].".","success");
-      if ($_SESSION['U_ROLE']=='Staff'){
-        redirect(web_root.'staff/');
-      }else{
-        redirect(web_root."user/");
+      if ($_SESSION['U_ROLE'] == 'Staff') {
+        redirect(web_root . 'staff/');
+      } else {
+        redirect(web_root . "user/");
       }
-    }else{
+    } else {
       message("Account does not exist!", "error");
-      redirect(web_root."index.php?q=login");
+      redirect(web_root . "index.php?q=login");
     }
   }
- } 
+}

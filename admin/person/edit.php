@@ -75,11 +75,11 @@
                   <div class="form-group">
                     <div class="col-md-8">
                       <label class="col-md-4 control-label" for=
-                      "CATEGORIES">Section:</label>
+                      "CATEGORIES">Block:</label>
 
                       <div class="col-md-8">
                        <select class="form-control input-sm" name="CATEGORIES" id="CATEGORIES">
-                          <option value="None">Select Section</option>
+                          <option value="None">Select Block</option>
 
                             <?php
                             //Statement
@@ -115,7 +115,7 @@
                           <div class="input-group-addon"> 
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input id="datemask2" name="BORNDATE"  value="<?php echo $p->BORNDATE ?>" type="text" class="form-control input-sm datemask2"   data-inputmask="'alias': 'mm/dd/yyyy'" data-mask >
+                          <input name="BORNDATE"  value="<?php echo $p->BORNDATE ?>" type="date" class="form-control input-sm datemask2">
                         </div>
                       </div>
                     </div>
@@ -131,7 +131,7 @@
                           <div class="input-group-addon"> 
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input id="datemask2" name="DIEDDATE"  value="<?php echo $p->DIEDDATE ?>" type="text" class="form-control input-sm datemask2"   data-inputmask="'alias': 'mm/dd/yyyy'" data-mask >
+                          <input name="DIEDDATE"  value="<?php echo $p->DIEDDATE ?>" type="date" class="form-control input-sm datemask2">
                         </div>
                       </div>
                     </div>
@@ -145,12 +145,14 @@
                              
                       <select class="form-control input-sm" name="LOCATION" id="LOCATION">
                           <option value="None" hidden>Select Location</option>
-                          <option value="SANGI TOLEDO CITY" <?php echo ($p->LOCATION=='SANGI TOLEDO CITY') ? 'SELECTED' : '';?>>SANGI TOLEDO CITY</option>
-                          <option value="LURAY TOLEDO CITY" <?php echo ($p->LOCATION=='LURAY TOLEDO CITY') ? 'SELECTED' : '';?>>LURAY TOLEDO CITY</option>
-                          <option value="DUMLOG TOLEDO CITY" <?php echo ($p->LOCATION=='DUMLOG TOLEDO CITY') ? 'SELECTED' : '';?>>DUMLOG TOLEDO CITY</option>
-                          <!-- <option value="BUENAVISTA LOOC CEMETERY" <?php echo ($p->LOCATION=='BUENAVISTA LOOC CEMETERY') ? 'SELECTED' : '';?>>BUENAVISTA LOOC CEMETERY</option>
-                          <option value="PUNTA LOOC CEMETERY" <?php echo ($p->LOCATION=='PUNTA LOOC CEMETERY') ? 'SELECTED' : '';?>>PUNTA LOOC CEMETERY</option> -->
-          
+                          <option value="Sangi" <?php echo ($p->LOCATION=='Sangi') ? 'selected="true"': '' ?>>SANGI</option>
+                          <option value="Luray" <?php echo ($p->LOCATION=='Luray') ? 'selected="true"': '' ?>>LURAY</option>
+                          <option value="Dumlog" <?php echo ($p->LOCATION=='Dumlog') ? 'selected="true"': '' ?>>DUMLOG</option>
+                          <option value="Carmen" <?php echo ($p->LOCATION=='Carmen') ? 'selected="true"': '' ?>>CARMEN</option>
+                          <option value="Canlumampao" <?php echo ($p->LOCATION=='Canlumampao') ? 'selected="true"': '' ?>>CANLUMAMPAO</option>
+                          <option value="Poog" <?php echo ($p->LOCATION=='Poog') ? 'selected="true"': '' ?>>POOG</option>
+                          <option value="Ibo" <?php echo ($p->LOCATION=='Ibo') ? 'selected="true"': '' ?>>IBO</option>
+                          <option value="Bunga" <?php echo ($p->LOCATION=='Bunga') ? 'selected="true"': '' ?>>BUNGA</option>
                         </select> 
                       </div>
                     </div>
