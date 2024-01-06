@@ -64,6 +64,9 @@ if (isset($search)) {
             <a class="nav-link <?= ($q == 'home') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php">Home</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link <?= ($q == 'map') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=map">Map</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link <?= ($q == 'about') ? 'nav-link-active' : ''; ?>" href="<?= web_root; ?>index.php?q=about">About</a>
           </li>
           <!-- <li class="nav-item">
@@ -152,35 +155,28 @@ if (isset($search)) {
               <p>
                 A cemetery mapping and information system for the people to easily locate the grave of their loved ones.
               </p>
-              <?php
-              if (isset($_GET['location'])) {
+              <?php if (isset($_GET['location'])) {
                 echo '<a href="index.php?q=home#search" class="clear-location">';
                 echo $_GET['location'];
                 echo '<i class="fas fa-times"></i>';
                 echo '</a>';
-              } else {
-              ?>
+              } else { ?>
                 <form method="POST">
                   <input type="text" placeholder="Search" name="search" required>
                   <button type="submit" name="submit-search" value="submit-search">
                     <i class="fas fa-search"></i>
                   </button>
                 </form>
-              <?php
-              }
-              ?>
-
+              <?php } ?>
             </section>
           <?php } ?>
 
           <!--SEARCH RESULT SECTION-->
-          <?php
-          if (isset($_POST['submit-search']) || $q == 'search') {
+          <?php if (isset($_POST['submit-search']) || $q == 'search') {
             if (isset($_POST['submit-search'])) {
               $post_search = $_POST['search'];
               echo '<script>window.location.href = "index.php?q=search&search=' . $post_search . '#search";</script>';
-            }
-          ?>
+            } ?>
             <section class="search-result" id="search">
               <?php if (isset($search)) { ?>
                 <p class="p">
@@ -445,8 +441,8 @@ if (isset($search)) {
             </section>
           <?php } ?>
 
+          <!--FEATURES SECTION-->
           <?php if ($q == 'features') { ?>
-            <!--FEATURES SECTION-->
             <section class="features" id="features">
               <h2>
                 Features
@@ -492,8 +488,8 @@ if (isset($search)) {
             </section>
           <?php } ?>
 
+          <!--CONTACT SECTION-->
           <?php if ($q == 'contact') { ?>
-            <!--CONTACT SECTION-->
             <section class="contact" id="contact">
               <h2>
                 Contact
@@ -549,13 +545,17 @@ if (isset($search)) {
           <?php } ?>
         <?php } ?>
 
-        <section>
-          <div class="card">
-            <div class="card-body">
-              <?php include('../' . web_root . 'map.php'); ?>
-            </div>
-          </div>
-        </section>
+        <?php if ($q == 'map') { ?>
+          <section class="about" id="about">
+            <div class="about-content">
+              <h2>
+                Map
+              </h2>
+              <div class="map-info">
+                <?php include('../' . web_root . 'map.php'); ?>
+              </div>
+          </section>
+        <?php } ?>
 
         <!--FOOTER SECTION-->
         <footer class="footer">
