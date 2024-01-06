@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2024 at 07:46 AM
+-- Generation Time: Jan 06, 2024 at 11:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -77,20 +77,23 @@ CREATE TABLE `tblpeople` (
   `BORNDATE` date NOT NULL,
   `DIEDDATE` date NOT NULL,
   `CATEGORIES` enum('1','2','3') NOT NULL,
-  `LOCATION` enum('Poog','Luray','Dumlog','Canlumampao','Ibo','Carmen','Sangi') NOT NULL
+  `LOCATION` enum('Poog','Luray','Dumlog','Canlumampao','Ibo','Carmen','Sangi') NOT NULL,
+  `BURIALDATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tblpeople`
 --
 
-INSERT INTO `tblpeople` (`PEOPLEID`, `FNAME`, `GRAVENO`, `BORNDATE`, `DIEDDATE`, `CATEGORIES`, `LOCATION`) VALUES
-(9893, 'John Doe', 2, '2015-12-03', '2020-12-17', '1', 'Ibo'),
-(9894, 'Jane Doe', 7, '2014-12-11', '2020-12-31', '1', 'Carmen'),
-(9895, 'Kylynn Campbell', 51, '1970-09-04', '2006-01-18', '1', 'Carmen'),
-(9896, 'Colt Weiss', 84, '2009-04-05', '2013-08-07', '1', 'Luray'),
-(9897, 'Daphne Parsons', 268, '1976-09-08', '2002-11-23', '3', 'Canlumampao'),
-(201813, 'Cally Joseph', 300, '2020-11-15', '2017-05-29', '3', 'Canlumampao');
+INSERT INTO `tblpeople` (`PEOPLEID`, `FNAME`, `GRAVENO`, `BORNDATE`, `DIEDDATE`, `CATEGORIES`, `LOCATION`, `BURIALDATE`) VALUES
+(9893, 'John Doe', 2, '2015-12-03', '2020-12-17', '1', 'Ibo', '0000-00-00'),
+(9894, 'Jane Doe', 7, '2014-12-11', '2020-12-31', '1', 'Carmen', '2024-02-09'),
+(9895, 'Kylynn Campbell', 51, '2000-01-12', '2006-01-18', '1', 'Dumlog', '2024-02-06'),
+(9896, 'Colt Weiss', 84, '2001-02-22', '2020-05-23', '1', 'Sangi', '0000-00-00'),
+(9897, 'Daphne Parsons', 268, '2000-09-08', '2003-11-23', '3', 'Canlumampao', '0000-00-00'),
+(201813, 'Cally Joseph', 300, '2020-11-15', '2017-05-29', '3', 'Canlumampao', '0000-00-00'),
+(201819, 'test', 101, '2021-01-05', '2023-02-12', '2', 'Ibo', '2024-01-27'),
+(201820, 'test', 245, '2023-12-31', '2024-02-10', '3', 'Luray', '2024-02-04');
 
 -- --------------------------------------------------------
 
@@ -142,9 +145,14 @@ INSERT INTO `tblreserve` (`id`, `user_id`, `graveno`, `block`, `location`, `stat
 (1, 129, 7, 1, 'Sangi', 'Approved', 'samepl2@gmail.com', '789564321', '2023-12-09 17:04:49'),
 (2, 129, 51, 1, 'Carmen', 'Approved', 'sample@gmail.com', '123456789', '2023-12-09 17:05:05'),
 (3, 129, 2, 1, 'Dumlog', 'Approved', 'juzoqa@mailinator.com', '184', '2023-12-09 20:40:23'),
-(4, 129, 84, 1, 'Luray', 'Declined', 'lelahyfe@mailinator.com', '193', '2023-12-09 20:40:31'),
-(9, 129, 300, 3, 'Canlumampao', 'Pending', 'mocepak@mailinator.com', '920', '2024-01-01 09:57:39'),
-(10, 129, 268, 3, 'Sangi', 'Pending', 'bova@mailinator.com', '763', '2024-01-01 09:58:29');
+(4, 129, 84, 1, 'Luray', 'Approved', 'lelahyfe@mailinator.com', '193', '2023-12-09 20:40:31'),
+(9, 129, 300, 3, 'Canlumampao', 'Approved', 'mocepak@mailinator.com', '920', '2024-01-01 09:57:39'),
+(10, 129, 268, 3, 'Sangi', 'Approved', 'bova@mailinator.com', '763', '2024-01-01 09:58:29'),
+(11, 129, 101, 2, 'Ibo', 'Approved', 'test@gmail.com', '123456897', '2024-01-06 11:30:25'),
+(12, 129, 135, 2, 'Bunga', 'Pending', 'rylybikim@mailinator.com', '609', '2024-01-06 13:06:23'),
+(13, 129, 170, 2, 'Dumlog', 'Contacted', 'wymenetygo@mailinator.com', '302', '2024-01-06 13:07:39'),
+(14, 129, 245, 3, 'Luray', 'Approved', 'bupulig@mailinator.com', '559', '2024-01-06 13:08:48'),
+(15, 129, 133, 2, 'Ut nulla non ducimus', 'Pending', 'mofiqotyxi@mailinator.com', '956', '2024-01-06 16:38:50');
 
 -- --------------------------------------------------------
 
@@ -241,7 +249,7 @@ ALTER TABLE `tblcategory`
 -- AUTO_INCREMENT for table `tblpeople`
 --
 ALTER TABLE `tblpeople`
-  MODIFY `PEOPLEID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201819;
+  MODIFY `PEOPLEID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201821;
 
 --
 -- AUTO_INCREMENT for table `tblreport`
@@ -253,7 +261,7 @@ ALTER TABLE `tblreport`
 -- AUTO_INCREMENT for table `tblreserve`
 --
 ALTER TABLE `tblreserve`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbluseraccount`
