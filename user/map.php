@@ -1,197 +1,477 @@
-
 <style type="text/css">
- .scrolly {
-  /* width: 1400px;
-    height:450px;*/
-    /*border: thin solid black;*/
-    /*overflow-: hidden; */
-    overflow: auto;
-}  
-.scroll {
-	   /*width: 600px;*/
-    height:500px;
-    /*border: thin solid black;*/
-    /*overflow-: hidden; */
-    overflow-y: auto;
-}
-</style>
-<!-- <button id="btn_ZoomIn" class="btn btn-xs btn-info"> <i class="fa fa-search-plus"> </i> </button>
-<button id="btn_ZoomOut" class="btn btn-xs btn-info"><i class="fa fa-search-minus"></i></button>
-<button id="btn_ZoomReset" class="btn btn-xs btn-info">Zoom Reset</button> -->
-<div class="scroll" id="zoom"> 	
-
-<?php 
- if (isset($_GET['location'])) {
- 	# code...
- 	if ($_GET['location']=='Sangi') {
- 		# code...
- 		include 'mapBuenavista.php';
- 	}else{ 
- 		include 'puntaMap.php';
- 	}
- }else{
- 	if ($res->LOCATION=='Sangi') {
- 		# code...
- 		include 'mapBuenavista.php';
- 	}else{
- 		include 'puntaMap.php'; 
- 	}
- }
-?>
-
-</div>
-
-
-<?php 
-
-$sql = "SELECT * FROM tblpeople";
-$mydb->setQuery($sql);
-$res = $mydb->loadResultList();
-    
-$totalBlock = 3;
-$totalGrave = 960;
-$totalRow = 23;
-$totalColumn = 14;
-
-?>
-<style>
-	.map-container {
-		position: relative;
+	.scroll {
+		overflow: auto;
+		height: 500px;
 		width: 100%;
-		height: auto;
 	}
+
 	.legend {
-		width: 100%;
-		padding: 10px;
-		background: #c7c9c8;
+		padding: 20px;
 	}
+
 	.legend ul {
 		list-style: none;
-		margin: 0;
 		padding: 0;
+		margin: 0;
+		display: flex;
+		align-items: center;
 	}
+
 	.legend ul li {
-		display: inline-block;
-		margin-right: 10px;
-		color: #000;
+		margin-right: 20px;
 	}
+
 	.legend ul li span {
 		display: inline-block;
-		width: 18px;
-		height: 18px;
+		width: 20px;
+		height: 20px;
 		margin-right: 5px;
-		vertical-align: middle;
 	}
+
+	.map-container {
+		position: relative;
+	}
+
 	.map {
 		width: 100%;
-		height: 130vh;
+		height: 600px;
 	}
-	.heading-text{
-		font-size: 30px;
-		font-weight: bold;
-	}
-	.blocks{
+
+	.blocks {
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 100%;
-		height: 100%;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
-		align-items: center;
-		gap: 10px;
-		padding: 0 10px;
+		width: 100%;
+		padding: 20px;
 	}
-	.block-1 td,
-	.block-2 td,
-	.block-3 td {
-		background-color: #fff;
-		color: #000;
-		border: .5px solid #000;
+
+	.blocks table {
+		border-collapse: collapse;
+	}
+
+	.blocks table td {
+		border: 1px solid #000;
+		width: 30px;
+		height: 30px;
 		text-align: center;
-		vertical-align: middle;
+		font-size: 12px;
 	}
-	td .person{
-		background: red;
-		color: #fff;
+
+	.blocks table th {
+		border: 0;
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		font-size: 12px;
+	}
+
+	.blocks table th.heading-text {
+		font-size: 16px;
+	}
+
+	.blocks table.block-1 {
+		top: 0;
+		left: 0;
+	}
+
+	.blocks table.block-2 {
+		top: 0;
+		left: 500px;
+	}
+
+	.blocks table.block-3 {
+		top: 0;
+		left: 1000px;
+	}
+
+	/*
+	hover effect
+	*/
+
+	.blocks table td:hover {
+		font-weight: bold;
+		cursor: pointer;
+
+	}
+
+	/*
+	media queries
+	*/
+
+	@media screen and (max-width: 1024px) {
+		.blocks table th.heading-text {
+			font-size: 14px;
+		}
+
+		.blocks table td {
+			width: 25px;
+			height: 25px;
+			font-size: 12px;
+		}
+
+		.blocks table th {
+			width: 25px;
+			height: 25px;
+			font-size: 12px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 400px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 800px;
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		.blocks table th.heading-text {
+			font-size: 12px;
+		}
+
+		.blocks table td {
+			width: 20px;
+			height: 20px;
+			font-size: 10px;
+		}
+
+		.blocks table th {
+			width: 20px;
+			height: 20px;
+			font-size: 10px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 300px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 600px;
+		}
+	}
+
+	@media screen and (max-width: 480px) {
+		.blocks table th.heading-text {
+			font-size: 10px;
+		}
+
+		.blocks table td {
+			width: 15px;
+			height: 15px;
+			font-size: 8px;
+		}
+
+		.blocks table th {
+			width: 15px;
+			height: 15px;
+			font-size: 8px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 200px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 400px;
+		}
+	}
+
+	@media screen and (max-width: 320px) {
+		.blocks table th.heading-text {
+			font-size: 8px;
+		}
+
+		.blocks table td {
+			width: 10px;
+			height: 10px;
+			font-size: 6px;
+		}
+
+		.blocks table th {
+			width: 10px;
+			height: 10px;
+			font-size: 6px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 100px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 200px;
+		}
+	}
+
+	@media screen and (max-width: 280px) {
+		.blocks table th.heading-text {
+			font-size: 6px;
+		}
+
+		.blocks table td {
+			width: 8px;
+			height: 8px;
+			font-size: 4px;
+		}
+
+		.blocks table th {
+			width: 8px;
+			height: 8px;
+			font-size: 4px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 50px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 100px;
+		}
+	}
+
+	@media screen and (max-width: 240px) {
+		.blocks table th.heading-text {
+			font-size: 4px;
+		}
+
+		.blocks table td {
+			width: 6px;
+			height: 6px;
+			font-size: 2px;
+		}
+
+		.blocks table th {
+			width: 6px;
+			height: 6px;
+			font-size: 2px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 25px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 50px;
+		}
+	}
+
+	@media screen and (max-width: 200px) {
+		.blocks table th.heading-text {
+			font-size: 2px;
+		}
+
+		.blocks table td {
+			width: 4px;
+			height: 4px;
+			font-size: 1px;
+		}
+
+		.blocks table th {
+			width: 4px;
+			height: 4px;
+			font-size: 1px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 12.5px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 25px;
+		}
+	}
+
+	@media screen and (max-width: 160px) {
+		.blocks table th.heading-text {
+			font-size: 1px;
+		}
+
+		.blocks table td {
+			width: 3px;
+			height: 3px;
+			font-size: 1px;
+		}
+
+		.blocks table th {
+			width: 3px;
+			height: 3px;
+			font-size: 1px;
+		}
+
+		.blocks table.block-1 {
+			top: 0;
+			left: 0;
+		}
+
+		.blocks table.block-2 {
+			top: 0;
+			left: 6.25px;
+		}
+
+		.blocks table.block-3 {
+			top: 0;
+			left: 12.5px;
+		}
 	}
 </style>
 
-<div class="map-container">
-	<div class="legend">
-		<ul>
-			<?php
-			if (isset($_GET['name']) && isset($_GET['id'])) {
-				$sql = "SELECT * FROM tblpeople WHERE PEOPLEID = '{$_GET['id']}'";
-				$mydb->setQuery($sql);
-				$selected = $mydb->loadSingleResult();
-				echo "<li><span style='background: blue;'></span> - Selected</li>";
-			}
-			?>
-			<li><span style="background: red;"></span> - Occupied</li>
-			<li><span style="background: yellow;"></span> - Reserved</li>
-			<li><span style="background: white;"></span> - Available</li>
-		</ul>
-	</div>
-	<img src="./img/map.png" alt="map" class="map" />
 
-	<div class="blocks">
-		<?php
-		
-			$count = 1;
-			for ($i = 1; $i <= $totalBlock; $i++) {
-				echo "<table class='block-$i'>";
-				echo "<thead>";
-				echo "<tr>";
-				echo "<th colspan='$totalColumn' class='heading-text'>Block $i</th>";
-				echo "</tr>";
-				echo "</thead>";
-				echo "<tbody>";
-				for ($j = 1; $j <= $totalRow; $j++) {
-					echo "<tr>";
-					for ($k = 1; $k <= $totalColumn; $k++) {
-						$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
-						$mydb->setQuery($sql);
-						$res = $mydb->loadSingleResult();
-						// get reserved grave
-						$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
-						$mydb->setQuery($sql1);
-						$reserved = $mydb->loadResultList();
+<div class="col-xl-12 d-flex">
+	<div class="content container-fluid">
+		<div class="card invoices-tabs-card">
+			<div class="card-body card-body pt-0 pb-0">
+				<div class="invoices-items-main-tabs">
+					<div class="row align-items-center">
+						<div class="col-lg-12 col-md-12">
+							<div class="invoices-items-tabs">
+								<ul>
+									<li><a href="?q=map" class="active">Map</a></li>
+									<li><a href="?q=view-reserve">Reserve Plot</a></li>
+									<li><a href="?q=report">Report Issues</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-						$reservedGrave = array();
-						foreach ($reserved as $key => $value) {
-							array_push($reservedGrave, $value->graveno);
-						}
-						if (isset($res)) {
-							if ($res->GRAVENO == $count) {
-								if(isset($_GET['name'])){
-									if ($res->PEOPLEID == $_GET['id']) {
-										echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$res->FNAME'>$count</td>";
-									} else {
-										echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
+		<div class="row">
+			<div class="col-12">
+				<div class="card card-table">
+					<div class="card-header">
+						<h4 class="card-title">Map</h4>
+					</div>
+					<div class="card-body">
+						<div class="legend">
+							<ul>
+								<li><span style="background: red;"></span> - Occupied</li>
+								<li><span style="background: yellow;"></span> - Reserved</li>
+								<li><span style="background: white;"></span> - Available</li>
+							</ul>
+						</div>
+						<div class="scroll" id="zoom">
+							<?php
+							$sql = "SELECT * FROM tblpeople";
+							$mydb->setQuery($sql);
+							$res = $mydb->loadResultList();
+
+							$totalRow = 10;
+							$totalColumn = 10;
+							$totalBlock = 3;
+
+
+							?>
+
+							<div class="map-container">
+								<img src="img/map.png" alt="map" class="map">
+								<div class="blocks">
+									<?php
+
+									$count = 1;
+									for ($i = 1; $i <= $totalBlock; $i++) {
+										echo "<table class='block-$i'>";
+										echo "<thead>";
+										echo "<tr>";
+										echo "<th colspan='$totalColumn' class='heading-text'>Block $i</th>";
+										echo "</tr>";
+										echo "</thead>";
+										echo "<tbody>";
+										for ($j = 1; $j <= $totalRow; $j++) {
+											echo "<tr>";
+											for ($k = 1; $k <= $totalColumn; $k++) {
+												$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
+												$mydb->setQuery($sql);
+												$res = $mydb->loadSingleResult();
+												// get reserved grave
+												$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+												$mydb->setQuery($sql1);
+												$reserved = $mydb->loadResultList();
+
+												$reservedGrave = array();
+												foreach ($reserved as $key => $value) {
+													array_push($reservedGrave, $value->graveno);
+												}
+												if (isset($res)) {
+													if ($res->GRAVENO == $count) {
+														echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
+													}
+												} else {
+													if (in_array($count, $reservedGrave)) {
+														echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
+													} else {
+														echo "<td style='background: white; cursor: pointer;' title='Available'>";
+														echo "<a href='?q=reserve-plot-form&graveno=$count&block=$i' style='color: #000; text-decoration: none;'>$count</a>";
+														echo "</td>";
+													}
+												}
+												$count++;
+											}
+											echo "</tr>";
+										}
+										echo "</tbody>";
+										echo "</table>";
 									}
-								}else{
-									echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
-								}
-							}
-						} else {
-							if (in_array($count, $reservedGrave)) {
-								echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
-							} else {
-								echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
-							}
-						}
-						$count++;
-					}
-					echo "</tr>";
-				}
-				echo "</tbody>";
-				echo "</table>";
-			}
-			
 
-		?>
+
+									?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-
-

@@ -8,15 +8,25 @@ $content='home.php';
 if (isset($_GET['q'])){
 	$view = $_GET['q'];
 }else{
-	$view = 'person';
+	$view = 'map';
 	echo "<script> window.location.href = 'index.php?q=".$view."';</script>";
 }
 switch ($view) {
 
-    case 'person' :
-       $title="Deceased Person";	
-       $content='person.php';		
-       break;
+    // case 'person' :
+    //    $title="Deceased Person";	
+    //    $content='person.php';		
+    //    break;
+
+    case 'reserve-plot-form' :
+        $title="Reserve Plot";	
+        $content='reserve-plot-form.php';		
+        break;
+
+    case 'map' :
+        $title="Deceased Persons Map";	
+        $content='map.php';		
+        break;
 
     case 'report' :
         $title="Report Issues";	
@@ -24,13 +34,13 @@ switch ($view) {
         break;
 
     case 'view-reserve' :
-        $title="Reserved Plot";	
+        $title="Reserve Plot";	
         $content='reserved-plot.php';		
         break;
  
    default :
        $title="Home";	
-       $content ='person.php';		
+       $content ='map.php';		
 }
 
 require_once("theme/templates.php");

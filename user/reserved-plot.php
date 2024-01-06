@@ -16,8 +16,9 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
 						<div class="col-lg-12 col-md-12">
 							<div class="invoices-items-tabs">
 								<ul>
-									<li><a href="?q=person">Deceased Person</a></li>
-									<li><a href="?q=view-reserve" class="active">Reserved Plot</a></li>
+									<!-- <li><a href="?q=person">Deceased Person</a></li> -->
+									<li><a href="?q=map">Map</a></li>
+									<li><a href="?q=view-reserve" class="active">Reserve Plot</a></li>
 									<li><a href="?q=report">Report Issues</a></li>
 								</ul>
 							</div>
@@ -26,7 +27,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
 				</div>
 			</div>
 		</div>
-        <div class="card invoices-tabs-card">
+        <!-- <div class="card invoices-tabs-card">
             <div class="card-body card-body pt-0 pb-0">
                 <div class="invoices-main-tabs border-0 pb-0">
                     <div class="row align-items-center">
@@ -40,10 +41,13 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 		<div class="row">
 			<div class="col-12">
 				<div class="card card-table">
+                    <div class="card-header">
+						<h4 class="card-title">Reserve Plot</h4>
+					</div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-stripped table-hover datatable">
@@ -59,7 +63,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
 								</thead>
 								<tbody>
 									<?php
-                                    $sql = "SELECT * FROM tblreserve WHERE user_id = ".$_SESSION['USERID']." ORDER BY id DESC";
+                                    $sql = "SELECT * FROM tblreserve WHERE user_id = ".$_SESSION['USERID']." ORDER BY id ASC";
                                     $mydb->setQuery($sql);
                                     $cur = $mydb->loadResultList();
 					

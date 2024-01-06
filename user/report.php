@@ -8,8 +8,9 @@
 						<div class="col-lg-12 col-md-12">
 							<div class="invoices-items-tabs">
 								<ul>
-									<li><a href="?q=person">Deceased Person</a></li>
-									<li><a href="?q=view-reserve">Reserved Plot</a></li>
+									<!-- <li><a href="?q=person">Deceased Person</a></li> -->
+									<li><a href="?q=map">Map</a></li>
+									<li><a href="?q=view-reserve">Reserve Plot</a></li>
 									<li><a href="?q=report" class="active">Report Issues</a></li>
 								</ul>
 							</div>
@@ -36,6 +37,9 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="card card-table">
+					<div class="card-header">
+						<h4 class="card-title">Reported Issues</h4>
+					</div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-stripped table-hover datatable">

@@ -6,7 +6,7 @@
 	}
 
 	.legend {
-		margin-bottom: 20px;
+		padding: 20px;
 	}
 
 	.legend ul {
@@ -16,7 +16,7 @@
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.legend ul li {
 		margin-right: 20px;
 	}
@@ -34,6 +34,7 @@
 
 	.map {
 		width: 100%;
+		height: 600px;
 	}
 
 	.blocks {
@@ -44,6 +45,7 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 		width: 100%;
+		padding: 20px;
 	}
 
 	.blocks table {
@@ -59,7 +61,7 @@
 	}
 
 	.blocks table th {
-		border: 1px solid #000;
+		border: 0;
 		width: 30px;
 		height: 30px;
 		text-align: center;
@@ -92,7 +94,7 @@
 	.blocks table td:hover {
 		font-weight: bold;
 		cursor: pointer;
-		
+
 	}
 
 	/*
@@ -364,84 +366,95 @@
 	}
 </style>
 
+<div class="row">
+	<div class="col-12">
+		<div class="card card-table">
+			<div class="card-header">
+				<h4 class="card-title">Map</h4>
+			</div>
+			<div class="card-body">
+				<div class="legend">
+					<ul>
+						<li><span style="background: red;"></span> - Occupied</li>
+						<li><span style="background: yellow;"></span> - Reserved</li>
+						<li><span style="background: white;"></span> - Available</li>
+					</ul>
+				</div>
+				<div class="scroll" id="zoom">
+					<?php
+					$sql = "SELECT * FROM tblpeople";
+					$mydb->setQuery($sql);
+					$res = $mydb->loadResultList();
 
-<div class="scroll" id="zoom">
-	<div class="legend">
-		<ul>
-			<li><span style="background: red;"></span> - Occupied</li>
-			<li><span style="background: yellow;"></span> - Reserved</li>
-			<li><span style="background: white;"></span> - Available</li>
-		</ul>
-	</div>
-	<?php
-	$sql = "SELECT * FROM tblpeople";
-	$mydb->setQuery($sql);
-	$res = $mydb->loadResultList();
-
-	$totalRow = 10;
-	$totalColumn = 10;
-	$totalBlock = 3;
+					$totalRow = 10;
+					$totalColumn = 10;
+					$totalBlock = 3;
 
 
-	?>
+					?>
 
-	<div class="map-container">
-		<div class="blocks">
-			<?php
+					<div class="map-container">
+						<img src="../img/map.png" alt="map" class="map">
+						<div class="blocks">
+							<?php
 
-			$count = 1;
-			for ($i = 1; $i <= $totalBlock; $i++) {
-				echo "<table class='block-$i'>";
-				echo "<thead>";
-				echo "<tr>";
-				echo "<th colspan='$totalColumn' class='heading-text'>Block $i</th>";
-				echo "</tr>";
-				echo "</thead>";
-				echo "<tbody>";
-				for ($j = 1; $j <= $totalRow; $j++) {
-					echo "<tr>";
-					for ($k = 1; $k <= $totalColumn; $k++) {
-						$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
-						$mydb->setQuery($sql);
-						$res = $mydb->loadSingleResult();
-						// get reserved grave
-						$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
-						$mydb->setQuery($sql1);
-						$reserved = $mydb->loadResultList();
+							$count = 1;
+							for ($i = 1; $i <= $totalBlock; $i++) {
+								echo "<table class='block-$i'>";
+								echo "<thead>";
+								echo "<tr>";
+								echo "<th colspan='$totalColumn' class='heading-text'>Block $i</th>";
+								echo "</tr>";
+								echo "</thead>";
+								echo "<tbody>";
+								for ($j = 1; $j <= $totalRow; $j++) {
+									echo "<tr>";
+									for ($k = 1; $k <= $totalColumn; $k++) {
+										$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
+										$mydb->setQuery($sql);
+										$res = $mydb->loadSingleResult();
+										// get reserved grave
+										$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+										$mydb->setQuery($sql1);
+										$reserved = $mydb->loadResultList();
 
-						$reservedGrave = array();
-						foreach ($reserved as $key => $value) {
-							array_push($reservedGrave, $value->graveno);
-						}
-						if (isset($res)) {
-							if ($res->GRAVENO == $count) {
-								if (isset($_GET['name'])) {
-									if ($res->PEOPLEID == $_GET['id']) {
-										echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$res->FNAME'>$count</td>";
-									} else {
-										echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
+										$reservedGrave = array();
+										foreach ($reserved as $key => $value) {
+											array_push($reservedGrave, $value->graveno);
+										}
+										if (isset($res)) {
+											if ($res->GRAVENO == $count) {
+												if (isset($_GET['name'])) {
+													if ($res->PEOPLEID == $_GET['id']) {
+														echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$res->FNAME'>$count</td>";
+													} else {
+														echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
+													}
+												} else {
+													echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
+												}
+											}
+										} else {
+											if (in_array($count, $reservedGrave)) {
+												echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
+											} else {
+												echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
+											}
+										}
+										$count++;
 									}
-								} else {
-									echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
+									echo "</tr>";
 								}
+								echo "</tbody>";
+								echo "</table>";
 							}
-						} else {
-							if (in_array($count, $reservedGrave)) {
-								echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
-							} else {
-								echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
-							}
-						}
-						$count++;
-					}
-					echo "</tr>";
-				}
-				echo "</tbody>";
-				echo "</table>";
-			}
 
 
-			?>
+							?>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

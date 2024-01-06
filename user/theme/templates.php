@@ -192,52 +192,8 @@ if (isset($_GET['graveno'])) {
                         </div>
                     </div>
                 </div>
-                <?php } ?>
-                <div class="row">
-                    <?php if (!isset($_GET['graveno'])) { ?>
-                    <div class="col-xl-12 d-flex">
-                        <?php if ($q == 'person') {
-                            include $content;
-                        } ?>
-                    </div>
-                    <?php } ?>
-                    <?php if(isset($_GET['graveno'])){ ?>
-                    <div class="col-xl-12 d-flex">
-                        <div class="card flex-fill">
-                            <div class="card-header">
-                                <a href="index.php?q=person" class="btn btn-primary btn-sm float-end">Back</a>
-                                <h6 class="card-title mb-0">
-                                    Person Details <small class="text-muted">
-                                </h6>
-                                <h5 class="card-title">
-                                    Name: <?= $name; ?>
-                                </h5>
-                                <h5 class="card-title">
-                                    Plot #: <?= $graveno ?>
-                                </h5>
-                                <h5 class="card-title">
-                                    Block #: <?= $section ?>
-                                </h5>
-                                <h5 class="card-title">
-                                    Date of Birth: <?= $born; ?>
-                                </h5>
-                                <h5 class="card-title">
-                                    Date of Death: <?= $died; ?>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <?php
-                                include '../map.php';
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                    <?php } ?>
-                </div>
-
-                <?php if ($_GET['q'] == 'view-reserve' || $_GET['q'] == 'report') {
-                    include $content;
-                } ?>
+                <?php }
+                include $content; ?>
             </div>
         </div>
 
