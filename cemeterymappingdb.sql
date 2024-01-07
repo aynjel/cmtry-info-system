@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2024 at 11:41 AM
+-- Generation Time: Jan 07, 2024 at 04:42 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,7 +41,7 @@ CREATE TABLE `tblautonumber` (
 --
 
 INSERT INTO `tblautonumber` (`ID`, `AUTOSTART`, `AUTOINC`, `AUTOEND`, `AUTOKEY`, `AUTONUM`) VALUES
-(1, '2018', 1, 19, 'PEOPLEID', 0);
+(1, '2018', 1, 21, 'PEOPLEID', 0);
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,7 @@ CREATE TABLE `tblpeople` (
   `BORNDATE` date NOT NULL,
   `DIEDDATE` date NOT NULL,
   `CATEGORIES` enum('1','2','3') NOT NULL,
-  `LOCATION` enum('Poog','Luray','Dumlog','Canlumampao','Ibo','Carmen','Sangi') NOT NULL,
+  `LOCATION` varchar(100) NOT NULL,
   `BURIALDATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -89,11 +89,12 @@ INSERT INTO `tblpeople` (`PEOPLEID`, `FNAME`, `GRAVENO`, `BORNDATE`, `DIEDDATE`,
 (9893, 'John Doe', 2, '2015-12-03', '2020-12-17', '1', 'Ibo', '0000-00-00'),
 (9894, 'Jane Doe', 7, '2014-12-11', '2020-12-31', '1', 'Carmen', '2024-02-09'),
 (9895, 'Kylynn Campbell', 51, '2000-01-12', '2006-01-18', '1', 'Dumlog', '2024-02-06'),
-(9896, 'Colt Weiss', 84, '2001-02-22', '2020-05-23', '1', 'Sangi', '0000-00-00'),
-(9897, 'Daphne Parsons', 268, '2000-09-08', '2003-11-23', '3', 'Canlumampao', '0000-00-00'),
-(201813, 'Cally Joseph', 300, '2020-11-15', '2017-05-29', '3', 'Canlumampao', '0000-00-00'),
-(201819, 'test', 101, '2021-01-05', '2023-02-12', '2', 'Ibo', '2024-01-27'),
-(201820, 'test', 245, '2023-12-31', '2024-02-10', '3', 'Luray', '2024-02-04');
+(9896, 'Colt Weiss', 84, '2001-02-22', '2020-05-23', '1', 'Sangi', '2024-02-10'),
+(9897, 'Daphne Parsons', 268, '2000-09-08', '2003-11-23', '3', 'Canlumampao', '2024-02-04'),
+(201813, 'Cally Joseph', 300, '2020-11-15', '2017-05-29', '3', 'Canlumampao', '2024-02-08'),
+(201820, 'test 123456', 245, '2023-12-31', '2024-02-10', '3', 'Luray', '2024-02-04'),
+(201821, 'Brendan Newton', 99, '2004-03-09', '2006-05-04', '1', 'Balamban', '2024-12-13'),
+(201822, 'Kessie Molina', 254, '2003-08-21', '2011-11-05', '3', 'Bato', '2021-01-26');
 
 -- --------------------------------------------------------
 
@@ -249,7 +250,7 @@ ALTER TABLE `tblcategory`
 -- AUTO_INCREMENT for table `tblpeople`
 --
 ALTER TABLE `tblpeople`
-  MODIFY `PEOPLEID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201821;
+  MODIFY `PEOPLEID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201823;
 
 --
 -- AUTO_INCREMENT for table `tblreport`

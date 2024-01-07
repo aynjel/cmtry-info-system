@@ -387,6 +387,68 @@
 			</div>
 		</div>
 
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Search</h4>
+				<div class="search-box">
+					<form action="" method="POST">
+						<div class="input-group">
+							<input type="text" name="search" class="form-control" placeholder="Search by name, plot no. or block no.">
+							<div class="input-group-append">
+								<button type="submit" name="btnSearch" class="btn btn-primary">Search</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+				<!-- results in table -->
+				<?php
+				if (isset($_POST["btnSearch"])) {
+					$search = $_POST["search"];
+					$sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%$search%' OR GRAVENO LIKE '%$search%' OR CATEGORIES LIKE '%$search%'";
+					$mydb->setQuery($sql);
+					$res = $mydb->loadResultList();
+
+					if (empty($res)) {
+						echo "<h4>No results found.</h4>";
+					} else { ?>
+				<div class="card-body">
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Plot No.</th>
+								<th>Block No.</th>
+								<th>Address</th>
+								<th>Born Date</th>
+								<th>Died Date</th>
+								<th>Burial Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($res as $row) { ?>
+								<tr>
+									<td><?php echo $row->FNAME; ?></td>
+									<td><?php echo $row->GRAVENO; ?></td>
+									<td><?php echo $row->CATEGORIES; ?></td>
+									<td><?php echo $row->LOCATION; ?></td>
+									<td><?php echo date('l, F d, Y', strtotime($row->BORNDATE)); ?></td>
+									<td><?php echo date('l, F d, Y', strtotime($row->DIEDDATE)); ?></td>
+									<td><?php echo date('l, F d, Y', strtotime($row->BURIALDATE)); ?></td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+
+					<!-- clear search -->
+					<div class="text-center">
+						<a href="?q=map" class="btn btn-primary">Clear Search</a>
+					</div>
+					</div>
+			<?php }
+			} ?>
+		</div>
+
 		<div class="row">
 			<div class="col-12">
 				<div class="card card-table">
