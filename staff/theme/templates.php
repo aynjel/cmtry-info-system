@@ -325,20 +325,15 @@ $max = 300;
                         </div>
                     </div>
 
-                <?php } elseif($q == 'plot-location'){?>
+                <?php } elseif ($q == 'plot-location'){?>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col">
-                                            <h5 class="card-title">Reserved Plot</h5>
+                                            <h5 class="card-title">Reserve Plot</h5>
                                         </div>
-                                        <!-- <div class="col-auto">
-                                            <a href="reports.php" class="btn-right btn btn-sm btn-outline-primary">
-                                                View All
-                                            </a>
-                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -346,9 +341,9 @@ $max = 300;
                                         <table class="table table-hover datatable">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>Plot Number</th>
-                                                    <th>Block</th>
+                                                    <!-- <th>ID</th> -->
+                                                    <th>Plot No.</th>
+                                                    <th>Block No.</th>
                                                     <th>Location</th>
                                                     <th>Reserved Date</th>
                                                     <th>Status</th>
@@ -365,7 +360,7 @@ $max = 300;
                                                 if ($reserved) {
                                                     foreach ($reserved as $res) {
                                                         echo '<tr>';
-                                                        echo '<td>' . $res->id . '</td>';
+                                                        // echo '<td>' . $res->id . '</td>';
                                                         echo '<td>' . $res->graveno . '</td>';
                                                         echo '<td>' . $res->block . '</td>';
                                                         echo '<td>' . $res->location . '</td>';
@@ -423,8 +418,8 @@ $max = 300;
                                 echo '<table class="table table-hover table-center mb-0 datatable">';
                                 echo '<thead>';
                                 echo '<tr>';
-                                echo '<th>Plot Number</th>';
-                                echo '<th>Block Number</th>';
+                                echo '<th>Plot No.</th>';
+                                echo '<th>Block No.</th>';
                                 echo '<th>Location</th>';
                                 echo '<th>Name</th>';
                                 echo '<th>Years Buried</th>';
@@ -445,20 +440,40 @@ $max = 300;
                                     echo '<a href="index.php?q=map-info&name=' . $res->FNAME . '&id=' . $res->PEOPLEID . '" class="text-primary">' . $res->GRAVENO . '</a>';
                                     echo '</span></td>';
                                     echo '<td><span class="text-primary"># ' . $res->CATEGORIES . '</span></td>';
-                                    echo '<td><span class="badge bg-info-light">' . $res->LOCATION . '</span></td>';
+                                    echo '<td><span class="text-info">' . $res->LOCATION . '</span></td>';
                                     echo '<td><span class="text-primary text-uppercase">' . $res->FNAME . '</span></td>';
                                     if ($age == 0) {
-                                        echo '<td><span class="badge bg-danger-light">Less than a year</span></td>';
+                                        echo '<td><span class="text-primary">';
+                                        if (date_diff(date_create($res->BORNDATE), date_create($res->DIEDDATE))->m == 0) {
+                                            echo date_diff(date_create($res->BORNDATE), date_create($res->DIEDDATE))->d . ' days';
+                                        } else {
+                                            if (date_diff(date_create($res->BORNDATE), date_create($res->DIEDDATE))->m == 1) {
+                                                echo date_diff(date_create($res->BORNDATE), date_create($res->DIEDDATE))->m . ' month';
+                                            } else {
+                                                echo date_diff(date_create($res->BORNDATE), date_create($res->DIEDDATE))->m . ' months';
+                                            }
+                                        }
+                                        echo '</span></td>';
                                     } else {
-                                        echo '<td><span class="text-primary">' . $age . ' years</span></td>';
+                                        if ($age == 1) {
+                                            echo '<td><span class="text-primary">' . $age . ' year</span></td>';
+                                        } else {
+                                            echo '<td><span class="text-primary">' . $age . ' years</span></td>';
+                                        }
                                     }
                                     echo '<td>' . date_format(date_create($res->BORNDATE), 'F d, Y') . '</td>';
                                     echo '<td>' . date_format(date_create($res->DIEDDATE), 'F d, Y') . '</td>';
                                     echo '<td>' . date_format(date_create($res->BURIALDATE), 'F d, Y') . '</td>';
                                     echo '<td class="text-right">';
-                                    echo '<a href="index.php?q=map-info&name=' . $res->FNAME . '&id=' . $res->PEOPLEID . '" class="btn btn-sm btn-outline-primary">';
-                                    echo '<i class="far fa-eye me-1"></i> View';
+                                    echo '<div class="dropdown dropdown-action">';
+                                    echo '<a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">';
+                                    echo '<i class="fas fa-ellipsis-v"></i>';
                                     echo '</a>';
+                                    echo '<ul class="dropdown-menu dropdown-menu-end">';
+                                    echo '<li><a href="index.php?q=map-info&name=' . $res->FNAME . '&id=' . $res->PEOPLEID . '" class="dropdown-item"><i class="far fa-eye me-1"></i> View</a></li>';
+                                    echo '<li><a href="index.php?q=edit-deceased&id=' . $res->PEOPLEID . '" class="dropdown-item"><i class="far fa-edit me-1"></i> Edit</a></li>';
+                                    echo '</ul>';
+                                    echo '</div>';
                                     echo '</td>';
                                     echo '</tr>';
                                 }
@@ -497,7 +512,7 @@ $max = 300;
                             }?>
                         </div>
                     </div>
-                <?php } else if ($q == 'reports') {
+                <?php } elseif ($q == 'reports') {
                     $sql = "SELECT * FROM tblreport";
                     $mydb->setQuery($sql);
                     $cur = $mydb->executeQuery();
@@ -587,8 +602,7 @@ $max = 300;
                             } ?>
                         </div>
                     </div>
-                <?php
-                } else if ($q == 'report-view' && isset($_GET['id'])) {
+                <?php } elseif ($q == 'report-view' && isset($_GET['id'])) {
                     $id = $_GET['id'];
                     $status = isset($_POST['r-status']) ? $_POST['r-status'] : '';
                     $sql1 = "SELECT * FROM tblreport WHERE id = '$id'";
@@ -649,8 +663,108 @@ $max = 300;
                             </form>
                         </div>
                     </div>
-                <?php
-                } else {
+                <?php } elseif ($q == 'edit-deceased' && isset($_GET['id'])){
+                    $id = $_GET['id'];
+                    $sql = "SELECT * FROM tblpeople WHERE PEOPLEID = '$id'";
+                    $mydb->setQuery($sql);
+                    $cur = $mydb->executeQuery();
+                    $deceased = $mydb->loadSingleResult();
+
+                    if (isset($_POST['deceased-update'])) {
+                        $name = $_POST['FNAME'];
+                        $born_date = $_POST['BORNDATE'];
+                        $died_date = $_POST['DIEDDATE'];
+                        $burial_date = $_POST['BURIALDATE'];
+
+
+                        $sql = "UPDATE tblpeople SET FNAME = '$name', BORNDATE = '$born_date', DIEDDATE = '$died_date', BURIALDATE = '$burial_date' WHERE PEOPLEID = '$id'";
+                        $mydb->setQuery($sql);
+                        $cur = $mydb->executeQuery();
+
+                        if ($cur) {
+                            echo '<script>alert("Deceased Person Updated Successfully!")</script>';
+                            echo '<script>window.location.href = "index.php?q=person-list";</script>';
+                        } else {
+                            echo '<script>alert("Something went wrong!")</script>';
+                            echo '<script>window.location.href = "index.php?q=person-list";</script>';
+                        }
+                    }
+                ?>
+                <form method="POST">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="form-header text-start mb-0">
+                                <h4 class="mb-0">Edit Deceased Person</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="bank-inner-details">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="FNAME" 
+                                            value="<?= $deceased->FNAME; ?>"
+                                            >
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>
+                                                Address (Location)
+                                            </label>
+                                            <input 
+                                            type="number" 
+                                            class="form-control" 
+                                            name="LOCATION"
+                                            value="<?= $deceased->LOCATION; ?>"
+                                            >
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label>
+                                                Born Date
+                                            </label>
+                                            <input type="date" class="form-control" name="BORNDATE" value="<?= $deceased->BORNDATE; ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label>
+                                                Died Date
+                                            </label>
+                                            <input type="date" class="form-control" name="DIEDDATE" value="<?= $deceased->DIEDDATE; ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label>
+                                                Burial Date
+                                            </label>
+                                            <input type="date" class="form-control" name="BURIALDATE" value="<?= $deceased->BURIALDATE; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="bank-details-btn">
+                                <button type="submit" name="deceased-update" class="btn bank-save-btn">Update</button>
+                                <a href="index.php?q=person-list" class="btn bank-cancel-btn me-2">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <?php } else {
                     include $q . '.php';
                 } ?>
             </div>
