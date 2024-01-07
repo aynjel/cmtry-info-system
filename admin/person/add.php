@@ -144,7 +144,7 @@
                       <div class="col-md-8">
 
                       <input class="form-control input-sm" id="LOCATION" name="LOCATION" placeholder=
-                            "Location" type="text" value="">
+                            "Location" type="text">
                              
                         <!-- <select class="form-control input-sm" name="LOCATION" id="LOCATION">
                           <option selected hidden disabled>Select Location</option>
