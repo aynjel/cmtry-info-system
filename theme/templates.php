@@ -91,15 +91,9 @@ if (isset($search)) {
       <?php if ($q == 'details' && isset($_GET['id']) && isset($_GET['graveno'])) { ?>
         <section class="details" id="details">
           <div class="details-content">
-            <?php if (isset($_GET['location'])) { ?>
-              <a class="back" href="index.php?q=search&location=<?= $_GET['location']; ?>#search">
-                <i class="fas fa-arrow-left"></i> Back
-              </a>
-            <?php } else { ?>
               <a class="back" href="index.php?q=search&search=<?= $_GET['name']; ?>#search">
                 <i class="fas fa-arrow-left"></i> Back
               </a>
-            <?php } ?>
             <img src="https://ui-avatars.com/api/?name=<?= $_GET['name']; ?>&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="<?= $_GET['name']; ?>">
             <h2>
               <?= $_GET['name']; ?>
@@ -187,8 +181,7 @@ if (isset($search)) {
               <div class="search-result-content">
                 <?php if ($numrows > 0) {
                   while ($row = $mydb->fetch_array($cur)) { ?>
-                  <!-- href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details" -->
-                    <a class="search-result-item" href="#">
+                    <a class="search-result-item" href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
                       <img src="https://ui-avatars.com/api/?name=<?= $row['FNAME']; ?>&background=random&color=000&rounded=true&bold=true&format=svg" alt="<?= $row['FNAME']; ?>">
                       <div class="search-result-item-content">
                         <h3>

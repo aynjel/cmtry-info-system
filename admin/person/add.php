@@ -8,23 +8,23 @@
 
 ?> 
  <form class="form-horizontal span6" action="controller.php?action=add" method="POST" enctype="multipart/form-data"    >
- <div class="row">
+      <div class="row">
          <div class="col-lg-12">
             <h1 class="page-header">Add New Person</h1>
           </div>
           <!-- /.col-lg-12 -->
        </div> 
 
-                   <div class="form-group">
-                    <div class="col-md-8">
-                      <label class="col-md-4 control-label" for=
-                      "GRAVENO">Number:</label>
-
+                  <div class="form-group">
                       <div class="col-md-8">
-                            <input class="form-control input-sm" id="GRAVENO" name="GRAVENO" placeholder=
-                            "Grave Number" type="text" value="">
+                        <label class="col-md-4 control-label" for=
+                        "GRAVENO">Plot No.:</label>
+
+                        <div class="col-md-8">
+                              <input class="form-control input-sm" id="GRAVENO" name="GRAVENO" placeholder=
+                              "Grave Number" type="number" value="" min="1" max="300" required>
+                        </div>
                       </div>
-                    </div>
                   </div> 
 
                  <div class="form-group">
@@ -70,15 +70,18 @@
 
                       <div class="col-md-8">
                        <select class="form-control input-sm" name="CATEGORIES" id="CATEGORIES">
-                          <option selected hidden>Select Block</option>
+                          <option selected hidden disabled>Select Block</option>
+                          <option value="1">1 (Plot no. 1 - 100)</option>
+                          <option value="2">2 (Plot no. 101 - 200)</option>
+                          <option value="3">3 (Plot no. 201 - 300)</option>
                           <?php
                             //Statement
-                          $mydb->setQuery("SELECT * FROM `tblcategory`");
-                          $cur = $mydb->loadResultList();
+                        //   $mydb->setQuery("SELECT * FROM `tblcategory`");
+                        //   $cur = $mydb->loadResultList();
 
-                        foreach ($cur as $result) {
-                          echo  '<option value='.$result->CATEGORIES.' >'.$result->CATEGORIES.'</option>';
-                          }
+                        // foreach ($cur as $result) {
+                        //   echo  '<option value='.$result->CATEGORIES.' >'.$result->CATEGORIES.'</option>';
+                        //   }
                           ?>
           
                         </select> 

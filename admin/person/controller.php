@@ -21,69 +21,59 @@ switch ($action) {
 
    
 function doInsert(){
-	global $mydb;
-	if(isset($_POST['save'])){
+	var_dump($_POST);
+	// global $mydb;
+	// if(isset($_POST['save'])){
+	// 	if ($_POST['FNAME'] == "" || $_POST['GRAVENO'] == "") {
+	// 				echo "<script>alert('Please fill up all required fields!')</script>";
+	// 				redirect('index.php');
+	// 				}else{	
 
-		 
-		
-				
-				// $borndate =  ($_POST['BORNDATE'] !='') ? @date_format(date_create($_POST['BORNDATE']), "Y-m-d"): '0000-00-00';
-				// $dieddate =  ($_POST['DIEDDATE'] !='') ? @date_format(date_create($_POST['DIEDDATE']), "Y-m-d") : '0000-00-00';
+	// 					$sql = "SELECT * FROM `tblpeople` WHERE `GRAVENO`= '".$_POST['GRAVENO']."'";
+	// 				    $mydb->setQuery($sql);
+	// 				    $cur = $mydb->loadSingleResult();
 
-				$borndate =  $_POST['BORNDATE'];
-				$dieddate =  $_POST['DIEDDATE'];
+	// 				    if ($cur->GRAVENO== $_POST['GRAVENO']) {
+	// 				    	# code...
+	// 				    	// message("Grave number is already exists!","error");
+	// 						echo "<script>alert('Grave number is already exists!')</script>";
+	// 						redirect('index.php');
+	// 				    }else{
 
-		 
-		 	
-					if ($_POST['FNAME'] == "" || $_POST['GRAVENO'] == "") {
-					echo "<script>alert('Please fill up all required fields!')</script>";
-					redirect('index.php');
-					}else{	
+	// 						$autonumber = New Autonumber();
+	// 						$res = $autonumber->set_autonumber('PEOPLEID');
 
-						$sql = "SELECT * FROM `tblpeople` WHERE `GRAVENO`= '".$_POST['GRAVENO']."'";
-					    $mydb->setQuery($sql);
-					    $cur = $mydb->loadSingleResult();
-
-					    if ($cur->GRAVENO== $_POST['GRAVENO']) {
-					    	# code...
-					    	// message("Grave number is already exists!","error");
-							echo "<script>alert('Grave number is already exists!')</script>";
-							redirect('index.php');
-					    }else{
-
-							$autonumber = New Autonumber();
-							$res = $autonumber->set_autonumber('PEOPLEID');
-
-							$p = New Person(); 
-							$p->PEOPLEID 	= $res->AUTO; 
-							$p->FNAME 		= $_POST['FNAME'];
-							// $p->LNAME 		= $_POST['LNAME'];
-							// $p->MNAME 		= $_POST['MNAME'];
-							$p->CATEGORIES  = $_POST['CATEGORIES'];
-							$p->BORNDATE	= $borndate;
-							$p->DIEDDATE	= $dieddate; 
-							$p->LOCATION 	= $_POST['LOCATION'];
-							$p->GRAVENO		= $_POST['GRAVENO']; 
-							$p->create();
-							// }
+	// 						$p = New Person(); 
+	// 						$p->PEOPLEID 	= $res->AUTO; 
+	// 						$p->FNAME 		= $_POST['FNAME'];
+	// 						// $p->LNAME 		= $_POST['LNAME'];
+	// 						// $p->MNAME 		= $_POST['MNAME'];
+	// 						$p->CATEGORIES  = $_POST['CATEGORIES'];
+	// 						$p->BORNDATE	= $borndate;
+	// 						$p->DIEDDATE	= $dieddate; 
+	// 						$p->BURIALDATE 	= $_POST['BURIALDATE'];
+	// 						$p->LOCATION 	= $_POST['LOCATION'];
+	// 						$p->GRAVENO		= $_POST['GRAVENO']; 
+	// 						$p->create();
+	// 						// }
 
 	
 
-							$autonumber = New Autonumber();
-							$autonumber->auto_update('PEOPLEID');
+	// 						$autonumber = New Autonumber();
+	// 						$autonumber->auto_update('PEOPLEID');
 
 
 
-							message("New Record created successfully!", "success");
-							redirect("index.php");
+	// 						message("New Record created successfully!", "success");
+	// 						redirect("index.php");
 
-					    }
+	// 				    }
 
 		 
-					}
+	// 				}
 						
-				}
-		}
+	// 			}
+	}
 			  
  
 	function doEdit(){ 
