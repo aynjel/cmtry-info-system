@@ -390,7 +390,7 @@
 		<div class="card">
 			<div class="card-header">
 				<h4 class="card-title">Search</h4>
-				<div class="search-box">
+				<div class="search-box" style="width: 300px;">
 					<form action="" method="POST">
 						<div class="input-group">
 							<input type="text" name="search" class="form-control" placeholder="Search by name, plot no. or block no.">
