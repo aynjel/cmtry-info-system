@@ -18,6 +18,16 @@ switch ($view) {
     //    $content='person.php';		
     //    break;
 
+    case 'person-info' :
+        $title="Deceased Person";	
+        $content='person-info.php';		
+        break;
+
+    case 'map-info' :
+        $title="Deceased Persons Map";	
+        $content='map-info.php';		
+        break;
+
     case 'reserve-plot-form' :
         $title="Reserve Plot";	
         $content='reserve-plot-form.php';		

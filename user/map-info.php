@@ -366,7 +366,6 @@
 	}
 </style>
 
-
 <div class="col-xl-12 d-flex">
 	<div class="content container-fluid">
 		<div class="card invoices-tabs-card">
@@ -386,154 +385,94 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="card">
+		<div class="card card-table">
 			<div class="card-header">
-				<h4 class="card-title">Search</h4>
-				<div class="search-box">
-					<form action="" method="POST">
-						<div class="input-group">
-							<input type="text" name="search" class="form-control" placeholder="Search by name, plot no. or block no.">
-							<div class="input-group-append">
-								<button type="submit" name="btnSearch" class="btn btn-primary">Search</button>
-							</div>
-						</div>
-					</form>
-				</div>
+				<h4 class="card-title">
+					Graveyard Map Information of <?php echo isset($_GET['name']) ? $_GET['name'] : ''; ?>
+				</h4>
+				<!-- back button -->
+				<a href="index.php?q=map" class="btn btn-primary btn-sm">Back</a>
+				<!-- details button -->
+				<?php if (isset($_GET['name'])) : ?>
+					<a href="index.php?q=person-info&id=<?php echo $_GET['id']; ?>&name=<?php echo $_GET['name']; ?>" class="btn btn-primary btn-sm">Details</a>
+				<?php endif; ?>
 			</div>
-				<!-- results in table -->
-				<?php
-				if (isset($_POST["btnSearch"])) {
-					$search = $_POST["search"];
-					$sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%$search%' OR GRAVENO LIKE '%$search%' OR CATEGORIES LIKE '%$search%'";
+			<div class="card-body">
+				<div class="legend">
+					<ul>
+						<li><span style="background: blue;"></span> - Selected</li>
+						<li><span style="background: red;"></span> - Occupied</li>
+						<li><span style="background: yellow;"></span> - Reserved</li>
+						<li><span style="background: white;"></span> - Available</li>
+					</ul>
+				</div>
+				<div class="scroll" id="zoom">
+					<?php
+					$sql = "SELECT * FROM tblpeople";
 					$mydb->setQuery($sql);
 					$res = $mydb->loadResultList();
 
-					if (empty($res)) {
-						echo "<h4>No results found.</h4>";
-					} else { ?>
-				<div class="card-body">
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Plot No.</th>
-								<th>Block No.</th>
-								<th>Address</th>
-								<th>Born Date</th>
-								<th>Died Date</th>
-								<th>Burial Date</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach ($res as $row) { ?>
-								<tr>
-									<td><?php echo $row->FNAME; ?></td>
-									<td><?php echo $row->GRAVENO; ?></td>
-									<td><?php echo $row->CATEGORIES; ?></td>
-									<td><?php echo $row->LOCATION; ?></td>
-									<td><?php echo date('l, F d, Y', strtotime($row->BORNDATE)); ?></td>
-									<td><?php echo date('l, F d, Y', strtotime($row->DIEDDATE)); ?></td>
-									<td><?php echo date('l, F d, Y', strtotime($row->BURIALDATE)); ?></td>
-									<td>
-										<a href="?q=map-info&id=<?php echo $row->PEOPLEID; ?>&name=<?php echo $row->FNAME; ?>" class="btn btn-primary">View</a>
-									</td>
-								</tr>
-							<?php } ?>
-						</tbody>
-					</table>
+					$totalRow = 10;
+					$totalColumn = 10;
+					$totalBlock = 3;
 
-					<!-- clear search -->
-					<div class="text-center">
-						<a href="?q=map" class="btn btn-primary">Clear Search</a>
-					</div>
-					</div>
-			<?php }
-			} ?>
-		</div>
 
-		<div class="row">
-			<div class="col-12">
-				<div class="card card-table">
-					<div class="card-header">
-						<h4 class="card-title">Map</h4>
-					</div>
-					<div class="card-body">
-						<div class="legend">
-							<ul>
-								<li><span style="background: red;"></span> - Occupied</li>
-								<li><span style="background: yellow;"></span> - Reserved</li>
-								<li><span style="background: white;"></span> - Available</li>
-							</ul>
-						</div>
-						<div class="scroll" id="zoom">
+					?>
+
+					<div class="map-container">
+						<img src="../img/map.png" alt="map" class="map">
+						<div class="blocks">
 							<?php
-							$sql = "SELECT * FROM tblpeople";
-							$mydb->setQuery($sql);
-							$res = $mydb->loadResultList();
 
-							$totalRow = 10;
-							$totalColumn = 10;
-							$totalBlock = 3;
+							$count = 1;
+							for ($i = 1; $i <= $totalBlock; $i++) {
+								echo "<table class='block-$i'>";
+								echo "<thead>";
+								echo "<tr>";
+								echo "<th colspan='$totalColumn' class='heading-text'>Block $i</th>";
+								echo "</tr>";
+								echo "</thead>";
+								echo "<tbody>";
+								for ($j = 1; $j <= $totalRow; $j++) {
+									echo "<tr>";
+									for ($k = 1; $k <= $totalColumn; $k++) {
+										$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
+										$mydb->setQuery($sql);
+										$res = $mydb->loadSingleResult();
+										// get reserved grave
+										$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+										$mydb->setQuery($sql1);
+										$reserved = $mydb->loadResultList();
+
+										$reservedGrave = array();
+										foreach ($reserved as $key => $value) {
+											array_push($reservedGrave, $value->graveno);
+										}
+										if (isset($res)) {
+											if ($res->PEOPLEID == $_GET['id']) {
+												echo "<td style='background: blue; cursor: pointer;' title='Selected'>$count</td>";
+											} else {
+												echo "<td style='background: red; cursor: pointer;' title='Occupied'>$count</td>";
+											}
+										} else {
+											if (in_array($count, $reservedGrave)) {
+												echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
+											} else {
+												echo "<td style='background: white; cursor: pointer;' title='Available'>";
+												echo "<a href='?q=reserve-plot-form&graveno=$count&block=$i' style='color: #000; text-decoration: none;'>$count</a>";
+												echo "</td>";
+											}
+										}
+										$count++;
+									}
+									echo "</tr>";
+								}
+								echo "</tbody>";
+								echo "</table>";
+							}
 
 
 							?>
-
-							<div class="map-container">
-								<img src="img/map.png" alt="map" class="map">
-								<div class="blocks">
-									<?php
-
-									$count = 1;
-									for ($i = 1; $i <= $totalBlock; $i++) {
-										echo "<table class='block-$i'>";
-										echo "<thead>";
-										echo "<tr>";
-										echo "<th colspan='$totalColumn' class='heading-text'>Block $i</th>";
-										echo "</tr>";
-										echo "</thead>";
-										echo "<tbody>";
-										for ($j = 1; $j <= $totalRow; $j++) {
-											echo "<tr>";
-											for ($k = 1; $k <= $totalColumn; $k++) {
-												$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
-												$mydb->setQuery($sql);
-												$res = $mydb->loadSingleResult();
-												// get reserved grave
-												$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
-												$mydb->setQuery($sql1);
-												$reserved = $mydb->loadResultList();
-
-												$reservedGrave = array();
-												foreach ($reserved as $key => $value) {
-													array_push($reservedGrave, $value->graveno);
-												}
-												if (isset($res)) {
-													if ($res->GRAVENO == $count) {
-														echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
-													}
-												} else {
-													if (in_array($count, $reservedGrave)) {
-														echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
-													} else {
-														echo "<td style='background: white; cursor: pointer;' title='Available'>";
-														echo "<a href='?q=reserve-plot-form&graveno=$count&block=$i' style='color: #000; text-decoration: none;'>$count</a>";
-														echo "</td>";
-													}
-												}
-												$count++;
-											}
-											echo "</tr>";
-										}
-										echo "</tbody>";
-										echo "</table>";
-									}
-
-
-									?>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
