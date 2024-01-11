@@ -7,6 +7,8 @@
 
 	.legend {
 		padding: 20px;
+		background-color: #59b272;
+
 	}
 
 	.legend ul {
@@ -54,6 +56,7 @@
 
 	.blocks table td {
 		border: 1px solid #000;
+		border: 10px solid #59b272;
 		width: 30px;
 		height: 30px;
 		text-align: center;
@@ -414,7 +417,9 @@
 										$mydb->setQuery($sql);
 										$res = $mydb->loadSingleResult();
 										// get reserved grave
-										$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+										// $sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+										$sql1 = "SELECT * FROM tblreserve";
+
 										$mydb->setQuery($sql1);
 										$reserved = $mydb->loadResultList();
 

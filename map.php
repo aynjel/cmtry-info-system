@@ -7,6 +7,7 @@
 
 	.legend {
 		padding: 20px;
+		background-color: #59b272;
 	}
 
 	.legend ul {
@@ -54,7 +55,8 @@
 	}
 
 	.blocks table td {
-		border: 1px solid #000;
+		/* border: 1px solid #000; */
+		border: 10px solid #59b272;
 		width: 30px;
 		height: 30px;
 		text-align: center;
@@ -369,9 +371,19 @@
 
 <div class="legend">
 	<ul>
-		<li><span style="background: red;"></span> - Occupied</li>
-		<li><span style="background: yellow;"></span> - Reserved</li>
-		<li><span style="background: white;"></span> - Available</li>
+		<?php
+		if (isset($_GET['name']) && isset($_GET['id'])) {
+		?>
+			<li><span style="background: blue;"></span> - Selected</li>
+			<li><span style="background: red;"></span> - Occupied</li>
+			<li><span style="background: green;"></span> - Reserved</li>
+			<li><span style="background: white;"></span> - Available</li>
+			<?php
+		} else { ?>
+			<li><span style="background: red;"></span> - Occupied</li>
+			<li><span style="background: green;"></span> - Reserved</li>
+			<li><span style="background: white;"></span> - Available</li>
+		<?php } ?>
 	</ul>
 </div>
 <div class="scroll" id="zoom">
@@ -408,7 +420,7 @@
 						$mydb->setQuery($sql);
 						$res = $mydb->loadSingleResult();
 						// get reserved grave
-						$sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+						$sql1 = "SELECT * FROM tblreserve";
 						$mydb->setQuery($sql1);
 						$reserved = $mydb->loadResultList();
 
@@ -434,7 +446,7 @@
 								$mydb->setQuery($sql2);
 								$reserve = $mydb->loadSingleResult();
 								$reserveId = $reserve->id;
-								echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
+								echo "<td style='background: green; cursor: pointer;' title='Reserved'>$count</td>";
 							} else {
 								echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
 							}
