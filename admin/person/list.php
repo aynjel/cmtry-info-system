@@ -21,6 +21,7 @@ check_message();
 					<th>Block</th>
 					<th>Address</th>
 					<th>Burial Date</th>
+					<th>Person to be Contacted</th>
 				</tr>
 			</thead>
 
@@ -51,6 +52,30 @@ check_message();
 					echo '<td>' . $result->CATEGORIES . '</td>';
 					echo '<td>' . $result->LOCATION . '</td>';
 					echo '<td>' . $result->BURIALDATE . '</td>';
+
+					// query for person to be contacted in  tblreserve
+					$query = "SELECT * FROM `tblreserve` WHERE `graveno` = '" . $result->GRAVENO . "'";
+					$mydb->setQuery($query);
+					$cur = $mydb->loadResultList();
+
+					if (count($cur) > 1) {
+						echo '<td>';
+						foreach ($cur as $result) {
+							if ($result->status == 'Approved') {
+								echo $result->email . '<br>'. '('.$result->mobile_number.')';
+							}
+						}
+						echo '</td>';
+					}else{
+						echo '<td>';
+						foreach ($cur as $result) {
+							if ($result->status == 'Approved') {
+								echo $result->email . '<br>'. '('.$result->mobile_number.')';
+							}
+						}
+						echo '</td>';
+					}
+
 					echo '</tr>';
 				}
 				?>
