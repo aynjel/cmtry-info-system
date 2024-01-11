@@ -91,7 +91,7 @@ if (isset($search)) {
       <?php if ($q == 'details' && isset($_GET['id']) && isset($_GET['graveno'])) { ?>
         <section class="details" id="details">
           <div class="details-content">
-              <a class="back" href="index.php?q=search&search=<?= $_GET['name']; ?>#search">
+              <a class="back" href="javascript:history.back()">
                 <i class="fas fa-arrow-left"></i> Back
               </a>
             <img src="https://ui-avatars.com/api/?name=<?= $_GET['name']; ?>&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="<?= $_GET['name']; ?>">
@@ -174,6 +174,9 @@ if (isset($search)) {
             <section class="search-result" id="search">
               <?php if (isset($search)) { ?>
                 <p class="p">
+                  <a href="index.php?q=home#hero">
+                    <i class="fas fa-arrow-left"></i> Back to home
+                  </a>
                   Search result for "<?= $search ?>"
                   (<?= $numrows; ?> results)
                 </p>
@@ -181,7 +184,7 @@ if (isset($search)) {
               <div class="search-result-content">
                 <?php if ($numrows > 0) {
                   while ($row = $mydb->fetch_array($cur)) { ?>
-                    <a class="search-result-item" href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
+                    <div class="search-result-item">
                       <img src="https://ui-avatars.com/api/?name=<?= $row['FNAME']; ?>&background=random&color=000&rounded=true&bold=true&format=svg" alt="<?= $row['FNAME']; ?>">
                       <div class="search-result-item-content">
                         <h3>
@@ -218,9 +221,15 @@ if (isset($search)) {
                               <path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
                             </svg> <?= $row['CATEGORIES']; ?>
                           </li>
+                          <li>
+                          <a href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
+                          View Map
+                        </a>
+                          </li>
                         </ul>
+                        
                       </div>
-                    </a>
+                    </div>
                   <?php
                   }
                 } else { ?>
@@ -239,9 +248,7 @@ if (isset($search)) {
                 } ?>
               </div>
 
-              <a href="index.php?q=home#hero" class="back-to-home" style="margin-top: 30px;">
-                <i class="fas fa-arrow-left"></i> Back to home
-              </a>
+              
 
               <!--div for next and previous button-->
               <div class="next-prev-btn">

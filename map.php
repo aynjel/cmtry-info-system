@@ -50,7 +50,7 @@
 	}
 
 	.blocks table {
-		border-collapse: collapse;
+		/* border-collapse: collapse; */
 	}
 
 	.blocks table td {

@@ -24,7 +24,7 @@ body{
     align-items: center;
     justify-content: space-between;
     padding: 0 50px;
-    background-color: #005B41;
+    background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
@@ -57,12 +57,13 @@ body{
 
 .nav-link{
     text-decoration: none;
-    color: #fff;
+    color: #555555;
     transition: all 0.3s ease;
 }
 
 .nav-link-active{
-    color: #008170;
+    color: #204ac8de;
+    font-weight: 700;
 }
 
 .hero{
@@ -464,7 +465,7 @@ body{
 .footer{
     width: 100%;
     height: 200px;
-    background-color: #008170;
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -484,7 +485,7 @@ body{
 .footer .footer-nav-item{
     font-size: 1.1em;
     font-weight: 500;
-    color: #fff;
+    color:  #555555;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -492,23 +493,23 @@ body{
 .footer .footer-nav-item a{
     font-size: 1.1em;
     font-weight: 500;
-    color: #fff;
+    color: #555555;
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
 .footer .footer-nav-item:hover{
-    color: #ff0051;
+    color: #4c4c4c;
 }
 
 .footer .footer-nav-item a:hover{
-    color: #ff0051;
+    color: #4c4c4c;
 }
 
 .footer p{
     font-size: 1.1em;
     font-weight: 500;
-    color: #fff;
+    color: #555555;
     margin-bottom: 20px;
 }
 
@@ -592,6 +593,21 @@ body{
     color: #fff;
     font-size: 1.1em;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.search-result .p a{
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background-color: #008170;
+    position: absolute;
+    top: 10px;
+    left: -200px;
 }
 
 .search-result .next-prev-btn{
@@ -637,7 +653,7 @@ body{
     /* justify-content: center; */
     flex-direction: column;
     padding: 20px;
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: all 0.3s ease;
 }
 
@@ -691,6 +707,18 @@ body{
     width: 20px;
     height: 20px;
     fill: #fff;
+}
+
+.search-result-item-content a{
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background-color: #008170;
+
 }
 
 .clear-location{
