@@ -91,9 +91,9 @@ if (isset($search)) {
       <?php if ($q == 'details' && isset($_GET['id']) && isset($_GET['graveno'])) { ?>
         <section class="details" id="details">
           <div class="details-content">
-              <a class="back" href="javascript:history.back()">
-                <i class="fas fa-arrow-left"></i> Back
-              </a>
+            <a class="back" href="javascript:history.back()">
+              <i class="fas fa-arrow-left"></i> Back
+            </a>
             <img src="https://ui-avatars.com/api/?name=<?= $_GET['name']; ?>&background=random&color=000&rounded=true&size=32&bold=true&format=svg" alt="<?= $_GET['name']; ?>">
             <h2>
               <?= $_GET['name']; ?>
@@ -222,12 +222,12 @@ if (isset($search)) {
                             </svg> <?= $row['CATEGORIES']; ?>
                           </li>
                           <li>
-                          <a href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
-                          View Map
-                        </a>
+                            <a href="index.php?q=details&id=<?= $row['PEOPLEID']; ?>&name=<?= $row['FNAME']; ?>&location=<?= $row['LOCATION']; ?>&graveno=<?= $row['GRAVENO']; ?>&section=<?= $row['CATEGORIES']; ?>&born=<?= $row['BORNDATE']; ?>&died=<?= $row['DIEDDATE']; ?>#details">
+                              Click this to View Map
+                            </a>
                           </li>
                         </ul>
-                        
+
                       </div>
                     </div>
                   <?php
@@ -248,7 +248,7 @@ if (isset($search)) {
                 } ?>
               </div>
 
-              
+
 
               <!--div for next and previous button-->
               <div class="next-prev-btn">

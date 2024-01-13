@@ -1,32 +1,32 @@
-<?php 
+<?php
 $per_page = 10; // Number of records per page
 
 $search = isset($_POST['search']) ? $_POST['search'] : "";
 $location = isset($_GET['location']) ? $_GET['location'] : '';
 
-?> 
+?>
 
 <div class="col-xl-12 d-flex">
-	<div class="content container-fluid">
+    <div class="content container-fluid">
 
-		<div class="card invoices-tabs-card">
-			<div class="card-body card-body pt-0 pb-0">
-				<div class="invoices-items-main-tabs">
-					<div class="row align-items-center">
-						<div class="col-lg-12 col-md-12">
-							<div class="invoices-items-tabs">
-								<ul>
-									<!-- <li><a href="?q=person">Deceased Person</a></li> -->
-									<li><a href="?q=map">Map</a></li>
-									<li><a href="?q=view-reserve" class="active">Reserve Plot</a></li>
-									<li><a href="?q=report">Report Issues</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="card invoices-tabs-card">
+            <div class="card-body card-body pt-0 pb-0">
+                <div class="invoices-items-main-tabs">
+                    <div class="row align-items-center">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="invoices-items-tabs">
+                                <ul>
+                                    <!-- <li><a href="?q=person">Deceased Person</a></li> -->
+                                    <li><a href="?q=map">Map</a></li>
+                                    <li><a href="?q=view-reserve" class="active">Reserve Plot</a></li>
+                                    <li><a href="?q=report">Report Issues</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- <div class="card invoices-tabs-card">
             <div class="card-body card-body pt-0 pb-0">
                 <div class="invoices-main-tabs border-0 pb-0">
@@ -42,34 +42,34 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                 </div>
             </div>
         </div> -->
-		<div class="row">
-			<div class="col-12">
-				<div class="card card-table">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-table">
                     <div class="card-header">
-						<h4 class="card-title">Reserve Plot</h4>
-					</div>
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-stripped table-hover datatable">
-								<thead class="thead-light">
-									<tr>
-										<th>ID</th>
-										<th>PLOT NUMBER</th>
-										<th>BLOCK</th>
-										<th>LOCATION</th>
-										<th>DATE RESERVED</th>
-										<th>STATUS</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-                                    $sql = "SELECT * FROM tblreserve WHERE user_id = ".$_SESSION['USERID']." ORDER BY id ASC";
+                        <h4 class="card-title">Reserve Plot</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-stripped table-hover datatable">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>PLOT NUMBER</th>
+                                        <th>BLOCK</th>
+                                        <th>ADDRESS</th>
+                                        <th>DATE RESERVED</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $sql = "SELECT * FROM tblreserve WHERE user_id = " . $_SESSION['USERID'] . " ORDER BY id ASC";
                                     $mydb->setQuery($sql);
                                     $cur = $mydb->loadResultList();
-					
-									if ($cur) {
+
+                                    if ($cur) {
                                         foreach ($cur as $res) {
-                                            echo '<tr>'; 
+                                            echo '<tr>';
                                             echo '<td>' . $res->id . '</td>';
                                             echo '<td>' . $res->graveno . '</td>';
                                             echo '<td>' . $res->block . '</td>';
@@ -83,31 +83,31 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                                                 echo '<td><span class="badge bg-danger">' . $res->status . '</span></td>';
                                             } else if ($res->status == 'Contacted') {
                                                 echo '<td><span class="badge bg-info">' . $res->status . '</span></td>';
-                                            }else{
+                                            } else {
                                                 echo '<td><span class="badge bg-danger">' . $res->status . '</span></td>';
                                             }
                                             echo '</tr>';
-										}
-									}else{
-                                        echo '<tr>'; 
-                                        echo '<td colspan="7" style="text-align:center">No Record Found!</td>'; 
-                                        echo '</tr>'; 
-									}?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                        }
+                                    } else {
+                                        echo '<tr>';
+                                        echo '<td colspan="7" style="text-align:center">No Record Found!</td>';
+                                        echo '</tr>';
+                                    } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div class="modal custom-modal fade bank-details" id="reserve-plot-modal" role="dialog">
-	<div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <?php 
+            <?php
             if (isset($_POST['reserve'])) {
                 $plot_no = $_POST['plot_no'];
                 $location = $_POST['location'];
@@ -119,11 +119,11 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                 $sql = "SELECT * FROM tblreserve WHERE graveno = '$plot_no' AND status = 'Approved'";
                 $mydb->setQuery($sql);
                 $cur = $mydb->loadResultList();
-                
+
                 if ($cur) {
                     message("Plot number is already reserved!", "error");
                 } else {
-                    $sql = "INSERT INTO tblreserve (graveno, location, block, mobile_number, email, user_id) VALUES ('$plot_no', '$location', '$block', '$mobile_number', '$email', ".$_SESSION['USERID'].")";
+                    $sql = "INSERT INTO tblreserve (graveno, location, block, mobile_number, email, user_id) VALUES ('$plot_no', '$location', '$block', '$mobile_number', '$email', " . $_SESSION['USERID'] . ")";
                     $mydb->setQuery($sql);
                     $res = $mydb->executeQuery();
                     if ($res) {
@@ -133,7 +133,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                         message("Something went wrong! Please try again.", "error");
                     }
                 }
-                redirect(web_root."user/index.php?q=view-reserve");
+                redirect(web_root . "user/index.php?q=view-reserve");
             }
             ?>
             <form method="POST">
@@ -164,16 +164,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                                             </i>
                                         </small>
                                     </p>
-                                    <input 
-                                    type="number" 
-                                    class="form-control" 
-                                    name="plot_no" 
-                                    min="1"
-                                    max="300"
-                                    placeholder="Plot No. 1 to 100 - Block 1, Plot No. 101 to 200 - Block 2, Plot No. 201 to 300 - Block 3"
-                                    title="Plot number must be between 1 to 300"
-                                    required
-                                    >
+                                    <input type="number" class="form-control" name="plot_no" min="1" max="300" placeholder="Plot No. 1 to 100 - Block 1, Plot No. 101 to 200 - Block 2, Plot No. 201 to 300 - Block 3" title="Plot number must be between 1 to 300" required>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
@@ -256,5 +247,5 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                 </div>
             </form>
         </div>
-	</div>
+    </div>
 </div>

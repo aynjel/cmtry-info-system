@@ -20,6 +20,7 @@
 
 	.legend ul li {
 		margin-right: 20px;
+		color: #fff;
 	}
 
 	.legend ul li span {
@@ -50,11 +51,12 @@
 	}
 
 	.blocks table {
-		border-collapse: collapse;
+		/* border-collapse: collapse; */
 	}
 
 	.blocks table td {
-		border: 1px solid #000;
+		/* border: 1px solid #000; */
+		border: 10px solid #59b272;
 		width: 30px;
 		height: 30px;
 		text-align: center;
@@ -366,6 +368,7 @@
 		}
 	}
 </style>
+
 
 <div class="col-xl-12 d-flex">
 	<div class="content container-fluid">

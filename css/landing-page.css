@@ -185,7 +185,7 @@ body{
     align-items: center;
     flex-direction: column;
     gap: 20px;
-    padding: 0 50px;
+    /* padding: 0 50px; */
 }
 
 .about-content h2{
@@ -710,6 +710,7 @@ body{
 }
 
 .search-result-item-content a{
+    text-align: center;
     text-decoration: none;
     font-size: 1.1em;
     font-weight: 500;
@@ -719,6 +720,20 @@ body{
     transition: all 0.3s ease;
     background-color: #008170;
 
+}
+
+/* .search-result-item-content li a{
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+} */
+
+.search-result-item-content li a:hover{
+    background-color: #00ad96;
 }
 
 .clear-location{

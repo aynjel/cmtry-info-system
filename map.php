@@ -371,33 +371,19 @@
 
 <div class="legend">
 	<ul>
-		<?php
-		if (isset($_GET['name']) && isset($_GET['id'])) {
-		?>
-			<li><span style="background: blue;"></span> - Selected</li>
-			<li><span style="background: red;"></span> - Occupied</li>
-			<li><span style="background: green;"></span> - Reserved</li>
-			<li><span style="background: white;"></span> - Available</li>
-			<?php
-		} else { ?>
-			<li><span style="background: red;"></span> - Occupied</li>
-			<li><span style="background: green;"></span> - Reserved</li>
-			<li><span style="background: white;"></span> - Available</li>
+		<?php if (isset($_GET['name']) && isset($_GET['id'])) { ?>
+		<li><span style="background: blue;"></span> - Selected</li>
 		<?php } ?>
+		<li><span style="background: red;"></span> - Occupied</li>
+		<li><span style="background: yellow;"></span> - Reserved/Contacted</li>
+		<li><span style="background: white;"></span> - Available</li>
 	</ul>
 </div>
 <div class="scroll" id="zoom">
 	<?php
-	$sql = "SELECT * FROM tblpeople";
-	$mydb->setQuery($sql);
-	$res = $mydb->loadResultList();
-
 	$totalRow = 10;
 	$totalColumn = 10;
-	$totalBlock = 3;
-
-
-	?>
+	$totalBlock = 3; ?>
 
 	<div class="map-container">
 		<img src="img/map.png" alt="map" class="map">
@@ -416,40 +402,22 @@
 				for ($j = 1; $j <= $totalRow; $j++) {
 					echo "<tr>";
 					for ($k = 1; $k <= $totalColumn; $k++) {
-						$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
+						$sql = "SELECT * FROM `tblreserve` WHERE `graveno` = '$count'";
 						$mydb->setQuery($sql);
-						$res = $mydb->loadSingleResult();
-						// get reserved grave
-						$sql1 = "SELECT * FROM tblreserve";
-						$mydb->setQuery($sql1);
-						$reserved = $mydb->loadResultList();
-
-						$reservedGrave = array();
-						foreach ($reserved as $key => $value) {
-							array_push($reservedGrave, $value->graveno);
-						}
-						if (isset($res)) {
-							if ($res->GRAVENO == $count) {
-								if (isset($_GET['name'])) {
-									if ($res->PEOPLEID == $_GET['id']) {
-										echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$res->FNAME'>$count</td>";
-									} else {
-										echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
-									}
-								} else {
-									echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'>$count</td>";
-								}
-							}
-						} else {
-							if (in_array($count, $reservedGrave)) {
-								$sql2 = "SELECT * FROM tblreserve WHERE graveno = '$count'";
-								$mydb->setQuery($sql2);
-								$reserve = $mydb->loadSingleResult();
-								$reserveId = $reserve->id;
-								echo "<td style='background: green; cursor: pointer;' title='Reserved'>$count</td>";
+						$row = $mydb->executeQuery();
+						$maxrow = $mydb->num_rows($row);
+						$object = $mydb->loadSingleResult();
+						
+						if ($maxrow > 0) {
+							if ($object->status == 'Approved') {
+								echo "<td style='background: red; cursor: pointer;' title='Occupied'>$count</td>";
+							} else if ($object->status == 'Contacted') {
+								echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
 							} else {
 								echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
 							}
+						} else {
+							echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
 						}
 						$count++;
 					}
@@ -464,4 +432,3 @@
 		</div>
 	</div>
 </div>
-				

@@ -1,11 +1,11 @@
-<?php 
+<?php
 $per_page = 10; // Number of records per page
 
 $search = isset($_POST['search']) ? $_POST['search'] : "";
 $location = isset($_GET['location']) ? $_GET['location'] : '';
 $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current page number
 
-?> 
+?>
 
 <div class="col-xl-12 d-flex">
 	<div class="content container-fluid">
@@ -37,14 +37,14 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current pag
 								<form method="POST" action="index.php?q=person">
 									<select name="location" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()">
 										<option hidden selected>Select Location</option>
-										<!-- <option value="" <?= $location=='' ? 'selected' : ''; ?>>All</option> -->
-										<option value="Sangi" <?= $location=='Sangi' ? 'selected' : ''; ?>>Sangi</option>
-										<option value="Luray" <?= $location=='Luray' ? 'selected' : ''; ?>>Luray</option>
-										<option value="Dumlog" <?= $location=='Dumlog' ? 'selected' : ''; ?>>Dumlog</option>
-										<option value="Carmen" <?= $location=='Carmen' ? 'selected' : ''; ?>>Carmen</option>
-										<option value="Canlumampao" <?= $location=='Canlumampao' ? 'selected' : ''; ?>>Canlumampao</option>
-										<option value="Poog" <?= $location=='Poog' ? 'selected' : ''; ?>>Poog</option>
-										<option value="Ibo" <?= $location=='Ibo' ? 'selected' : ''; ?>>Ibo</option>
+										<!-- <option value="" <?= $location == '' ? 'selected' : ''; ?>>All</option> -->
+										<option value="Sangi" <?= $location == 'Sangi' ? 'selected' : ''; ?>>Sangi</option>
+										<option value="Luray" <?= $location == 'Luray' ? 'selected' : ''; ?>>Luray</option>
+										<option value="Dumlog" <?= $location == 'Dumlog' ? 'selected' : ''; ?>>Dumlog</option>
+										<option value="Carmen" <?= $location == 'Carmen' ? 'selected' : ''; ?>>Carmen</option>
+										<option value="Canlumampao" <?= $location == 'Canlumampao' ? 'selected' : ''; ?>>Canlumampao</option>
+										<option value="Poog" <?= $location == 'Poog' ? 'selected' : ''; ?>>Poog</option>
+										<option value="Ibo" <?= $location == 'Ibo' ? 'selected' : ''; ?>>Ibo</option>
 									</select>
 								</form>
 							</div>
@@ -65,7 +65,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current pag
 										<th>Plot Number</th>
 										<th>Born</th>
 										<th>Died</th>
-										<th>Location</th>
+										<th>Address</th>
 										<!-- <th>Years Buried</th> -->
 										<th class="text-right">Action</th>
 									</tr>
@@ -75,7 +75,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current pag
 									$mydb->setQuery("SELECT * FROM tblpeople");
 									$cur = $mydb->executeQuery();
 									$numrows = $mydb->num_rows($cur);
-						
+
 									if (isset($_POST['location'])) {
 										# ...
 										if (isset($_GET['name'])) {
@@ -87,83 +87,82 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current pag
 									} else {
 										$sql = "SELECT * FROM tblpeople";
 									}
-						
+
 									$mydb->setQuery($sql);
 									$cur = $mydb->executeQuery();
-					
+
 									# code...
 									if ($numrows > 0) {
-											# code... 
+										# code... 
 										$cur = $mydb->loadResultList();
 
 										foreach ($cur as $res) {
 
 											echo '<tr>';
-											echo '<td>'.$res->FNAME.'</td>';
-											echo '<td>'.$res->GRAVENO.'</td>';
-											echo '<td>'.$res->BORNDATE.'</td>';
-											echo '<td>'.$res->DIEDDATE.'</td>';
-											echo '<td>'.$res->LOCATION.'</td>';
-											echo '<td class="text-right"><a href="index.php?q=details&id='.$res->PEOPLEID.'&graveno='.$res->GRAVENO.'&name='.$res->FNAME.'&location='.$res->LOCATION.'&section='.$res->CATEGORIES.'" class="btn btn-sm btn-white text-info me-2"><i class="far fa-eye me-1"></i> View</a></td>';
+											echo '<td>' . $res->FNAME . '</td>';
+											echo '<td>' . $res->GRAVENO . '</td>';
+											echo '<td>' . $res->BORNDATE . '</td>';
+											echo '<td>' . $res->DIEDDATE . '</td>';
+											echo '<td>' . $res->LOCATION . '</td>';
+											echo '<td class="text-right"><a href="index.php?q=details&id=' . $res->PEOPLEID . '&graveno=' . $res->GRAVENO . '&name=' . $res->FNAME . '&location=' . $res->LOCATION . '&section=' . $res->CATEGORIES . '" class="btn btn-sm btn-white text-info me-2"><i class="far fa-eye me-1"></i> View</a></td>';
 											echo '</tr>';
-
 										}
-
-									}else{
-											echo '<tr>'; 
-											echo '<td colspan="7" style="text-align:center">No Record Found!</td>'; 
-											echo '</tr>'; 
-									}?>
+									} else {
+										echo '<tr>';
+										echo '<td colspan="7" style="text-align:center">No Record Found!</td>';
+										echo '</tr>';
+									} ?>
 								</tbody>
 							</table>
 							<!-- <?php $pagination = pagination($total_pages, $current_page, 'index.php?q=person&page='); // Generate the pagination
-							echo $pagination;
+									echo $pagination;
 
-							function pagination($total_pages, $current_page, $targetpage) {
-								$pagination = '';
-								if ($total_pages > 0) {
-									$pagination .= '<ul class="pagination" id="pagination">';
-									$right_links = $current_page + 3;
-									$previous = $current_page - 3; //previous link
-									$next = $current_page + 1; //next link
-									$first_link = true; //boolean var to decide our first link
-									
-									if ($current_page > 1) {
-										$previous_link = ($previous == 0) ? 1 : $previous;
-										$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $previous_link . '#pagination">Previous</a></li>'; //previous link
-										for ($i = ($current_page - 2); $i < $current_page; $i++) { //Create left-hand side links
-											if ($i > 0) {
-												$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $i . '#pagination">' . $i . '</a></li>';
+									function pagination($total_pages, $current_page, $targetpage)
+									{
+										$pagination = '';
+										if ($total_pages > 0) {
+											$pagination .= '<ul class="pagination" id="pagination">';
+											$right_links = $current_page + 3;
+											$previous = $current_page - 3; //previous link
+											$next = $current_page + 1; //next link
+											$first_link = true; //boolean var to decide our first link
+
+											if ($current_page > 1) {
+												$previous_link = ($previous == 0) ? 1 : $previous;
+												$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $previous_link . '#pagination">Previous</a></li>'; //previous link
+												for ($i = ($current_page - 2); $i < $current_page; $i++) { //Create left-hand side links
+													if ($i > 0) {
+														$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $i . '#pagination">' . $i . '</a></li>';
+													}
+												}
+												$first_link = false; //set first link to false
 											}
+
+											if ($first_link) { //if current active page is first link
+												$pagination .= '<li class="page-item active"><a class="page-link" href="#">' . $current_page . '</a></li>';
+											} elseif ($current_page == $total_pages) { //if it's the last active link
+												$pagination .= '<li class="page-item active"><a class="page-link" href="#">' . $current_page . '</a></li>';
+											} else { //regular current link
+												$pagination .= '<li class="page-item active"><a class="page-link" href="#">' . $current_page . '</a></li>';
+											}
+
+											for ($i = $current_page + 1; $i < $right_links; $i++) { //create right-hand side links
+												if ($i <= $total_pages) {
+													$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $i . '#pagination">' . $i . '</a></li>';
+												}
+											}
+
+											if ($current_page < $total_pages) {
+												$next_link = ($i > $total_pages) ? $total_pages : $i;
+												$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $next_link . '#pagination">Next</a></li>'; //next link
+											}
+
+
+
+											$pagination .= '</ul>';
 										}
-										$first_link = false; //set first link to false
-									}
-
-									if ($first_link) { //if current active page is first link
-										$pagination .= '<li class="page-item active"><a class="page-link" href="#">' . $current_page . '</a></li>';
-									} elseif ($current_page == $total_pages) { //if it's the last active link
-										$pagination .= '<li class="page-item active"><a class="page-link" href="#">' . $current_page . '</a></li>';
-									} else { //regular current link
-										$pagination .= '<li class="page-item active"><a class="page-link" href="#">' . $current_page . '</a></li>';
-									}
-
-									for ($i = $current_page + 1; $i < $right_links; $i++) { //create right-hand side links
-										if ($i <= $total_pages) {
-											$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $i . '#pagination">' . $i . '</a></li>';
-										}
-									}
-
-									if ($current_page < $total_pages) {
-										$next_link = ($i > $total_pages) ? $total_pages : $i;
-										$pagination .= '<li class="page-item"><a class="page-link" href="' . $targetpage . $next_link . '#pagination">Next</a></li>'; //next link
-									}
-
-
-
-									$pagination .= '</ul>';
-								}
-								return $pagination; //return pagination links
-							} ?> -->
+										return $pagination; //return pagination links
+									} ?> -->
 						</div>
 					</div>
 				</div>

@@ -40,12 +40,12 @@ $max = 300;
                         <i class="fas fa-map-marker-alt"></i>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item"> -->
                     <!-- add new people button modal -->
-                    <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="modal" data-bs-target="#add-people-modal">
+                    <!-- <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="modal" data-bs-target="#add-people-modal">
                         <i class="fas fa-plus-circle"></i>
-                    </a>
-                </li>
+                    </a> -->
+                <!-- </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="user-img">
@@ -114,7 +114,7 @@ $max = 300;
                                         $plot = $mydb->loadResultList();
                                         $total = $max - count($plot);
                                         ?>
-                                        <div class="dash-title">Plot Location</div>
+                                        <div class="dash-title">Plot Address</div>
                                         <div class="dash-counts">
                                             <p><?= $total; ?>
                                                 <?php if ($_GET['q'] != 'plot-location' && $_GET['q'] != 'reserved-plot') { ?>
@@ -132,7 +132,7 @@ $max = 300;
                                     <div class="progress-bar bg-6" role="progressbar" style="width: <?= $percent; ?>%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <p class="text-muted mt-3 mb-0">
-                                    There are <?= $total; ?> plot location available
+                                    There are <?= $total; ?> plot address available
                                 </p>
                             </div>
                         </div>
@@ -191,6 +191,18 @@ $max = 300;
                                 <div class="col">
                                     <h5 class="card-title">Reserved Plot Information</h5>
                                     <span class="badge bg-<?= $reserved->status == 'Pending' ? 'warning' : ($reserved->status == 'Approved' ? 'success' : 'danger'); ?>"><?= $reserved->status; ?></span>
+                                    <?php if ($reserved->status == 'Approved') {
+                                        $sql = "SELECT * FROM tblpeople WHERE GRAVENO = '" . $reserved->graveno . "'";
+                                        $mydb->setQuery($sql);
+                                        $cur = $mydb->executeQuery();
+                                        $numrows = $mydb->num_rows($cur); ?>
+                                        <?php if ($numrows > 0) {
+                                            $cur = $mydb->loadSingleResult(); ?>
+                                            <span class="badge bg-info">Occupied</span>
+                                        <?php } else { ?>
+                                            <span class="badge bg-danger">Vacant</span>
+                                        <?php } ?>
+                                    <?php } ?>
                                 </div>
                                 <div class="col-auto">
                                     <a href="index.php?q=plot-location" class="btn btn-sm btn-outline-primary">
@@ -198,10 +210,106 @@ $max = 300;
                                     </a>
                                 </div>
                             </div>
+
+                            <?php
+                            if (isset($_GET['isEdit']) == 'true') { ?>
+                                <hr>
+                                <div class="row">
+                                    <p class="text-muted mb-3">Update status of reserved plot.</p>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <form method="POST">
+                                                <label>Status</label>
+                                                <!-- form to update status -->
+                                                <?php
+                                                if (isset($_POST['status'])) {
+                                                    $status = $_POST['status'];
+
+                                                    // if status is Declined then delete the reserved plot
+                                                    if ($status == 'Declined') {
+                                                        $sql = "DELETE FROM tblreserve WHERE id = '$id'";
+                                                        $mydb->setQuery($sql);
+                                                        $cur = $mydb->executeQuery();
+
+                                                        if ($cur) {
+                                                            echo '<script>alert("Status Updated Successfully!")</script>';
+                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                        } else {
+                                                            echo '<script>alert("Something went wrong!")</script>';
+                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                        }
+                                                    } else {
+                                                        $sql = "UPDATE tblreserve SET status = '$status' WHERE id = '$id'";
+                                                        $mydb->setQuery($sql);
+                                                        $cur = $mydb->executeQuery();
+
+                                                        if ($cur) {
+                                                            echo '<script>alert("Status Updated Successfully!")</script>';
+                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                        } else {
+                                                            echo '<script>alert("Something went wrong!")</script>';
+                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                        }
+                                                    }
+                                                }
+
+                                                if ($reserved->status == 'Contacted') { ?>
+                                                    <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()" id="sel">
+                                                        <option hidden selected>Select Status</option>
+                                                        <option value="Approved" <?= $reserved->status == 'Approved' ? 'selected' : ''; ?>>Approved</option>
+                                                        <option value="Declined" <?= $reserved->status == 'Declined' ? 'selected' : ''; ?>>Declined</option>
+                                                    </select>
+                                                <?php
+                                                } else { ?>
+                                                    <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()" id="sel">
+                                                        <option hidden selected>Select Status</option>
+                                                        <option value="Contacted" <?= $reserved->status == 'Contacted' ? 'selected' : ''; ?>>Contacted</option>
+                                                        <option value="Declined" <?= $reserved->status == 'Declined' ? 'selected' : ''; ?>>Declined</option>
+                                                    </select>
+                                                <?php } ?>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-12 col-sm-12 col-12">
+                                    <?php if(isset($_GET['isEdit']) == 'true'){ ?>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <h4>
+                                                    <i class="fas fa-user me-1"></i> Deceased Person Information
+                                                </h4>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    <input type="text" class="form-control" name="name" placeholder="Ex. Juan Dela Cruz">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Born Date</label>
+                                                    <input type="date" class="form-control" name="born_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Died Date</label>
+                                                    <input type="date" class="form-control" name="died_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Burial Date</label>
+                                                    <input type="date" class="form-control" name="burial_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                     <div class="row">
                                         <p class="text-muted mb-3">Information about reserved plot.</p>
                                         <div class="col-lg-2 col-md-2">
@@ -224,7 +332,7 @@ $max = 300;
                                         </div>
                                         <div class="col-lg-3 col-md-3">
                                             <div class="form-group">
-                                                <label>Location</label>
+                                                <label>Address</label>
                                                 <input type="text" class="form-control" value="<?= $reserved->location; ?>" disabled>
                                             </div>
                                         </div>
@@ -251,45 +359,7 @@ $max = 300;
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <p class="text-muted mb-3">Update status of reserved plot.</p>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="form-group">
-                                                <form method="POST">
-                                                    <label>Status</label>
-                                                    <!-- form to update status -->
-                                                    <?php
-                                                    if (isset($_POST['status'])) {
-                                                        $status = $_POST['status'];
-                                                        $sql = "UPDATE tblreserve SET status = '$status' WHERE id = '$id'";
-                                                        $mydb->setQuery($sql);
-                                                        $cur = $mydb->executeQuery();
 
-                                                        if ($cur) {
-                                                            echo '<script>alert("Status Updated Successfully!")</script>';
-                                                            echo '<script>window.location.href = "index.php?q=reserved-plot&id=' . $id . '#sel";</script>';
-                                                        } else {
-                                                            echo '<script>alert("Something went wrong!")</script>';
-                                                            echo '<script>window.location.href = "index.php?q=reserved-plot&id=' . $id . '#sel";</script>';
-                                                        }
-                                                    }
-
-                                                    // disable is if status is approved
-                                                    if ($reserved->status == 'Approved') {
-                                                        echo '<input type="text" class="form-control" value="' . $reserved->status . '" disabled>';
-                                                    } else { ?>
-                                                        <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()" id="sel">
-                                                            <option hidden selected>Select Status</option>
-                                                            <option value="Contacted" <?= $reserved->status == 'Contacted' ? 'selected' : ''; ?>>Contacted</option>
-                                                            <option value="Approved" <?= $reserved->status == 'Approved' ? 'selected' : ''; ?>>Approved</option>
-                                                            <option value="Declined" <?= $reserved->status == 'Declined' ? 'selected' : ''; ?>>Declined</option>
-                                                        </select>
-                                                    <?php } ?>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -305,7 +375,7 @@ $max = 300;
                             $numrows = $mydb->num_rows($cur); ?>
                             <?php if ($numrows > 0) {
                                 $cur = $mydb->loadSingleResult(); ?>
-                                
+
                                 <div class="card flex-fill bg-white">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">Deceased Person Information on this Plot</h5>
@@ -325,7 +395,7 @@ $max = 300;
                         </div>
                     </div>
 
-                <?php } elseif ($q == 'plot-location'){?>
+                <?php } elseif ($q == 'plot-location') { ?>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="card">
@@ -344,19 +414,19 @@ $max = 300;
                                                     <!-- <th>ID</th> -->
                                                     <th>Plot No.</th>
                                                     <th>Block No.</th>
-                                                    <th>Location</th>
+                                                    <th>Address</th>
                                                     <th>Reserved Date</th>
                                                     <th>Status</th>
                                                     <th class="text-right">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
+                                                <?php
                                                 $sql = "SELECT * FROM tblreserve";
                                                 $mydb->setQuery($sql);
                                                 $cur = $mydb->executeQuery();
                                                 $reserved = $mydb->loadResultList();
-                                                
+
                                                 if ($reserved) {
                                                     foreach ($reserved as $res) {
                                                         echo '<tr>';
@@ -365,18 +435,37 @@ $max = 300;
                                                         echo '<td>' . $res->block . '</td>';
                                                         echo '<td>' . $res->location . '</td>';
                                                         echo '<td>' . date_format(date_create($res->created_at), 'l, F d, Y') . '</td>';
-                                                        if ($res->status == 'Pending') {
-                                                            echo '<td><span class="badge bg-warning">' . $res->status . '</span></td>';
+                                                        if ($res->status == 'Contacted') {
+                                                            echo '<td><span class="badge bg-warning text-dark">' . $res->status . '</span></td>';
                                                         } else if ($res->status == 'Approved') {
                                                             echo '<td><span class="badge bg-success">' . $res->status . '</span></td>';
                                                         } else {
                                                             echo '<td><span class="badge bg-danger">' . $res->status . '</span></td>';
                                                         }
-                                                        echo '<td class="text-right">';
-                                                        echo '<a href="?q=reserved-plot&id=' . $res->id .'" class="btn btn-sm btn-outline-primary">';
-                                                        echo '<i class="far fa-eye me-1"></i> View';
-                                                        echo '</a>';
-                                                        echo '</td>';
+
+                                                        // check if the plot is occupied or vacant
+                                                        $sql = "SELECT * FROM tblpeople WHERE GRAVENO = '" . $res->graveno . "'";
+                                                        $mydb->setQuery($sql);
+                                                        $cur = $mydb->executeQuery();
+                                                        $numrows = $mydb->num_rows($cur);
+
+                                                        if ($numrows > 0) {
+                                                            $cur = $mydb->loadSingleResult();
+                                                            echo '<td class="text-right">';
+                                                            echo '<a href="?q=reserved-plot&id=' . $res->id . '" class="btn btn-sm btn-outline-primary">';
+                                                            echo '<i class="far fa-eye me-1"></i> View';
+                                                            echo '</a>';
+                                                            echo '</td>';
+                                                        } else {
+                                                            echo '<td class="text-right">';
+                                                            echo '<a href="?q=reserved-plot&id=' . $res->id . '" class="btn btn-sm btn-outline-primary">';
+                                                            echo '<i class="far fa-eye me-1"></i> View';
+                                                            echo '</a>';
+                                                            echo '<a href="index.php?q=reserved-plot&id=' . $res->id . '&isEdit=true" class="btn btn-sm btn-outline-primary">';
+                                                            echo '<i class="far fa-edit me-1"></i> Edit';
+                                                            echo '</a>';
+                                                            echo '</td>';
+                                                        }
                                                         echo '</tr>';
                                                     }
                                                 } else {
@@ -420,7 +509,7 @@ $max = 300;
                                 echo '<tr>';
                                 echo '<th>Plot No.</th>';
                                 echo '<th>Block No.</th>';
-                                echo '<th>Location</th>';
+                                echo '<th>Address</th>';
                                 echo '<th>Name</th>';
                                 echo '<th>Years Buried</th>';
                                 echo '<th>Born</th>';
@@ -492,7 +581,7 @@ $max = 300;
                                 echo '<tr>';
                                 echo '<th>Plot Number</th>';
                                 echo '<th>Block</th>';
-                                echo '<th>Location</th>';
+                                echo '<th>Address</th>';
                                 echo '<th>Name</th>';
                                 echo '<th>Age</th>';
                                 echo '<th>Born</th>';
@@ -509,7 +598,7 @@ $max = 300;
                                 echo '</div>';
                                 echo '</div>';
                                 echo '</div>';
-                            }?>
+                            } ?>
                         </div>
                     </div>
                 <?php } elseif ($q == 'reports') {
@@ -663,7 +752,7 @@ $max = 300;
                             </form>
                         </div>
                     </div>
-                <?php } elseif ($q == 'edit-deceased' && isset($_GET['id'])){
+                <?php } elseif ($q == 'edit-deceased' && isset($_GET['id'])) {
                     $id = $_GET['id'];
                     $sql = "SELECT * FROM tblpeople WHERE PEOPLEID = '$id'";
                     $mydb->setQuery($sql);
@@ -690,29 +779,24 @@ $max = 300;
                         }
                     }
                 ?>
-                <form method="POST">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="form-header text-start mb-0">
-                                <h4 class="mb-0">Edit Deceased Person</h4>
+                    <form method="POST">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="form-header text-start mb-0">
+                                    <h4 class="mb-0">Edit Deceased Person</h4>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="bank-inner-details">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input 
-                                            type="text" 
-                                            class="form-control" 
-                                            name="FNAME" 
-                                            value="<?= $deceased->FNAME; ?>"
-                                            >
+                            <div class="card-body">
+                                <div class="bank-inner-details">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text" class="form-control" name="FNAME" value="<?= $deceased->FNAME; ?>">
+                                            </div>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- <div class="col-lg-6 col-md-6">
+
+                                        <!-- <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <label>
                                                 Address (Location)
@@ -726,43 +810,43 @@ $max = 300;
                                         </div>
                                     </div> -->
 
-                                    <div class="col-lg-4 col-md-4">
-                                        <div class="form-group">
-                                            <label>
-                                                Born Date
-                                            </label>
-                                            <input type="date" class="form-control" name="BORNDATE" value="<?= $deceased->BORNDATE; ?>">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="form-group">
+                                                <label>
+                                                    Born Date
+                                                </label>
+                                                <input type="date" class="form-control" name="BORNDATE" value="<?= $deceased->BORNDATE; ?>">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-lg-4 col-md-4">
-                                        <div class="form-group">
-                                            <label>
-                                                Died Date
-                                            </label>
-                                            <input type="date" class="form-control" name="DIEDDATE" value="<?= $deceased->DIEDDATE; ?>">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="form-group">
+                                                <label>
+                                                    Died Date
+                                                </label>
+                                                <input type="date" class="form-control" name="DIEDDATE" value="<?= $deceased->DIEDDATE; ?>">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-lg-4 col-md-4">
-                                        <div class="form-group">
-                                            <label>
-                                                Burial Date
-                                            </label>
-                                            <input type="date" class="form-control" name="BURIALDATE" value="<?= $deceased->BURIALDATE; ?>">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="form-group">
+                                                <label>
+                                                    Burial Date
+                                                </label>
+                                                <input type="date" class="form-control" name="BURIALDATE" value="<?= $deceased->BURIALDATE; ?>">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="bank-details-btn">
-                                <button type="submit" name="deceased-update" class="btn bank-save-btn">Update</button>
-                                <a href="index.php?q=person-list" class="btn bank-cancel-btn me-2">Cancel</a>
+                            <div class="card-footer">
+                                <div class="bank-details-btn">
+                                    <button type="submit" name="deceased-update" class="btn bank-save-btn">Update</button>
+                                    <a href="index.php?q=person-list" class="btn bank-cancel-btn me-2">Cancel</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
                 <?php } else {
                     include $q . '.php';
@@ -838,7 +922,7 @@ $max = 300;
                         }
                     }
                     ?>
-                    <form method="POST">
+                    <!-- <form method="POST">
                         <div class="modal-header">
                             <div class="form-header text-start mb-0">
                                 <h4 class="mb-0">Add New Deceased Person</h4>
@@ -907,7 +991,7 @@ $max = 300;
                                 <button type="submit" name="add" class="btn bank-save-btn">Add</button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </div>
