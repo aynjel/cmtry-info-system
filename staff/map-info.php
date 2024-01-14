@@ -413,47 +413,75 @@
 								echo "<tbody>";
 								for ($j = 1; $j <= $totalRow; $j++) {
 									echo "<tr>";
+
 									for ($k = 1; $k <= $totalColumn; $k++) {
 										$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
 										$mydb->setQuery($sql);
-										$res = $mydb->loadSingleResult();
-										// get reserved grave
-										// $sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
-										$sql1 = "SELECT * FROM tblreserve";
+										$person_res = $mydb->loadSingleResult();
 
-										$mydb->setQuery($sql1);
-										$reserved = $mydb->loadResultList();
-
-										$reservedGrave = array();
-										foreach ($reserved as $key => $value) {
-											array_push($reservedGrave, $value->graveno);
-										}
-										if (isset($res)) {
-											if ($res->GRAVENO == $count) {
-												if (isset($_GET['name'])) {
-													if ($res->PEOPLEID == $_GET['id']) {
-														echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$res->FNAME'><a href='index.php?q=person-info&id=$res->GRAVENO&name=$res->FNAME'>$count</a></td>";
-													} else {
-														echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'><a href='index.php?q=person-info&id=$res->GRAVENO&name=$res->FNAME'>$count</a></td>";
-													}
-												} else {
-													echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'><a href='index.php?q=person-info&id=$res->GRAVENO&name=$res->FNAME'>$count</a></td>";
-												}
-											}
-										} else {
-											if (in_array($count, $reservedGrave)) {
-                                                // get reserve id for reserved grave
-                                                $sql2 = "SELECT * FROM tblreserve WHERE graveno = '$count'";
-                                                $mydb->setQuery($sql2);
-                                                $reserve = $mydb->loadSingleResult();
-                                                $reserveId = $reserve->id;
-												echo "<td style='background: yellow; cursor: pointer;' title='Reserved'><a href='index.php?q=reserved-plot&id=$reserveId'>$count</a></td>";
+										$sql = "SELECT * FROM `tblreserve` WHERE `graveno` = '$count'";
+										$mydb->setQuery($sql);
+										$row = $mydb->executeQuery();
+										$maxrow = $mydb->num_rows($row);
+										$object = $mydb->loadSingleResult();
+										
+										if (isset($_GET['name']) && $person_res->PEOPLEID == $_GET['id']) {
+											echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$person_res->FNAME'><a style='color: white;' href='index.php?q=person-info&id=$person_res->GRAVENO&name=$person_res->FNAME'>$count</a></td>";
+										} elseif ($maxrow > 0) {
+											if ($object->status == 'Approved') {
+												echo "<td style='background: red; cursor: pointer;' title='$person_res->FNAME'><a style='color: white;' href='index.php?q=person-info&id=$person_res->GRAVENO&name=$person_res->FNAME'>$count</a></td>";
+											} else if ($object->status == 'Contacted') {
+												echo "<td style='background: yellow; cursor: pointer;' title='Reserved'>$count</td>";
 											} else {
 												echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
 											}
+										} else {
+											echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
 										}
 										$count++;
 									}
+
+									// for ($k = 1; $k <= $totalColumn; $k++) {
+									// 	$sql = "SELECT * FROM tblpeople WHERE GRAVENO = '$count'";
+									// 	$mydb->setQuery($sql);
+									// 	$res = $mydb->loadSingleResult();
+									// 	// get reserved grave
+									// 	// $sql1 = "SELECT * FROM tblreserve WHERE status = 'Contacted'";
+									// 	$sql1 = "SELECT * FROM tblreserve";
+
+									// 	$mydb->setQuery($sql1);
+									// 	$reserved = $mydb->loadResultList();
+
+									// 	$reservedGrave = array();
+									// 	foreach ($reserved as $key => $value) {
+									// 		array_push($reservedGrave, $value->graveno);
+									// 	}
+									// 	if (isset($res)) {
+									// 		if ($res->GRAVENO == $count) {
+									// 			if (isset($_GET['name'])) {
+									// 				if (isset($_GET['name']) && $res->PEOPLEID == $_GET['id']) {
+									// 					echo "<td style='background: blue; cursor: pointer; color: #fff;' title='$res->FNAME'><a href='index.php?q=person-info&id=$res->GRAVENO&name=$res->FNAME'>$count</a></td>";
+									// 				} else {
+									// 					echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'><a href='index.php?q=person-info&id=$res->GRAVENO&name=$res->FNAME'>$count</a></td>";
+									// 				}
+									// 			} else {
+									// 				echo "<td style='background: red; cursor: pointer; color: #fff;'title='$res->FNAME'><a href='index.php?q=person-info&id=$res->GRAVENO&name=$res->FNAME'>$count</a></td>";
+									// 			}
+									// 		}
+									// 	} else {
+									// 		if (in_array($count, $reservedGrave)) {
+                                    //             // get reserve id for reserved grave
+                                    //             $sql2 = "SELECT * FROM tblreserve WHERE graveno = '$count'";
+                                    //             $mydb->setQuery($sql2);
+                                    //             $reserve = $mydb->loadSingleResult();
+                                    //             $reserveId = $reserve->id;
+									// 			echo "<td style='background: yellow; cursor: pointer;' title='Reserved'><a href='index.php?q=reserved-plot&id=$reserveId'>$count</a></td>";
+									// 		} else {
+									// 			echo "<td style='background: white; cursor: pointer;' title='Available'>$count</td>";
+									// 		}
+									// 	}
+									// 	$count++;
+									// }
 									echo "</tr>";
 								}
 								echo "</tbody>";

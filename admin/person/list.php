@@ -56,25 +56,24 @@ check_message();
 					// query for person to be contacted in  tblreserve
 					$query = "SELECT * FROM `tblreserve` WHERE `graveno` = '" . $result->GRAVENO . "'";
 					$mydb->setQuery($query);
-					$cur = $mydb->loadResultList();
+					$cur1 = $mydb->loadResultList();
 
-					if (count($cur) > 1) {
-						echo '<td>';
-						foreach ($cur as $result) {
-							if ($result->status == 'Approved') {
-								echo $result->email . '<br>'. '('.$result->mobile_number.')';
+					echo '<td>';
+					if ($cur1) {
+						foreach ($cur1 as $result1) {
+							$query = "SELECT * FROM `tbluseraccount` WHERE `USERID` = '" . $result1->user_id . "'";
+							$mydb->setQuery($query);
+							$cur2 = $mydb->loadResultList();
+
+							foreach ($cur2 as $result2) {
+								echo $result2->U_NAME . '<br>';
+								echo $result1->mobile_number . '<br>';
 							}
 						}
-						echo '</td>';
-					}else{
-						echo '<td>';
-						foreach ($cur as $result) {
-							if ($result->status == 'Approved') {
-								echo $result->email . '<br>'. '('.$result->mobile_number.')';
-							}
-						}
-						echo '</td>';
+					} else {
+						echo 'NONE';
 					}
+					echo '</td>';
 
 					echo '</tr>';
 				}

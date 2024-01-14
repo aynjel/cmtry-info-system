@@ -41,8 +41,8 @@ $max = 300;
                     </a>
                 </li>
                 <!-- <li class="nav-item"> -->
-                    <!-- add new people button modal -->
-                    <!-- <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="modal" data-bs-target="#add-people-modal">
+                <!-- add new people button modal -->
+                <!-- <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="modal" data-bs-target="#add-people-modal">
                         <i class="fas fa-plus-circle"></i>
                     </a> -->
                 <!-- </li> -->
@@ -190,99 +190,131 @@ $max = 300;
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title">Reserved Plot Information</h5>
-                                    <span class="badge bg-<?= $reserved->status == 'Pending' ? 'warning' : ($reserved->status == 'Approved' ? 'success' : 'danger'); ?>"><?= $reserved->status; ?></span>
+                                    <span class="badge bg-<?= $reserved->status == 'Contacted' ? 'warning' : ($reserved->status == 'Approved' ? 'success' : 'danger'); ?>"><?= $reserved->status; ?></span>
                                     <?php if ($reserved->status == 'Approved') {
                                         $sql = "SELECT * FROM tblpeople WHERE GRAVENO = '" . $reserved->graveno . "'";
                                         $mydb->setQuery($sql);
                                         $cur = $mydb->executeQuery();
-                                        $numrows = $mydb->num_rows($cur); ?>
-                                        <?php if ($numrows > 0) {
+                                        $isO_numrows = $mydb->num_rows($cur); ?>
+                                        <?php if ($isO_numrows > 0) {
                                             $cur = $mydb->loadSingleResult(); ?>
-                                            <span class="badge bg-info">Occupied</span>
+                                            <span class="badge bg-info">Occupied by <?= $cur->FNAME; ?></span>
                                         <?php } else { ?>
                                             <span class="badge bg-danger">Vacant</span>
                                         <?php } ?>
                                     <?php } ?>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-auto ms-auto d-print-none d-flex align-items-center gap-3">
+                                    <?php if (isset($_GET['isEdit']) == 'true') { ?>
+                                        <?php if ($reserved->status == 'Contacted') { ?>
+                                            <a class="btn btn-sm btn-outline-info" href="index.php?q=reserved-plot&id=<?= $id; ?>&isEdit=true#fill-up">
+                                                For this to be approved, you need to fill up the information below.
+                                            </a>
+                                        <?php } ?>
+                                        <?php if ($reserved->status == 'Pending') { ?>
+                                            <!-- <form method="POST">
+                                                <?php if (isset($_POST['approve_reservation'])) {
+                                                    $sql = "UPDATE tblreserve SET status = 'Approved' WHERE id = '$id'";
+                                                    $mydb->setQuery($sql);
+                                                    $cur = $mydb->executeQuery();
+
+                                                    if ($cur) {
+                                                        echo '<script>alert("Reservation Approved Successfully!")</script>';
+                                                        echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                    } else {
+                                                        echo '<script>alert("Something went wrong!")</script>';
+                                                        echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                    }
+                                                } ?>
+                                                <button type="submit" name="approve_reservation" class="btn btn-sm btn-outline-success" onclick="return confirm('Are you sure you want to approve this reservation?')">
+                                                    Approve Reservation
+                                                </button>
+                                            </form> -->
+                                            
+                                            <form method="POST">
+                                                <?php if (isset($_POST['contact_reservation'])) {
+                                                    $sql = "UPDATE tblreserve SET status = 'Contacted' WHERE id = '$id'";
+                                                    $mydb->setQuery($sql);
+                                                    $cur = $mydb->executeQuery();
+
+                                                    if ($cur) {
+                                                        echo '<script>alert("Reservation Contacted Successfully!")</script>';
+                                                        echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                    } else {
+                                                        echo '<script>alert("Something went wrong!")</script>';
+                                                        echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                    }
+                                                } ?>
+                                                <button type="submit" name="contact_reservation" class="btn btn-sm btn-outline-warning" onclick="return confirm('Are you sure you want to set this reservation as contacted?')">
+                                                    Set as Contacted
+                                                </button>
+                                            </form>
+                                        <?php } ?>
+                                        <form method="POST">
+                                            <?php if (isset($_POST['decline_reservation'])) {
+                                                $sql = "DELETE FROM tblreserve WHERE id = '$id'";
+                                                $mydb->setQuery($sql);
+                                                $cur = $mydb->executeQuery();
+
+                                                if ($cur) {
+                                                    echo '<script>alert("Reservation Declined Successfully!")</script>';
+                                                    echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                } else {
+                                                    echo '<script>alert("Something went wrong!")</script>';
+                                                    echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                                }
+                                            } ?>
+                                            <button type="submit" name="decline_reservation" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to decline this reservation?')">
+                                                Decline Reservation
+                                            </button>
+                                        </form>
+                                    <?php } ?>
                                     <a href="index.php?q=plot-location" class="btn btn-sm btn-outline-primary">
                                         Back
                                     </a>
                                 </div>
                             </div>
-
-                            <?php
-                            if (isset($_GET['isEdit']) == 'true') { ?>
-                                <hr>
-                                <div class="row">
-                                    <p class="text-muted mb-3">Update status of reserved plot.</p>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <form method="POST">
-                                                <label>Status</label>
-                                                <!-- form to update status -->
-                                                <?php
-                                                if (isset($_POST['status'])) {
-                                                    $status = $_POST['status'];
-
-                                                    // if status is Declined then delete the reserved plot
-                                                    if ($status == 'Declined') {
-                                                        $sql = "DELETE FROM tblreserve WHERE id = '$id'";
-                                                        $mydb->setQuery($sql);
-                                                        $cur = $mydb->executeQuery();
-
-                                                        if ($cur) {
-                                                            echo '<script>alert("Status Updated Successfully!")</script>';
-                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
-                                                        } else {
-                                                            echo '<script>alert("Something went wrong!")</script>';
-                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
-                                                        }
-                                                    } else {
-                                                        $sql = "UPDATE tblreserve SET status = '$status' WHERE id = '$id'";
-                                                        $mydb->setQuery($sql);
-                                                        $cur = $mydb->executeQuery();
-
-                                                        if ($cur) {
-                                                            echo '<script>alert("Status Updated Successfully!")</script>';
-                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
-                                                        } else {
-                                                            echo '<script>alert("Something went wrong!")</script>';
-                                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
-                                                        }
-                                                    }
-                                                }
-
-                                                if ($reserved->status == 'Contacted') { ?>
-                                                    <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()" id="sel">
-                                                        <option hidden selected>Select Status</option>
-                                                        <option value="Approved" <?= $reserved->status == 'Approved' ? 'selected' : ''; ?>>Approved</option>
-                                                        <option value="Declined" <?= $reserved->status == 'Declined' ? 'selected' : ''; ?>>Declined</option>
-                                                    </select>
-                                                <?php
-                                                } else { ?>
-                                                    <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="this.form.submit()" id="sel">
-                                                        <option hidden selected>Select Status</option>
-                                                        <option value="Contacted" <?= $reserved->status == 'Contacted' ? 'selected' : ''; ?>>Contacted</option>
-                                                        <option value="Declined" <?= $reserved->status == 'Declined' ? 'selected' : ''; ?>>Declined</option>
-                                                    </select>
-                                                <?php } ?>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-xl-12 col-sm-12 col-12">
-                                    <?php if(isset($_GET['isEdit']) == 'true'){ ?>
-                                        <hr>
+                                <form method="POST" id="fill-up">
+                                    <?php
+                                    if (isset($_POST['add_deceased'])) {
+                                        $name = isset($_POST['name']) ? $_POST['name'] : '';
+                                        $born_date = isset($_POST['born_date']) ? $_POST['born_date'] : '';
+                                        $died_date = isset($_POST['died_date']) ? $_POST['died_date'] : '';
+                                        $burial_date = isset($_POST['burial_date']) ? $_POST['burial_date'] : '';
+
+                                        $sql = "INSERT INTO tblpeople (FNAME, BORNDATE, DIEDDATE, BURIALDATE, GRAVENO, CATEGORIES, LOCATION) VALUES ('$name', '$born_date', '$died_date', '$burial_date', '" . $reserved->graveno . "', '" . $reserved->block . "', '" . $reserved->location . "')";
+                                        $mydb->setQuery($sql);
+                                        $cur = $mydb->executeQuery();
+
+                                        if ($cur) {
+                                            $sql = "UPDATE tblreserve SET status = 'Approved' WHERE id = '$id'";
+                                            $mydb->setQuery($sql);
+                                            $cur = $mydb->executeQuery();
+
+                                            if ($cur) {
+                                                echo '<script>alert("Deceased Person Added Successfully!")</script>';
+                                                echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                            } else {
+                                                echo '<script>alert("Something went wrong!")</script>';
+                                                echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                            }
+                                        } else {
+                                            echo '<script>alert("Something went wrong!")</script>';
+                                            echo '<script>window.location.href = "index.php?q=plot-location";</script>';
+                                        }
+                                    }
+                                    ?>
+                                    <div class="col-xl-12 col-sm-12 col-12">
+                                        <?php if ($reserved->status == 'Contacted') { ?>
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12">
                                                 <h4>
                                                     <i class="fas fa-user me-1"></i> Deceased Person Information
                                                 </h4>
+                                                <p class="text-muted mb-3">For this to be approved, you need to fill up the information below.</p>
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="form-group">
@@ -309,58 +341,67 @@ $max = 300;
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php } ?>
-                                    <div class="row">
-                                        <p class="text-muted mb-3">Information about reserved plot.</p>
-                                        <div class="col-lg-2 col-md-2">
-                                            <div class="form-group">
-                                                <label>Ref ID</label>
-                                                <input type="text" class="form-control" value="<?= $reserved->id; ?>" disabled>
+                                        <?php } ?>
+                                        <div class="row">
+                                            <p class="text-muted mb-3">Information about reserved plot.</p>
+                                            <div class="col-lg-2 col-md-2">
+                                                <div class="form-group">
+                                                    <label>Ref ID</label>
+                                                    <input type="text" class="form-control" value="<?= $reserved->id; ?>" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2">
+                                                <div class="form-group">
+                                                    <label>Plot Number</label>
+                                                    <input type="text" class="form-control" value="<?= $reserved->graveno; ?>" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2">
+                                                <div class="form-group">
+                                                    <label>Block</label>
+                                                    <input type="text" class="form-control" value="<?= $reserved->block; ?>" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" value="<?= $reserved->location; ?>" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Date</label>
+                                                    <input type="text" class="form-control" value="<?= date_format(date_create($reserved->created_at), 'l, F d, Y'); ?>" disabled>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-2">
-                                            <div class="form-group">
-                                                <label>Plot Number</label>
-                                                <input type="text" class="form-control" value="<?= $reserved->graveno; ?>" disabled>
+                                        <hr>
+                                        <div class="row">
+                                            <p class="text-muted mb-3">Information about the person who reserved the plot.</p>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <input type="text" class="form-control" value="<?= $reserved->email; ?>" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Mobile Number</label>
+                                                    <input type="text" class="form-control" value="<?= $reserved->mobile_number; ?>" disabled>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-2">
-                                            <div class="form-group">
-                                                <label>Block</label>
-                                                <input type="text" class="form-control" value="<?= $reserved->block; ?>" disabled>
+                                        <?php if (isset($_GET['isEdit']) == 'true' && $reserved->status == 'Contacted') { ?>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <button type="submit" name="add_deceased" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-plus-circle me-1"></i> Add Deceased Person
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3">
-                                            <div class="form-group">
-                                                <label>Address</label>
-                                                <input type="text" class="form-control" value="<?= $reserved->location; ?>" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3">
-                                            <div class="form-group">
-                                                <label>Date</label>
-                                                <input type="text" class="form-control" value="<?= date_format(date_create($reserved->created_at), 'l, F d, Y'); ?>" disabled>
-                                            </div>
-                                        </div>
+                                        <?php } ?>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <p class="text-muted mb-3">Information about the person who reserved the plot.</p>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="text" class="form-control" value="<?= $reserved->email; ?>" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group">
-                                                <label>Mobile Number</label>
-                                                <input type="text" class="form-control" value="<?= $reserved->mobile_number; ?>" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
