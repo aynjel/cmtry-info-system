@@ -174,9 +174,9 @@ if (isset($search)) {
             <section class="search-result" id="search">
               <?php if (isset($search)) { ?>
                 <p class="p">
-                  <a href="index.php?q=home#hero">
+                  <!-- <a href="index.php?q=home#hero">
                     <i class="fas fa-arrow-left"></i> Back to home
-                  </a>
+                  </a> -->
                   Search result for "<?= $search ?>"
                   (<?= $numrows; ?> results)
                 </p>
@@ -280,6 +280,10 @@ if (isset($search)) {
                 }
                 ?>
               </div>
+
+              <a href="index.php?q=home#hero" class="back-to-home">
+                  <i class="fas fa-arrow-left"></i> Back to home
+                </a>
             </section>
           <?php } ?>
 
