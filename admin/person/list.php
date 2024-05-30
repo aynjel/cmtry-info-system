@@ -1,94 +1,91 @@
-<?php
-check_message();
-?>
-
 <div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">List of Deceased Person <a href="index.php?view=add" class="btn btn-primary btn-xs  "> <i class="fa fa-plus-circle fw-fa"></i> New</a> </h1>
-	</div>
-	<!-- /.col-lg-12 -->
-</div>
-<form action="controller.php?action=delete" Method="POST">
-	<div class="table-responsive">
-		<table id="dash-table" class="table table-striped table-bordered table-hover " style="font-size:12px" cellspacing="0">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h2>
+					<i class="fa fa-list"></i> List of Deceased
+					<a href="index.php?view=add" class="btn btn-secondary btn-sm">
+						<i class="fa fa-plus-circle"></i> New
+					</a>
+				</h2>
+			</div>
+			<div class="card-body">
+				<form action="controller.php?action=delete" Method="POST">
+					<div class="table-responsive">
+						<table id="dash-table" class="table table-bordered table-hover" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Plot No.</th>
+									<th>Name of the Deceased</td>
+									<th>Born</th>
+									<th>Died</th>
+									<th>Block</th>
+									<th>Address</th>
+									<th>Burial Date</th>
+									<th>Person to be Contacted</th>
+								</tr>
+							</thead>
 
-			<thead>
-				<tr>
-					<th>Plot No.</th>
-					<th>Name of the Deceased</td>
-					<th>Born</th>
-					<th>Died</th>
-					<th>Block</th>
-					<th>Address</th>
-					<th>Burial Date</th>
-					<th>Person to be Contacted</th>
-				</tr>
-			</thead>
+							<tbody>
+								<?php
 
-			<tbody>
-				<?php
+								$query = "SELECT * FROM `tblpeople` ORDER BY `PEOPLEID` DESC";
+								$mydb->setQuery($query);
+								$cur = $mydb->loadResultList();
 
-				$query = "SELECT * FROM `tblpeople`";
-				$mydb->setQuery($query);
-				$cur = $mydb->loadResultList();
+								foreach ($cur as $result) {
 
-				foreach ($cur as $result) {
+									$borndate =  $result->BORNDATE;
+									$dieddate =  $result->DIEDDATE;
 
-					// $borndate =  ($result->BORNDATE !='0000-00-00') ? date_format(date_create($result->BORNDATE), "m/d/Y"): 'NONE';
-					// $dieddate =  ($result->DIEDDATE !='0000-00-00') ? date_format(date_create($result->DIEDDATE), "m/d/Y") : 'NONE';
+									echo '<tr>';
+									echo '<td><input type="checkbox" name="selector[]" id="selector[]" value="' . $result->PEOPLEID . '"/> ' . $result->GRAVENO . '</td>';
+									// echo '<td><a title="edit" href="'.web_root.'admin/person/index.php?view=edit&id='.$result->PEOPLEID.'"><i class="fa fa-pencil "></i>'.$result->LNAME.', '.$result->FNAME.' '.$result->MNAME.'</a></td>';
+									echo '<td><a title="edit" href="' . web_root . 'admin/person/index.php?view=edit&id=' . $result->PEOPLEID . '"><i class="fa fa-pencil "></i>' . $result->FNAME . '</a></td>';
+									echo '<td>' . $borndate . '</td>';
+									echo '<td>' . $dieddate . '</td>';
+									echo '<td>' . $result->CATEGORIES . '</td>';
+									echo '<td>' . $result->LOCATION . '</td>';
+									echo '<td>' . $result->BURIALDATE . '</td>';
 
+									// query for person to be contacted in  tblreserve
+									$query = "SELECT * FROM `tblreserve` WHERE `graveno` = '" . $result->GRAVENO . "'";
+									$mydb->setQuery($query);
+									$cur1 = $mydb->loadResultList();
 
-					$borndate =  $result->BORNDATE;
-					$dieddate =  $result->DIEDDATE;
+									echo '<td>';
+									if ($cur1) {
+										foreach ($cur1 as $result1) {
+											$query = "SELECT * FROM `tbluseraccount` WHERE `USERID` = '" . $result1->user_id . "'";
+											$mydb->setQuery($query);
+											$cur2 = $mydb->loadResultList();
 
+											foreach ($cur2 as $result2) {
+												echo $result2->U_NAME . '<br>';
+												echo $result1->mobile_number . '<br>';
+											}
+										}
+									} else {
+										echo 'NONE';
+									}
+									echo '</td>';
 
+									echo '</tr>';
+								}
+								?>
+							</tbody>
+						</table>
 
-					echo '<tr>';
-					echo '<td width="1%" align="center"><input type="checkbox" name="selector[]" id="selector[]" value="' . $result->PEOPLEID . '"/>' . $result->GRAVENO . '</td>';
-					// echo '<td><a title="edit" href="'.web_root.'admin/person/index.php?view=edit&id='.$result->PEOPLEID.'"><i class="fa fa-pencil "></i>'.$result->LNAME.', '.$result->FNAME.' '.$result->MNAME.'</a></td>';
-					echo '<td><a title="edit" href="' . web_root . 'admin/person/index.php?view=edit&id=' . $result->PEOPLEID . '"><i class="fa fa-pencil "></i>' . $result->FNAME . '</a></td>';
-					echo '<td>' . $borndate . '</td>';
-					echo '<td>' . $dieddate . '</td>';
-					echo '<td>' . $result->CATEGORIES . '</td>';
-					echo '<td>' . $result->LOCATION . '</td>';
-					echo '<td>' . $result->BURIALDATE . '</td>';
-
-					// query for person to be contacted in  tblreserve
-					$query = "SELECT * FROM `tblreserve` WHERE `graveno` = '" . $result->GRAVENO . "'";
-					$mydb->setQuery($query);
-					$cur1 = $mydb->loadResultList();
-
-					echo '<td>';
-					if ($cur1) {
-						foreach ($cur1 as $result1) {
-							$query = "SELECT * FROM `tbluseraccount` WHERE `USERID` = '" . $result1->user_id . "'";
-							$mydb->setQuery($query);
-							$cur2 = $mydb->loadResultList();
-
-							foreach ($cur2 as $result2) {
-								echo $result2->U_NAME . '<br>';
-								echo $result1->mobile_number . '<br>';
-							}
-						}
-					} else {
-						echo 'NONE';
-					}
-					echo '</td>';
-
-					echo '</tr>';
-				}
-				?>
-			</tbody>
-
-
-		</table>
-
-		<div class="btn-group">
-			<!-- <a href="index.php?view=add" class="btn btn-default">New</a> -->
-			<button type="submit" class="btn btn-default" name="delete" onclick="return confirm('Are you sure you want to delete this data?');"><i class="fa fa-trash fw-fa"></i> Delete Selected</button>
+						<div class="btn-group">
+							<!-- <a href="index.php?view=add" class="btn btn-default">New</a> -->
+							<button type="submit" class="btn btn-danger btn-sm" name="delete" onclick="return confirm('Are you sure you want to delete this data?');"><i class="fa fa-trash fw-fa"></i> Delete Selected</button>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-</form>
+</div>
 
 <div class="modal fade" id="productmodal" tabindex="-1">
 	<div class="modal-dialog">

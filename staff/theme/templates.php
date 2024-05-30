@@ -26,8 +26,6 @@ $max = 300;
     <link rel="stylesheet" href="<?= web_root; ?>/template/assets/css/style.css">
 </head>
 
-</head>
-
 <body>
     <div class="main-wrapper">
         <div class="header header-one">
@@ -230,7 +228,7 @@ $max = 300;
                                                     Approve Reservation
                                                 </button>
                                             </form> -->
-                                            
+
                                             <form method="POST">
                                                 <?php if (isset($_POST['contact_reservation'])) {
                                                     $sql = "UPDATE tblreserve SET status = 'Contacted' WHERE id = '$id'";
@@ -309,38 +307,38 @@ $max = 300;
                                     ?>
                                     <div class="col-xl-12 col-sm-12 col-12">
                                         <?php if ($reserved->status == 'Contacted') { ?>
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12">
-                                                <h4>
-                                                    <i class="fas fa-user me-1"></i> Deceased Person Information
-                                                </h4>
-                                                <p class="text-muted mb-3">For this to be approved, you need to fill up the information below.</p>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="form-group">
-                                                    <label>Name</label>
-                                                    <input type="text" class="form-control" name="name" placeholder="Ex. Juan Dela Cruz">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <h4>
+                                                        <i class="fas fa-user me-1"></i> Deceased Person Information
+                                                    </h4>
+                                                    <p class="text-muted mb-3">For this to be approved, you need to fill up the information below.</p>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Name</label>
+                                                        <input type="text" class="form-control" name="name" placeholder="Ex. Juan Dela Cruz">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Born Date</label>
+                                                        <input type="date" class="form-control" name="born_date">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Died Date</label>
+                                                        <input type="date" class="form-control" name="died_date">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Burial Date</label>
+                                                        <input type="date" class="form-control" name="burial_date">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-3">
-                                                <div class="form-group">
-                                                    <label>Born Date</label>
-                                                    <input type="date" class="form-control" name="born_date">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-3">
-                                                <div class="form-group">
-                                                    <label>Died Date</label>
-                                                    <input type="date" class="form-control" name="died_date">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-3">
-                                                <div class="form-group">
-                                                    <label>Burial Date</label>
-                                                    <input type="date" class="form-control" name="burial_date">
-                                                </div>
-                                            </div>
-                                        </div>
                                         <?php } ?>
                                         <div class="row">
                                             <p class="text-muted mb-3">Information about reserved plot.</p>
@@ -1036,20 +1034,20 @@ $max = 300;
                 </div>
             </div>
         </div>
+    </div>
 
-
-        <script src="<?= web_root; ?>template/assets/js/jquery-3.6.0.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/js/bootstrap.bundle.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/js/feather.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/plugins/moment/moment.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/js/bootstrap-datetimepicker.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/plugins/select2/js/select2.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/plugins/datatables/datatables.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/plugins/apexchart/apexcharts.min.js"></script>
-        <script src="<?= web_root; ?>template/assets/plugins/apexchart/chart-data.js"></script>
-        <script src="<?= web_root; ?>template/assets/js/script.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/feather.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/moment/moment.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/select2/js/select2.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/datatables/datatables.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/apexchart/apexcharts.min.js"></script>
+    <script src="<?= web_root; ?>template/assets/plugins/apexchart/chart-data.js"></script>
+    <script src="<?= web_root; ?>template/assets/js/script.js"></script>
 
 </body>
 
