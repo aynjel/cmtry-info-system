@@ -42,44 +42,18 @@ function doInsert()
 			$p->GRAVENO		= $_POST['GRAVENO'];
 			$p->create();
 
+			$r = new Reserve();
+			$r->user_id = $_SESSION['USERID'];
+			$r->graveno = $_POST['GRAVENO'];
+			$r->block = $_POST['CATEGORIES'];
+			$r->status = 'Approved';
+			$r->create();
+
 			$autonumber = new Autonumber();
 			$autonumber->auto_update('PEOPLEID');
 
 			message("New Record created successfully!", "success");
 			redirect("index.php");
-
-			// $sql = "SELECT * FROM `tblpeople` WHERE `GRAVENO`= '" . $_POST['GRAVENO'] . "'";
-			// $mydb->setQuery($sql);
-			// $cur = $mydb->loadResultList();
-
-			// var_dump($cur);
-			// if ($cur->GRAVENO == $_POST['GRAVENO']) {
-			// 	# code...
-			// 	// message("Grave number is already exists!","error");
-			// 	echo "<script>alert('Grave number is already exists!')</script>";
-			// 	redirect('index.php');
-			// } else {
-
-			// 	$autonumber = new Autonumber();
-			// 	$res = $autonumber->set_autonumber('PEOPLEID');
-
-			// 	$p = new Person();
-			// 	$p->PEOPLEID 	= $res->AUTO;
-			// 	$p->FNAME 		= $_POST['FNAME'];
-			// 	$p->CATEGORIES  = $_POST['CATEGORIES'];
-			// 	$p->BORNDATE	= $_POST['BORNDATE'];
-			// 	$p->DIEDDATE	= $_POST['DIEDDATE'];
-			// 	$p->BURIALDATE 	= $_POST['BURIALDATE'];
-			// 	$p->LOCATION 	= $_POST['LOCATION'];
-			// 	$p->GRAVENO		= $_POST['GRAVENO'];
-			// 	$p->create();
-
-			// 	$autonumber = new Autonumber();
-			// 	$autonumber->auto_update('PEOPLEID');
-
-			// 	message("New Record created successfully!", "success");
-			// 	redirect("index.php");
-			// }
 		}
 	}
 }
