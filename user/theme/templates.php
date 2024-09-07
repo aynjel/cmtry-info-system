@@ -7,7 +7,7 @@ if (isset($_GET['graveno'])) {
     $sql = "SELECT * FROM tblpeople WHERE GRAVENO = '" . $_GET['graveno'] . "'";
     $mydb->setQuery($sql);
     $cur = $mydb->executeQuery();
-    $numrows = $mydb->num_rows($cur);//get the number of count
+    $numrows = $mydb->num_rows($cur); //get the number of count
     if ($numrows > 0) {
         # code... 
         $cur = $mydb->loadResultList();
@@ -39,7 +39,7 @@ if (isset($_GET['graveno'])) {
     <link rel="stylesheet" href="<?= web_root; ?>template/assets/css/style.css">
 
     <style>
-        .logo{
+        .logo {
             font-size: 20px;
             font-weight: 600;
             color: #fff;
@@ -93,105 +93,105 @@ if (isset($_GET['graveno'])) {
                 </li>
             </ul>
         </div>
-        
+
         <div class="page-wrapper">
             <div class="content container-fluid">
                 <?php check_message(); ?>
 
                 <?php if ($_GET['q'] == 'reserve') { ?>
-                <div class="row">
-                    <div class="col-xl-12 d-flex">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">Reservation Form</h5>
-                            </div>
-                            <div class="card-body">
-                                <form method="POST">
-                                    <?php check_message(); ?>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-2">Grave No.</label>
-                                        <div class="col-md-10">
-                                            <input required type="number" class="form-control" name="graveno" placeholder="Grave No.">
+                    <div class="row">
+                        <div class="col-xl-12 d-flex">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Reservation Form</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST">
+                                        <?php check_message(); ?>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Grave No.</label>
+                                            <div class="col-md-10">
+                                                <input required type="number" class="form-control" name="graveno" placeholder="Grave No.">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-2">Name</label>
-                                        <div class="col-md-10">
-                                            <input required type="text" class="form-control" name="name" placeholder="Name">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Name</label>
+                                            <div class="col-md-10">
+                                                <input required type="text" class="form-control" name="name" placeholder="Name">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-2">Born Date</label>
-                                        <div class="col-md-10">
-                                            <input required type="date" class="form-control" name="born" placeholder="Born Date">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Born Date</label>
+                                            <div class="col-md-10">
+                                                <input required type="date" class="form-control" name="born" placeholder="Born Date">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-2">Died Date</label>
-                                        <div class="col-md-10">
-                                            <input required type="date" class="form-control" name="died" placeholder="Died Date">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Died Date</label>
+                                            <div class="col-md-10">
+                                                <input required type="date" class="form-control" name="died" placeholder="Died Date">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-2">Section</label>
-                                        <div class="col-md-10">
-                                            <select class="form-select" name="section">
-                                                <?php 
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Section</label>
+                                            <div class="col-md-10">
+                                                <select class="form-select" name="section">
+                                                    <?php
                                                     $sql = "SELECT * FROM tblcategory";
                                                     $mydb->setQuery($sql);
                                                     $cur = $mydb->executeQuery();
-                                                    $numrows = $mydb->num_rows($cur);//get the number of count
+                                                    $numrows = $mydb->num_rows($cur); //get the number of count
                                                     if ($numrows > 0) {
                                                         # code... 
                                                         $cur = $mydb->loadResultList();
 
                                                         foreach ($cur as $res) {
-                                                            echo '<option value="'.$res->CATEGORIES.'">'.$res->CATEGORIES.'</option>';
+                                                            echo '<option value="' . $res->CATEGORIES . '">' . $res->CATEGORIES . '</option>';
                                                         }
                                                     }
-                                                ?>
-                                            </select>
+                                                    ?>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-2">Location</label>
-                                        <div class="col-md-10">
-                                            <select class="form-select" name="location">
-                                                <option value="Sangi">Sangi</option>
-                                                <option value="Luray">Luray</option>
-                                                <option value="Dumlog">Dumlog</option>
-                                                <option value="Carmen">Carmen</option>
-                                                <option value="Canlumampao">Canlumampao</option>
-                                                <option value="Poog">Poog</option>
-                                                <option value="Ibo">Ibo</option>
-                                            </select>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Location</label>
+                                            <div class="col-md-10">
+                                                <select class="form-select" name="location">
+                                                    <option value="Sangi">Sangi</option>
+                                                    <option value="Luray">Luray</option>
+                                                    <option value="Dumlog">Dumlog</option>
+                                                    <option value="Carmen">Carmen</option>
+                                                    <option value="Canlumampao">Canlumampao</option>
+                                                    <option value="Poog">Poog</option>
+                                                    <option value="Ibo">Ibo</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group mb-0 row">
-                                        <button type="submit" class="btn btn-primary btn-block" name="reserve">Reserve</button>
-                                    </div>
-                                </form>
+                                        <div class="form-group mb-0 row">
+                                            <button type="submit" class="btn btn-primary btn-block" name="reserve">Reserve</button>
+                                        </div>
+                                    </form>
 
-                                <?php 
+                                    <?php
                                     if (isset($_POST['reserve'])) {
                                         # code...
-                                        $sql = "INSERT INTO tblpeople (FNAME, BORNDATE, DIEDDATE, LOCATION, CATEGORIES, GRAVENO) VALUES ('".$_POST['name']."', '".$_POST['born']."', '".$_POST['died']."', '".$_POST['location']."', '".$_POST['section']."', '".$_POST['graveno']."')";
+                                        $sql = "INSERT INTO tblpeople (FNAME, BORNDATE, DIEDDATE, LOCATION, CATEGORIES, GRAVENO) VALUES ('" . $_POST['name'] . "', '" . $_POST['born'] . "', '" . $_POST['died'] . "', '" . $_POST['location'] . "', '" . $_POST['section'] . "', '" . $_POST['graveno'] . "')";
                                         $mydb->setQuery($sql);
                                         $cur = $mydb->executeQuery();
                                         if ($cur) {
                                             # code...
                                             message('Reservation Success!', 'success');
                                             redirect('index.php?q=person');
-                                        }else{
+                                        } else {
                                             message('Something went wrong!', 'error');
                                             redirect('index.php?q=person');
                                         }
                                     }
-                                ?>
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <?php }
                 include $content; ?>
             </div>

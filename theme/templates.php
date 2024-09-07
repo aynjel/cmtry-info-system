@@ -282,8 +282,8 @@ if (isset($search)) {
               </div>
 
               <a href="index.php?q=home#hero" class="back-to-home">
-                  <i class="fas fa-arrow-left"></i> Back to home
-                </a>
+                <i class="fas fa-arrow-left"></i> Back to home
+              </a>
             </section>
           <?php } ?>
 
