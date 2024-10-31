@@ -1,31 +1,31 @@
-<?php 
-    if (isset($_POST['reserve'])) {
-        $plot_no = $_POST['plot_no'];
-        $location = $_POST['location'];
-        $block = $_POST['block'];
-        $mobile_number = $_POST['mobile_number'];
-        $email = $_POST['email'];
+<?php
+if (isset($_POST['reserve'])) {
+    $plot_no = $_POST['plot_no'];
+    $location = $_POST['location'];
+    $block = $_POST['block'];
+    $mobile_number = $_POST['mobile_number'];
+    $email = $_POST['email'];
 
-        // check in database if plot number is already reserved
-        $sql = "SELECT * FROM tblreserve WHERE graveno = '$plot_no' AND status = 'Approved'";
+    // check in database if plot number is already reserved
+    $sql = "SELECT * FROM tblreserve WHERE graveno = '$plot_no' AND status = 'Approved'";
+    $mydb->setQuery($sql);
+    $cur = $mydb->loadResultList();
+
+    if ($cur) {
+        message("Plot number is already reserved!", "error");
+    } else {
+        $sql = "INSERT INTO tblreserve (graveno, location, block, mobile_number, email, user_id) VALUES ('$plot_no', '$location', '$block', '$mobile_number', '$email', " . $_SESSION['USERID'] . ")";
         $mydb->setQuery($sql);
-        $cur = $mydb->loadResultList();
-        
-        if ($cur) {
-            message("Plot number is already reserved!", "error");
+        $res = $mydb->executeQuery();
+        if ($res) {
+            message("Plot number reserved successfully!", "success");
+            echo "<script> window.location.href = 'index.php?q=view-reserve';</script>";
         } else {
-            $sql = "INSERT INTO tblreserve (graveno, location, block, mobile_number, email, user_id) VALUES ('$plot_no', '$location', '$block', '$mobile_number', '$email', ".$_SESSION['USERID'].")";
-            $mydb->setQuery($sql);
-            $res = $mydb->executeQuery();
-            if ($res) {
-                message("Plot number reserved successfully!", "success");
-                echo "<script> window.location.href = 'index.php?q=view-reserve';</script>";
-            } else {
-                message("Something went wrong! Please try again.", "error");
-            }
+            message("Something went wrong! Please try again.", "error");
         }
-        redirect(web_root."user/index.php?q=view-reserve");
     }
+    redirect(web_root . "user/index.php?q=view-reserve");
+}
 ?>
 
 <form method="POST">
@@ -48,18 +48,17 @@
                                     </i>
                                 </small>
                             </p>
-                            <input 
-                            type="number" 
-                            class="form-control" 
-                            name="plot_no" 
-                            min="1"
-                            max="300"
-                            value="<?= isset($_GET['graveno']) ? $_GET['graveno'] : ''; ?>"
-                            readonly
-                            >
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="plot_no"
+                                min="1"
+                                max="300"
+                                value="<?= isset($_GET['graveno']) ? $_GET['graveno'] : ''; ?>"
+                                readonly>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label>
@@ -72,27 +71,26 @@
                                     </i>
                                 </small>
                             </p>
-                            <input 
-                            type="number" 
-                            class="form-control" 
-                            name="block" 
-                            min="1"
-                            max="3"
-                            value="<?= isset($_GET['block']) ? $_GET['block'] : ''; ?>"
-                            readonly
-                            >
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="block"
+                                min="1"
+                                max="3"
+                                value="<?= isset($_GET['block']) ? $_GET['block'] : ''; ?>"
+                                readonly>
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label>
-                                Location
+                                Address
                             </label>
                             <p class="text-muted">
                                 <small>
                                     <i>
-                                        <b>Note:</b> Location is the location of the plot you want to reserve.
+                                        <b>Note:</b> Address is the location of the plot you want to reserve.
                                     </i>
                                 </small>
                             </p>
@@ -130,7 +128,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" class="form-control" name="email" placeholder="Ex. 09123456789" required>
+                            <input type="email" class="form-control" name="email" placeholder="Ex. test@email.com" required>
                         </div>
                     </div>
                 </div>

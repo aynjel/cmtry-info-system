@@ -170,7 +170,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>
-                                        Location
+                                        Address
                                     </label>
                                     <p class="text-muted">
                                         <small>
@@ -233,7 +233,7 @@ $location = isset($_GET['location']) ? $_GET['location'] : '';
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" name="email" placeholder="Ex. 09123456789" required>
+                                    <input type="email" class="form-control" name="email" placeholder="Ex. test@email.com" required>
                                 </div>
                             </div>
                         </div>

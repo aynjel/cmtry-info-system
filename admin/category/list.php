@@ -27,7 +27,7 @@ if (!isset($_SESSION['USERID'])) {
 							</thead>
 							<tbody>
 								<?php
-								$mydb->setQuery("SELECT * FROM `tblcategory`");
+								$mydb->setQuery("SELECT * FROM `tblcategory` ORDER BY `CATEGORIES` ASC");
 								$cur = $mydb->loadResultList();
 
 								foreach ($cur as $result) {
