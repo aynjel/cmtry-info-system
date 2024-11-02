@@ -4,6 +4,14 @@ if (!isset($_SESSION['USERID'])) {
     redirect(web_root . "../index.php?q=login");
 }
 
+if ($_SESSION['U_ROLE'] === "Administrator") {
+    redirect(web_root . "admin/person/index.php");
+}
+
+if ($_SESSION['U_ROLE'] === "User") {
+    redirect(web_root . "user/");
+}
+
 $content = 'home.php';
 if (isset($_GET['q'])) {
     $view = $_GET['q'];

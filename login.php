@@ -64,8 +64,10 @@ if (isset($_POST['btnLogin'])) {
       // message("You logged in as ".$_SESSION['U_ROLE'].".","success");
       if ($_SESSION['U_ROLE'] == 'Staff') {
         redirect(web_root . 'staff/');
+      } elseif ($_SESSION['U_ROLE'] == 'User') {
+        redirect(web_root . 'user/');
       } else {
-        redirect(web_root . "user/");
+        redirect(web_root . "admin/person/index.php");
       }
     } else {
       message("Account does not exist!", "error");
