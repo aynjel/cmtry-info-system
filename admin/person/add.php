@@ -91,10 +91,29 @@ if (!isset($_SESSION['USERID'])) {
               </div>
             </div>
 
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="idno"></label>
+            <hr>
+            <p>
+              <i>
+                Person to be Contact
+              </i>
+            </p>
 
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input class="form-control input-sm" id="email" name="con_email" placeholder="test@email.com" type="email">
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="number">Contact Number:</label>
+                <input class="form-control input-sm" id="number" name="con_number" placeholder="0912345678" type="number">
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
                 <button class="btn  btn-primary btn-sm" name="save" type="submit"><span class="fa fa-save fw-fa"></span> Save</button>
               </div>
             </div>

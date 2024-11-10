@@ -15,14 +15,14 @@ if (!isset($_SESSION['U_ROLE']) == 'Administrator') {
 						<div class="row">
 							<div class="col-sm-6">
 								<label>Address</label>
-								<select class="form-control" name="LOCATION" id="LOCATION" style="width: 100%;">
+								<select class="form-control" name="LOCATION" id="LOCATION">
 									<!-- <option selected>Select Location</option> -->
-									<option value="Sangi">SANGI</option>
-									<option>LURAY</option>
-									<option>DUMLOG</option>
-									<option>CARMEN</option>
-									<option>CANLUMAMPAO</option>
-									<option>IBO</option>
+									<option value="Sangi" <?php echo isset($_POST['LOCATION']) && $_POST['LOCATION'] == 'Sangi' ? 'selected' : ''; ?>>SANGI</option>
+									<option value="Luray" <?php echo isset($_POST['LOCATION']) && $_POST['LOCATION'] == 'Luray' ? 'selected' : ''; ?>>LURAY</option>
+									<option value="Dumlog" <?php echo isset($_POST['LOCATION']) && $_POST['LOCATION'] == 'Dumlog' ? 'selected' : ''; ?>>DUMLOG</option>
+									<option value="Carmen" <?php echo isset($_POST['LOCATION']) && $_POST['LOCATION'] == 'Carmen' ? 'selected' : ''; ?>>CARMEN</option>
+									<option value="Canlumampao" <?php echo isset($_POST['LOCATION']) && $_POST['LOCATION'] == 'Canlumampao' ? 'selected' : ''; ?>>CANLUMAMPAO</option>
+									<option value="Ibo" <?php echo isset($_POST['LOCATION']) && $_POST['LOCATION'] == 'Ibo' ? 'selected' : ''; ?>>IBO</option>
 								</select>
 							</div>
 							<div class="col-sm-2 d-flex align-items-center">
@@ -30,9 +30,9 @@ if (!isset($_SESSION['U_ROLE']) == 'Administrator') {
 									<label>Block</label>
 									<select class=" form-control" name="SECTION">
 										<!-- <option selected>Select Block</option> -->
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
+										<option value="1" <?php echo isset($_POST['SECTION']) && $_POST['SECTION'] == '1' ? 'selected' : ''; ?>>1</option>
+										<option value="2" <?php echo isset($_POST['SECTION']) && $_POST['SECTION'] == '2' ? 'selected' : ''; ?>>2</option>
+										<option value="3" <?php echo isset($_POST['SECTION']) && $_POST['SECTION'] == '3' ? 'selected' : ''; ?>>3</option>
 									</select>
 								</div>
 								<button name="submit" type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px;">
@@ -85,6 +85,12 @@ if (!isset($_SESSION['U_ROLE']) == 'Administrator') {
 									$query = "SELECT * FROM `tblpeople` WHERE LOCATION ='{$location}'  AND CATEGORIES='{$section}'";
 									$mydb->setQuery($query);
 									$cur = $mydb->loadResultList();
+
+									if (empty($cur)) {
+										echo '<tr>';
+										echo '<td colspan="6" align="center">No Record Found</td>';
+										echo '</tr>';
+									}
 
 									foreach ($cur as $result) {
 

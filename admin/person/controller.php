@@ -46,6 +46,8 @@ function doInsert()
 			$r->user_id = $_SESSION['USERID'];
 			$r->graveno = $_POST['GRAVENO'];
 			$r->block = $_POST['CATEGORIES'];
+			$r->email = $_POST['con_email'];
+			$r->mobile_number = $_POST['con_number'];
 			$r->status = 'Approved';
 			$r->create();
 

@@ -2,11 +2,11 @@
 require_once("include/initialize.php");
 if (isset($_SESSION['U_ROLE'])) {
 	if ($_SESSION['U_ROLE'] === 'User') {
-		redirect(web_root . "user/index.php");
+		redirect(web_root . "user");
 	}
 
 	if ($_SESSION['U_ROLE'] === 'Staff') {
-		redirect(web_root . "staff/index.php");
+		redirect(web_root . "staff");
 	}
 
 	if ($_SESSION['U_ROLE'] === 'Administrator') {
