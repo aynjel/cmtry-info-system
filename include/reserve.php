@@ -42,7 +42,7 @@ class Reserve
 	{
 		global $mydb;
 		$mydb->setQuery("SELECT * FROM " . self::$tblname . " 
-				Where PEOPLEID= {$id} LIMIT 1");
+				Where graveno= {$id} LIMIT 1");
 		$cur = $mydb->loadSingleResult();
 		return $cur;
 	}
@@ -134,7 +134,7 @@ class Reserve
 		}
 		$sql = "UPDATE " . self::$tblname . " SET ";
 		$sql .= join(", ", $attribute_pairs);
-		$sql .= " WHERE PEOPLEID=" . $id;
+		$sql .= " WHERE graveno=" . $id;
 		$mydb->setQuery($sql);
 		if (!$mydb->executeQuery()) return false;
 	}

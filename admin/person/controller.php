@@ -84,6 +84,10 @@ function doEdit()
 		$p->BURIALDATE 	= $_POST['BURIALDATE'];
 		$p->update($_POST['PEOPLEID']);
 
+		$r = new Reserve();
+		$r->email = $_POST['con_email'];
+		$r->mobile_number = $_POST['con_number'];
+		$r->update($_POST['GRAVENO']);
 
 		message("Record has been updated!", "success");
 		redirect("index.php");

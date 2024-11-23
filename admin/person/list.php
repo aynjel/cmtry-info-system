@@ -54,20 +54,24 @@
 									$cur1 = $mydb->loadResultList();
 
 									echo '<td>';
-									if ($cur1) {
-										foreach ($cur1 as $result1) {
-											$query = "SELECT * FROM `tbluseraccount` WHERE `USERID` = '" . $result1->user_id . "'";
-											$mydb->setQuery($query);
-											$cur2 = $mydb->loadResultList();
-
-											foreach ($cur2 as $result2) {
-												echo $result2->U_NAME . '<br>';
-												echo $result1->mobile_number . '<br>';
-											}
-										}
-									} else {
-										echo 'NONE';
+									foreach ($cur1 as $result1) {
+										echo $result1->email . '<br>';
+										echo $result1->mobile_number . '<br>';
 									}
+									// if ($cur1) {
+									// 	foreach ($cur1 as $result1) {
+									// 		$query = "SELECT * FROM `tbluseraccount` WHERE `USERID` = '" . $result1->user_id . "'";
+									// 		$mydb->setQuery($query);
+									// 		$cur2 = $mydb->loadResultList();
+
+									// 		foreach ($cur2 as $result2) {
+									// 			echo $cur1->email . '<br>';
+									// 			echo $cur1->mobile_number . '<br>';
+									// 		}
+									// 	}
+									// } else {
+									// 	echo 'NONE';
+									// }
 									echo '</td>';
 
 									echo '</tr>';

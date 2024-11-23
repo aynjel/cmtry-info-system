@@ -403,53 +403,53 @@
 					</form>
 				</div>
 			</div>
-				<!-- results in table -->
-				<?php
-				if (isset($_POST["btnSearch"])) {
-					$search = $_POST["search"];
-					$sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%$search%' OR GRAVENO LIKE '%$search%' OR CATEGORIES LIKE '%$search%'";
-					$mydb->setQuery($sql);
-					$res = $mydb->loadResultList();
+			<!-- results in table -->
+			<?php
+			if (isset($_POST["btnSearch"])) {
+				$search = $_POST["search"];
+				$sql = "SELECT * FROM tblpeople WHERE FNAME LIKE '%$search%' OR GRAVENO LIKE '%$search%' OR CATEGORIES LIKE '%$search%'";
+				$mydb->setQuery($sql);
+				$res = $mydb->loadResultList();
 
-					if (empty($res)) {
-						echo "<h4>No results found.</h4>";
-					} else { ?>
-				<div class="card-body">
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Plot No.</th>
-								<th>Block No.</th>
-								<th>Address</th>
-								<th>Born Date</th>
-								<th>Died Date</th>
-								<th>Burial Date</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach ($res as $row) { ?>
+				if (empty($res)) {
+					echo "<h4>No results found.</h4>";
+				} else { ?>
+					<div class="card-body">
+						<table class="table table-striped table-hover">
+							<thead>
 								<tr>
-									<td><?php echo $row->FNAME; ?></td>
-									<td><?php echo $row->GRAVENO; ?></td>
-									<td><?php echo $row->CATEGORIES; ?></td>
-									<td><?php echo $row->LOCATION; ?></td>
-									<td><?php echo date('l, F d, Y', strtotime($row->BORNDATE)); ?></td>
-									<td><?php echo date('l, F d, Y', strtotime($row->DIEDDATE)); ?></td>
-									<td><?php echo date('l, F d, Y', strtotime($row->BURIALDATE)); ?></td>
-									<td>
-										<a href="?q=map-info&id=<?php echo $row->PEOPLEID; ?>&name=<?php echo $row->FNAME; ?>" class="btn btn-primary">View</a>
-									</td>
+									<th>Name</th>
+									<th>Plot No.</th>
+									<th>Block No.</th>
+									<th>Address</th>
+									<th>Born Date</th>
+									<th>Died Date</th>
+									<th>Burial Date</th>
+									<th>Action</th>
 								</tr>
-							<?php } ?>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<?php foreach ($res as $row) { ?>
+									<tr>
+										<td><?php echo $row->FNAME; ?></td>
+										<td><?php echo $row->GRAVENO; ?></td>
+										<td><?php echo $row->CATEGORIES; ?></td>
+										<td><?php echo $row->LOCATION; ?></td>
+										<td><?php echo date('l, F d, Y', strtotime($row->BORNDATE)); ?></td>
+										<td><?php echo date('l, F d, Y', strtotime($row->DIEDDATE)); ?></td>
+										<td><?php echo date('l, F d, Y', strtotime($row->BURIALDATE)); ?></td>
+										<td>
+											<a href="?q=map-info&id=<?php echo $row->PEOPLEID; ?>&name=<?php echo $row->FNAME; ?>" class="btn btn-primary">View</a>
+										</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
 
-					<!-- clear search -->
-					<div class="text-center">
-						<a href="?q=map" class="btn btn-primary">Clear Search</a>
-					</div>
+						<!-- clear search -->
+						<div class="text-center">
+							<a href="?q=map" class="btn btn-primary">Clear Search</a>
+						</div>
 					</div>
 			<?php }
 			} ?>
@@ -505,9 +505,9 @@
 												$row = $mydb->executeQuery();
 												$maxrow = $mydb->num_rows($row);
 												$object = $mydb->loadSingleResult();
-												
+
 												if ($maxrow > 0) {
-													if(isset($_GET['id']) && isset($_GET['name'])) {
+													if (isset($_GET['id']) && isset($_GET['name'])) {
 														if ($object->status == 'Approved') {
 															echo "<td style='background: red; cursor: pointer;' title='Occupied'>$count</td>";
 														} else if ($object->status == 'Contacted') {

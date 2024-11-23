@@ -6,6 +6,8 @@ if (!isset($_SESSION['USERID'])) {
 $peopleid = $_GET['id'];
 $person = new Person();
 $p = $person->single_people($peopleid);
+$reserve = new Reserve();
+$r = $reserve->single_reserve($p->GRAVENO);
 ?>
 <div class="row">
   <div class="col-12">
@@ -103,11 +105,30 @@ $p = $person->single_people($peopleid);
               </div>
             </div>
 
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="idno"></label>
+            <hr>
+            <p>
+              <i>
+                Person to be Contact
+              </i>
+            </p>
 
-                <button class="btn btn-primary btn-sm" name="save" type="submit"><span class="fa fa-save fw-fa"></span> Save</button>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input class="form-control input-sm" id="email" name="con_email" placeholder="test@email.com" type="email" value="<?php echo $r->email ?? ''; ?>">
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="number">Contact Number:</label>
+                <input class="form-control input-sm" id="number" name="con_number" placeholder="0912345678" type="number" value="<?php echo $r->mobile_number ?? ''; ?>">
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <button class="btn  btn-primary btn-sm" name="save" type="submit"><span class="fa fa-save fw-fa"></span> Save</button>
               </div>
             </div>
           </div>

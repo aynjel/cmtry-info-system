@@ -1,8 +1,7 @@
 <?php
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM tblpeople WHERE PEOPLEID = '$id'";
-$mydb->setQuery($sql);
+$mydb->setQuery("SELECT * FROM tblpeople WHERE GRAVENO = '$id'");
 $res = $mydb->loadSingleResult();
 
 $sql1 = "SELECT * FROM tblreserve WHERE graveno = '$res->GRAVENO'";
@@ -32,38 +31,39 @@ $reserve = $mydb->loadSingleResult();
 		<div class="card card-table">
 			<div class="card-header">
 				<h4 class="card-title">
-                    Information of <?php echo isset($_GET['name']) ? $_GET['name'] : ''; ?>
+					Information of <?php echo isset($_GET['name']) ? $_GET['name'] : ''; ?>
 				</h4>
-				<a href="index.php?q=map-info&id=<?php echo $_GET['id']; ?>&name=<?php echo $_GET['name']; ?>" class="btn btn-primary btn-sm">Back</a>
+				<a href="index.php?q=map-info&id=<?php echo $res->PEOPLEID; ?>&name=<?php echo $_GET['name']; ?>" class="btn btn-primary btn-sm">Back</a>
+				<!-- <a href="index.php?q=map" class="btn btn-primary btn-sm">Back</a> -->
 			</div>
 			<div class="card-body">
-                <ul class="list-unstyled px-5 py-3">
-                    <li class="row">
-                        <div class="col-md-4">Name:</div>
-                        <div class="col-md-8"><?php echo $res->FNAME; ?></div>
-                    </li>
-                    <li class="row">
-                        <div class="col-md-4">Address:</div>
-                        <div class="col-md-8"><?php echo $res->LOCATION; ?></div>
-                    </li>
-                    <li class="row">
-                        <div class="col-md-4">Date of Birth:</div>
-                        <div class="col-md-8"><?php echo $res->BORNDATE; ?></div>
-                    </li>
-                    <li class="row">
-                        <div class="col-md-4">Date of Death:</div>
-                        <div class="col-md-8"><?php echo $res->DIEDDATE; ?></div>
-                    </li>
-                    <li class="row">
-                        <div class="col-md-4">Burial Date:</div>
-                        <div class="col-md-8"><?php echo $res->BURIALDATE; ?></div>
-                    </li>
-                    <li class="row">
-                        <div class="col-md-4">Plot No:</div>
-                        <div class="col-md-8"><?php echo $res->GRAVENO; ?></div>
-                    </li>
+				<ul class="list-unstyled px-5 py-3">
+					<li class="row">
+						<div class="col-md-4">Name:</div>
+						<div class="col-md-8"><?php echo $res->FNAME; ?></div>
+					</li>
+					<li class="row">
+						<div class="col-md-4">Address:</div>
+						<div class="col-md-8"><?php echo $res->LOCATION; ?></div>
+					</li>
+					<li class="row">
+						<div class="col-md-4">Date of Birth:</div>
+						<div class="col-md-8"><?php echo $res->BORNDATE; ?></div>
+					</li>
+					<li class="row">
+						<div class="col-md-4">Date of Death:</div>
+						<div class="col-md-8"><?php echo $res->DIEDDATE; ?></div>
+					</li>
+					<li class="row">
+						<div class="col-md-4">Burial Date:</div>
+						<div class="col-md-8"><?php echo $res->BURIALDATE; ?></div>
+					</li>
+					<li class="row">
+						<div class="col-md-4">Plot No:</div>
+						<div class="col-md-8"><?php echo $res->GRAVENO; ?></div>
+					</li>
 
-                </ul>
+				</ul>
 			</div>
 		</div>
 	</div>

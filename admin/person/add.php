@@ -20,7 +20,7 @@ if (!isset($_SESSION['USERID'])) {
             <div class="col-md-4">
               <div class="form-group">
                 <label for="GRAVENO">Plot No.:</label>
-                <input class="form-control input-sm" id="GRAVENO" name="GRAVENO" placeholder="Grave Number" type="number" value="" min="1" max="300" required>
+                <input class="form-control input-sm" id="GRAVENO" name="GRAVENO" placeholder="Grave Number" type="test" value="" min="1" max="300" required>
               </div>
             </div>
 
@@ -108,7 +108,7 @@ if (!isset($_SESSION['USERID'])) {
             <div class="col-md-3">
               <div class="form-group">
                 <label for="number">Contact Number:</label>
-                <input class="form-control input-sm" id="number" name="con_number" placeholder="0912345678" type="number">
+                <input class="form-control input-sm" id="number" name="con_number" placeholder="0912345678" type="text">
               </div>
             </div>
 
