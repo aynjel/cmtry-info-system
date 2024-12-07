@@ -543,7 +543,7 @@ $max = 300;
                                 echo '</div>';
                                 echo '<div class="card-body">';
                                 echo '<div class="table-responsive">';
-                                echo '<table class="table table-hover table-center mb-0 datatable">';
+                                echo '<table class="table table-hover table-center mb-0 person-list-datatable">';
                                 echo '<thead>';
                                 echo '<tr>';
                                 echo '<th>Plot No.</th>';
@@ -1048,6 +1048,14 @@ $max = 300;
     <script src="<?= web_root; ?>template/assets/plugins/apexchart/apexcharts.min.js"></script>
     <script src="<?= web_root; ?>template/assets/plugins/apexchart/chart-data.js"></script>
     <script src="<?= web_root; ?>template/assets/js/script.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.person-list-datatable').DataTable({
+                lengthMenu: [5, 10, 20, 50, 100, 200, 500],
+            });
+        });
+    </script>
 
 </body>
 
