@@ -38,7 +38,7 @@ if (isset($_POST['btnLogin'])) {
     $user = new User();
     $res = $user::userAuthentication($email, $h_upass);
     if ($res == true) {
-      message("You logged in as " . $_SESSION['U_ROLE'] . ".", "success");
+      // message("You logged in as " . $_SESSION['U_ROLE'] . ".", "success");
       if ($_SESSION['U_ROLE'] == 'Staff') {
         redirect(web_root . 'staff/');
       } elseif ($_SESSION['U_ROLE'] == 'User') {

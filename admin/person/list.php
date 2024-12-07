@@ -12,7 +12,7 @@
 			<div class="card-body">
 				<form action="controller.php?action=delete" Method="POST">
 					<div class="table-responsive">
-						<table id="dash-table" class="table table-bordered table-hover" cellspacing="0" width="100%">
+						<table id="dash-table" class="table table-bordered table-hover list-deceased-datatable" cellspacing="0" width="100%">
 							<thead>
 								<tr>
 									<th>Plot No.</th>

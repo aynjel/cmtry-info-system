@@ -204,6 +204,9 @@ if ($res > 0) {
   <script src="<?= web_root; ?>template/assets/js/script.js"></script>
 
   <script type="text/javascript">
+    $('.list-deceased-datatable').DataTable({
+      lengthMenu: [5, 10, 20, 50, 100, 200, 500],
+    });
     $(".select2").select2();
 
     //Datemask2 mm/dd/yyyy
