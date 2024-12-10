@@ -1,4 +1,22 @@
 <style type="text/css">
+	.vr1 {
+		position: absolute;
+		left: 560px;
+		top: 0;
+		height: 450px;
+		width: 40px;
+		background-color: #acb6af;
+		
+	}
+	.vr2 {
+		position: absolute;
+		left: 1280px;
+		top: 0;
+		height: 460px;
+		width: 40px;
+		background-color: #acb6af;
+	}
+
 	.scroll {
 		overflow: auto;
 		height: 500px;
@@ -485,6 +503,9 @@
 							<div class="map-container">
 								<img src="img/map.png" alt="map" class="map">
 								<div class="blocks">
+								<div class='vr1'></div>
+								<div class='vr2'></div>
+
 									<?php
 
 									$count = 1;
