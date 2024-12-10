@@ -2,17 +2,17 @@
 	.vr1 {
 		position: absolute;
 		left: 560px;
-		top: 0;
-		height: 450px;
+		top: 20px;
+		height: 380px;
 		width: 40px;
 		background-color: #acb6af;
 		
 	}
 	.vr2 {
 		position: absolute;
-		left: 1280px;
-		top: 0;
-		height: 460px;
+		left: 1260px;
+		top: 20px;
+		height: 400px;
 		width: 40px;
 		background-color: #acb6af;
 	}
