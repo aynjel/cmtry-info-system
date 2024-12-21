@@ -135,6 +135,10 @@ if (isset($search)) {
           include('../' . web_root . 'login.php');
         } elseif ($q == 'register') {
           include('../' . web_root . 'register.php');
+        } elseif ($q == 'username-recover') {
+          include('../' . web_root . 'username-recover.php');
+        } elseif ($q == 'forgot-password') {
+          include('../' . web_root . 'forgot-password.php');
         } else { ?>
 
           <!--HERO SECTION-->

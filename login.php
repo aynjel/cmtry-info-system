@@ -19,6 +19,9 @@
         <input class="form-control" id="U_PASS" name="U_PASS" type="password" required />
       </div>
       <div class="auth-form-group">
+        <a href="index.php?q=username-recover" class="auth-form-link">Forgot password?</a>
+      </div>
+      <div class="auth-form-group">
         <button class="btn-submit" name="btnLogin" type="submit">Login</button>
       </div>
     </form>

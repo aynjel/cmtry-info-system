@@ -8,7 +8,6 @@
 	.legend {
 		padding: 20px;
 		background-color: #59b272;
-
 	}
 
 	.legend ul {
@@ -36,12 +35,12 @@
 
 	.map {
 		width: 100%;
-		height: 600px;
+		height: 500px;
 	}
 
 	.blocks {
 		position: absolute;
-		top: 0;
+		top: 70px;
 		left: 0;
 		display: flex;
 		flex-wrap: wrap;
@@ -99,274 +98,6 @@
 		cursor: pointer;
 
 	}
-
-	/*
-	media queries
-	*/
-
-	@media screen and (max-width: 1024px) {
-		.blocks table th.heading-text {
-			font-size: 14px;
-		}
-
-		.blocks table td {
-			width: 25px;
-			height: 25px;
-			font-size: 12px;
-		}
-
-		.blocks table th {
-			width: 25px;
-			height: 25px;
-			font-size: 12px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 400px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 800px;
-		}
-	}
-
-	@media screen and (max-width: 768px) {
-		.blocks table th.heading-text {
-			font-size: 12px;
-		}
-
-		.blocks table td {
-			width: 20px;
-			height: 20px;
-			font-size: 10px;
-		}
-
-		.blocks table th {
-			width: 20px;
-			height: 20px;
-			font-size: 10px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 300px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 600px;
-		}
-	}
-
-	@media screen and (max-width: 480px) {
-		.blocks table th.heading-text {
-			font-size: 10px;
-		}
-
-		.blocks table td {
-			width: 15px;
-			height: 15px;
-			font-size: 8px;
-		}
-
-		.blocks table th {
-			width: 15px;
-			height: 15px;
-			font-size: 8px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 200px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 400px;
-		}
-	}
-
-	@media screen and (max-width: 320px) {
-		.blocks table th.heading-text {
-			font-size: 8px;
-		}
-
-		.blocks table td {
-			width: 10px;
-			height: 10px;
-			font-size: 6px;
-		}
-
-		.blocks table th {
-			width: 10px;
-			height: 10px;
-			font-size: 6px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 100px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 200px;
-		}
-	}
-
-	@media screen and (max-width: 280px) {
-		.blocks table th.heading-text {
-			font-size: 6px;
-		}
-
-		.blocks table td {
-			width: 8px;
-			height: 8px;
-			font-size: 4px;
-		}
-
-		.blocks table th {
-			width: 8px;
-			height: 8px;
-			font-size: 4px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 50px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 100px;
-		}
-	}
-
-	@media screen and (max-width: 240px) {
-		.blocks table th.heading-text {
-			font-size: 4px;
-		}
-
-		.blocks table td {
-			width: 6px;
-			height: 6px;
-			font-size: 2px;
-		}
-
-		.blocks table th {
-			width: 6px;
-			height: 6px;
-			font-size: 2px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 25px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 50px;
-		}
-	}
-
-	@media screen and (max-width: 200px) {
-		.blocks table th.heading-text {
-			font-size: 2px;
-		}
-
-		.blocks table td {
-			width: 4px;
-			height: 4px;
-			font-size: 1px;
-		}
-
-		.blocks table th {
-			width: 4px;
-			height: 4px;
-			font-size: 1px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 12.5px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 25px;
-		}
-	}
-
-	@media screen and (max-width: 160px) {
-		.blocks table th.heading-text {
-			font-size: 1px;
-		}
-
-		.blocks table td {
-			width: 3px;
-			height: 3px;
-			font-size: 1px;
-		}
-
-		.blocks table th {
-			width: 3px;
-			height: 3px;
-			font-size: 1px;
-		}
-
-		.blocks table.block-1 {
-			top: 0;
-			left: 0;
-		}
-
-		.blocks table.block-2 {
-			top: 0;
-			left: 6.25px;
-		}
-
-		.blocks table.block-3 {
-			top: 0;
-			left: 12.5px;
-		}
-	}
 </style>
 
 <div class="row">
@@ -418,7 +149,7 @@
 										$row = $mydb->executeQuery();
 										$maxrow = $mydb->num_rows($row);
 										$object = $mydb->loadSingleResult();
-										
+
 										if ($maxrow > 0) {
 											if ($object->status == 'Approved') {
 												echo "<td style='background: red; cursor: pointer;' title='Occupied'>$count</td>";

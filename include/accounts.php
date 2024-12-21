@@ -25,6 +25,16 @@ class User
 		$row_count = $mydb->num_rows($cur);
 		return $row_count;
 	}
+	static function resetPassword($U_USERNAME, $h_pass)
+	{
+		global $mydb;
+		$mydb->setQuery("UPDATE `tbluseraccount` SET `U_PASS` = '" . $h_pass . "' WHERE `U_USERNAME` = '" . $U_USERNAME . "'");
+		$cur = $mydb->executeQuery();
+		if ($cur == false) {
+			die(mysql_error());
+		}
+		return true;
+	}
 	static function userAuthentication($U_USERNAME, $h_pass)
 	{
 		global $mydb;
@@ -65,6 +75,23 @@ class User
 			$_SESSION['U_USERNAME'] 	= $user_found->U_USERNAME;
 			$_SESSION['U_PASS'] 		= $user_found->U_PASS;
 			$_SESSION['U_ROLE'] 		= $user_found->U_ROLE;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	static function retreiveUser($uname)
+	{
+		global $mydb;
+		$mydb->setQuery("SELECT * FROM `tbluseraccount` WHERE `U_USERNAME` = '" . $uname . "'");
+		$cur = $mydb->executeQuery();
+		if ($cur == false) {
+			die(mysql_error());
+		}
+		$row_count = $mydb->num_rows($cur);
+		if ($row_count == 1) {
+			$user_found = $mydb->loadSingleResult();
+			$_SESSION['USER_RECOVER_INFO'] = $user_found;
 			return true;
 		} else {
 			return false;

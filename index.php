@@ -51,6 +51,16 @@ switch ($view) {
 		$content = 'register.php';
 		break;
 
+	case 'username-recover':
+		$title = "Username Recover";
+		$content = 'username-recover.php';
+		break;
+
+	case 'forgot-password':
+		$title = "Forgot Password";
+		$content = 'forgot-password.php';
+		break;
+
 	default:
 		$title = "Home";
 		$content = 'home.php';

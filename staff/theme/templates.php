@@ -447,7 +447,7 @@ $max = 300;
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-hover datatable">
+                                        <table class="table table-hover reserve-datatable">
                                             <thead class="thead-light">
                                                 <tr>
                                                     <!-- <th>ID</th> -->
@@ -461,7 +461,7 @@ $max = 300;
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT * FROM tblreserve";
+                                                $sql = "SELECT * FROM tblreserve ORDER BY status DESC";
                                                 $mydb->setQuery($sql);
                                                 $cur = $mydb->executeQuery();
                                                 $reserved = $mydb->loadResultList();
@@ -961,76 +961,6 @@ $max = 300;
                         }
                     }
                     ?>
-                    <!-- <form method="POST">
-                        <div class="modal-header">
-                            <div class="form-header text-start mb-0">
-                                <h4 class="mb-0">Add New Deceased Person</h4>
-                            </div>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="fas fa-times"></i></span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="bank-inner-details">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group">
-                                            <label>Plot Number (Approved reserved plot only)</label>
-                                            <select class="form-control" name="graveno">
-                                                <option selected hidden>Select Plot Number</option>
-                                                <?php
-                                                $sql = "SELECT * FROM tblreserve WHERE status = 'Approved' AND graveno NOT IN (SELECT GRAVENO FROM tblpeople)";
-                                                $mydb->setQuery($sql);
-                                                $cur = $mydb->executeQuery();
-                                                $plot = $mydb->loadResultList();
-
-                                                foreach ($plot as $p) {
-                                                    echo '<option value="' . $p->graveno . '">PLOT NUMBER: ' . $p->graveno . ' - BLOCK: ' . $p->block . ' - LOCATION: ' . $p->location . '</option>';
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group">
-                                            <label>Burial Date</label>
-                                            <input type="date" class="form-control" name="burial_date">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <hr>
-                                        <h4>
-                                            <i class="fas fa-user me-1"></i> Deceased Person Information
-                                        </h4>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control" name="name" placeholder="Ex. Juan Dela Cruz">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group">
-                                            <label>Born Date</label>
-                                            <input type="date" class="form-control" name="born_date">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group">
-                                            <label>Died Date</label>
-                                            <input type="date" class="form-control" name="died_date">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="bank-details-btn">
-                                <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn bank-cancel-btn me-2">Cancel</a>
-                                <button type="submit" name="add" class="btn bank-save-btn">Add</button>
-                            </div>
-                        </div>
-                    </form> -->
                 </div>
             </div>
         </div>
@@ -1051,6 +981,10 @@ $max = 300;
 
     <script>
         $(document).ready(function() {
+            $('.reserve-datatable').DataTable({
+                lengthMenu: [5, 10, 20, 50, 100, 200, 500],
+                ordering: false
+            });
             $('.person-list-datatable').DataTable({
                 lengthMenu: [5, 10, 20, 50, 100, 200, 500],
             });
