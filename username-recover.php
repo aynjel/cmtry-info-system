@@ -38,6 +38,7 @@ if (isset($_POST['btnSubmit'])) {
       redirect(web_root . 'index.php?q=forgot-password');
     } else {
       message("Username does not exist!", "error");
+      redirect(web_root . "index.php?q=username-recover");
     }
   }
 }

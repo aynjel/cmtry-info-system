@@ -50,7 +50,7 @@ if (isset($_POST['btnLogin'])) {
         redirect(web_root . "admin/person/index.php");
       }
     } else {
-      message("Account does not exist!", "error");
+      message("Wrong Username or Password!", "error");
       redirect(web_root . "index.php?q=login");
     }
   }
